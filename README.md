@@ -5,32 +5,54 @@ for the new site, which is hosted on [Vercel](https://vercel.com).
 
 ## Status
 
-🚧 **Concept / planning phase.** Planning sheet captured and translated into an
-architecture, CMS content model, and information architecture (see `docs/`).
+🚧 **Foundation scaffolded.** Planning is captured (`docs/`) and the
+**Astro + Sanity** foundation is in place and building. Branded UI will be
+designed in Claude Design and imported on top of this foundation.
 
-**Stack decision:** Astro + React islands · TypeScript · Tailwind CSS · Sanity
-CMS · deployed on Vercel. Rationale in [`docs/architecture.md`](docs/architecture.md).
+**Stack:** Astro 5 + React islands · TypeScript · Tailwind v4 · Sanity CMS ·
+deployed on Vercel. Rationale in [`docs/architecture.md`](docs/architecture.md).
+
+## Quick start
+
+```bash
+npm install
+npm run dev        # site + Sanity Studio at http://localhost:4321/studio
+```
+
+The site builds and runs **before** a Sanity project exists (it falls back to
+empty content). To connect real content, follow [`docs/setup.md`](docs/setup.md)
+to create the Sanity account/project and fill in `.env` (see `.env.example`).
 
 ## Repository layout
 
-| Path        | Purpose                                                              |
-| ----------- | ------------------------------------------------------------------- |
-| `docs/`     | Planning sheets, requirements, content inventory, and decisions.    |
-| `concept/`  | Concept work — early drafts, wireframes, prototypes, and mockups.   |
-| `src/`      | (Coming) Application source for the production site.                |
+| Path                   | Purpose                                                       |
+| ---------------------- | ------------------------------------------------------------- |
+| `src/pages/`           | Routes: home, about, partnerships, newsroom, `/studio`.       |
+| `src/components/`      | UI components (`.astro` + React islands) — populated on import.|
+| `src/lib/sanity/`      | Sanity client, GROQ queries, image URL builder.               |
+| `src/styles/`          | Tailwind entry + placeholder brand tokens.                    |
+| `sanity/schemaTypes/`  | CMS content model (events, newsroom, people, partnerships…).  |
+| `sanity/structure.ts`  | Sanity Studio desk layout.                                     |
+| `docs/`                | Planning sheet, architecture, content model, IA, setup.       |
+| `concept/`             | Concept work / design-import holding area.                    |
+
+## Documentation
+
+| Doc | What |
+| --- | ---- |
+| [`docs/planning-sheet.md`](docs/planning-sheet.md) | Source planning sheet |
+| [`docs/architecture.md`](docs/architecture.md) | Stack decision & rationale |
+| [`docs/build-plan.md`](docs/build-plan.md) | Design-first workflow & phases |
+| [`docs/content-model.md`](docs/content-model.md) | Sanity content model |
+| [`docs/information-architecture.md`](docs/information-architecture.md) | Page → component → CMS map |
+| [`docs/setup.md`](docs/setup.md) | Local setup + Sanity account creation |
 
 ## Hosting
 
-The site is deployed on Vercel. Every push to the production branch deploys
-automatically; pull requests get their own preview deployments.
+Deployed on Vercel: pushes to the production branch deploy automatically, and
+pull requests get their own preview deployments.
 
 ## Working in this repo
 
-Development happens on feature branches and is merged in via pull request. The
-current active working branch is `claude/texas-house-rebuild-jt7avf`.
-
-## Getting started
-
-The production application has not been scaffolded yet — the stack will be
-chosen once the planning sheet and concept work are reviewed. Until then, this
-repo collects the planning and concept materials that will drive the build.
+Development happens on feature branches. The current active working branch is
+`claude/texas-house-rebuild-jt7avf`.

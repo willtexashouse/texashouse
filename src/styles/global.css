@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+/*
+  Placeholder brand tokens.
+  These will be REPLACED with the real Texas House brand values exported from
+  Claude Design (colors, typography, spacing). Keeping neutral defaults for now
+  so the foundation builds and renders before the design lands.
+*/
+@theme {
+  --color-brand: #111111;
+  --color-brand-accent: #b3541e; /* placeholder rust/terracotta — swap later */
+  --color-ink: #1a1a1a;
+  --color-paper: #faf8f4;
+
+  --font-display: ui-serif, Georgia, serif;
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}

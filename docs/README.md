@@ -11,6 +11,7 @@ Planning materials driving the Texas House website rebuild.
 - **`content-model.md`** — Sanity schema for every CMS type (events, schedule,
   sponsors, newsroom, people, partnerships, settings).
 - **`information-architecture.md`** — pages → sections → components → CMS source.
+- **`setup.md`** — get the foundation running locally + create the Sanity project.
 
 ## How we work
 

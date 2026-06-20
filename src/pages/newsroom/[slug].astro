@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { sanityFetch } from '../../lib/sanity/queries';
+import { ARTICLE_BY_SLUG_QUERY, ARTICLE_SLUGS_QUERY } from '../../lib/sanity/queries';
+import { isConfigured } from '../../lib/sanity/safeFetch';
+
+// Pre-render an article page per slug. Before Sanity is configured there are no
+// slugs, so this generates zero pages and the build still succeeds.
+export async function getStaticPaths() {
+  if (!isConfigured) return [];
+  try {
+    const slugs = await sanityFetch<string[]>(ARTICLE_SLUGS_QUERY);
+    return slugs.map((slug) => ({ params: { slug } }));
+  } catch {
+    return [];
+  }
+}
+
+const { slug } = Astro.params;
+const article = await sanityFetch<any>(ARTICLE_BY_SLUG_QUERY, { slug });
+---
+
+<BaseLayout title={`${article?.title ?? 'Article'} · Texas House`}>
+  <main class="mx-auto max-w-2xl px-6 py-24">
+    <h1 class="font-[var(--font-display)] text-4xl font-semibold">
+      {article?.title ?? 'Article'}
+    </h1>
+    <!-- Portable Text body will render here once the design lands. -->
+  </main>
+</BaseLayout>

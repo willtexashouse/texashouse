@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { safeFetch } from '../../lib/sanity/safeFetch';
+import {
+  FEATURED_ARTICLE_QUERY,
+  ALL_ARTICLES_QUERY,
+  TOPICS_QUERY,
+} from '../../lib/sanity/queries';
+
+const featured = await safeFetch<any>(FEATURED_ARTICLE_QUERY, {}, null);
+const articles = await safeFetch<any[]>(ALL_ARTICLES_QUERY, {}, []);
+const topics = await safeFetch<any[]>(TOPICS_QUERY, {}, []);
+---
+
+<BaseLayout title="Newsroom · Texas House">
+  <main class="mx-auto max-w-3xl px-6 py-24">
+    <h1 class="font-[var(--font-display)] text-4xl font-semibold">Newsroom</h1>
+    <p class="mt-4 text-lg">Featured article, topic filter, and the archive.</p>
+    <!--
+      Sections: Featured article · Topic filter (island) · Archive grid.
+      Topics drive the working filter; articles drive featured + archive.
+    -->
+    <ul class="mt-10 space-y-1 text-sm text-neutral-600">
+      <li>Featured: {featured ? 'yes' : 'none'}</li>
+      <li>Articles: {articles.length}</li>
+      <li>Topics: {topics.length}</li>
+    </ul>
+  </main>
+</BaseLayout>

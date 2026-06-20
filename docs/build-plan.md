@@ -53,13 +53,19 @@ Bring the Claude Design export into the repo. Land it in a holding area
 (e.g. `concept/design-import/`) before integrating, so we can review before it
 touches `src/`.
 
-### Phase 3 — Astro + Sanity foundation
-Can run **in parallel** with Phases 1–2 since it's design-independent:
-- Scaffold Astro (TypeScript) + `@astrojs/react` + `@astrojs/tailwind` +
+### Phase 3 — Astro + Sanity foundation ✅ (scaffolded)
+Design-independent foundation, in place and verified building:
+- Astro 5 (TypeScript) + `@astrojs/react` + Tailwind v4 (`@tailwindcss/vite`) +
   `@astrojs/vercel`.
-- Scaffold Sanity Studio at `/studio` with the schema types from
-  `content-model.md`.
-- Wire the Sanity client + GROQ query helpers + image URL builder.
+- Sanity Studio embedded at `/studio` with every schema type from
+  `content-model.md` (`sanity/schemaTypes/`) and a desk structure for singletons.
+- Sanity client, GROQ query helpers, and image URL builder (`src/lib/sanity/`).
+- Placeholder pages for Home / About / Partnerships / Newsroom / article wired
+  to the queries; `safeFetch` returns fallbacks until a real Sanity project is
+  configured, so `npm run build` succeeds today.
+
+Remaining for this phase: create the Sanity account/project and fill `.env`
+(walkthrough in `setup.md`), then bring in the real brand tokens from the design.
 
 ### Phase 4 — Port & integrate
 - Move imported components from the holding area into `src/components`.

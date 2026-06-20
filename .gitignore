@@ -11,6 +11,7 @@ build/
 out/
 .vercel/
 .turbo/
+.astro/
 
 # Environment / secrets
 .env

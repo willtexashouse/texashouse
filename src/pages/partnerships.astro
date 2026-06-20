@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { safeFetch } from '../lib/sanity/safeFetch';
+import { PARTNERSHIPS_PAGE_QUERY } from '../lib/sanity/queries';
+
+// "Become a Partner" — all CTAs across the site link here.
+const partnerships = await safeFetch<any>(PARTNERSHIPS_PAGE_QUERY, {}, null);
+---
+
+<BaseLayout title="Partnerships · Texas House">
+  <main class="mx-auto max-w-3xl px-6 py-24">
+    <h1 class="font-[var(--font-display)] text-4xl font-semibold">Become a Partner</h1>
+    <p class="mt-4 text-lg">
+      Work with Texas House — sponsorship, in-kind, and preferred partnerships.
+    </p>
+    <!--
+      Sections: Header (contact form · brands we've worked with · gallery) ·
+      Working with Texas House (focus · what we do · what to expect · types) · FAQ
+    -->
+    <ul class="mt-10 space-y-1 text-sm text-neutral-600">
+      <li>Partnerships content: {partnerships ? 'loaded' : 'not configured yet'}</li>
+      <li>Partnership types: {partnerships?.partnershipTypes?.length ?? 0}</li>
+      <li>FAQs: {partnerships?.faqs?.length ?? 0}</li>
+      <li>Brands worked with: {partnerships?.brands?.length ?? 0}</li>
+    </ul>
+  </main>
+</BaseLayout>

@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { safeFetch } from '../lib/sanity/safeFetch';
+import { ABOUT_PAGE_QUERY, PEOPLE_BY_GROUP_QUERY } from '../lib/sanity/queries';
+
+const about = await safeFetch<any>(ABOUT_PAGE_QUERY, {}, null);
+const team = await safeFetch<any[]>(PEOPLE_BY_GROUP_QUERY, { group: 'team' }, []);
+const board = await safeFetch<any[]>(PEOPLE_BY_GROUP_QUERY, { group: 'board' }, []);
+const advisors = await safeFetch<any[]>(PEOPLE_BY_GROUP_QUERY, { group: 'advisor' }, []);
+---
+
+<BaseLayout title="About · Texas House">
+  <main class="mx-auto max-w-3xl px-6 py-24">
+    <h1 class="font-[var(--font-display)] text-4xl font-semibold">About</h1>
+    <p class="mt-4 text-lg">The story of Texas House — why we do it.</p>
+    <!-- Sections: Header (story / why) · Team · Board of Directors · Strategic Advisors -->
+    <ul class="mt-10 space-y-1 text-sm text-neutral-600">
+      <li>About content: {about ? 'loaded' : 'not configured yet'}</li>
+      <li>Team: {team.length}</li>
+      <li>Board: {board.length}</li>
+      <li>Advisors: {advisors.length}</li>
+    </ul>
+  </main>
+</BaseLayout>
