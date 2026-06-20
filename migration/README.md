@@ -12,18 +12,20 @@ webflow-export/
 │   ├── activations.csv
 │   ├── newsrooms.csv
 │   ├── past-events.csv
-│   └── ros-segments.csv
+│   ├── ros-segments.csv
+│   └── sponsors.csv
 ├── json/                 # Data pulled via the Webflow Data API
 │   └── tags.json
-└── assets-manifest.txt   # 249 unique CDN asset URLs referenced by the content
+└── assets-manifest.txt   # 294 unique CDN asset URLs referenced by the content
 ```
 
 ## Status
 
-- ✅ 4 collections exported as CSV (Activations, Newsrooms, Past Events, ROS Segments)
-- ✅ Tags (26) + Sponsors (52) pulled via API; Tags persisted to `json/tags.json`
-- ✅ Asset URL manifest built (249 URLs)
-- ⛏️ Pending: asset backup, Tags/Sponsors CSV parity, Sanity import script
+- ✅ 5 collections exported as CSV (Activations, Newsrooms, Past Events, ROS Segments, Sponsors)
+- ✅ Tags (26) pulled via API → `json/tags.json`; Sponsors (52) via CSV + API
+- ✅ Asset URL manifest built (294 URLs)
+- 🟢 Asset strategy: leave on CDN, pull into Sanity at import time
+- ⛏️ Pending: Tags CSV parity (optional), Sanity import script
 
 > Note: nothing here is wired into the site yet. Import happens once a Sanity
 > project exists (see `../docs/setup.md`).

@@ -124,14 +124,14 @@ Raw export staged under `migration/webflow-export/`.
 | Collection | Items | Source | Notes |
 | --- | --- | --- | --- |
 | Tags | 26 | API → `json/tags.json` | 2 duplicate pairs to merge (see below) |
-| Sponsors | 52 | API (see tier breakdown) | tiers as switches; some drafts have no logo |
+| Sponsors | 52 | `csv/sponsors.csv` + API | tiers as switches; some drafts have no logo |
 | Activations | 5 | `csv/activations.csv` | Race Weekend 2025, SXSW 2025, SXSW 2026, SXSW London 2025, SXSW London 2026 |
 | Newsrooms | 4 | `csv/newsrooms.csv` | type Blog/Media; no topics/featured/author fields |
 | Past Events | ~34 | `csv/past-events.csv` | full panel sessions w/ recaps + galleries |
 | ROS Segments | ~58 | `csv/ros-segments.csv` | same schema as Past Events (run-of-show) |
 
-**249 unique CDN asset URLs** captured in
-`migration/webflow-export/assets-manifest.txt`.
+**294 unique CDN asset URLs** captured in
+`migration/webflow-export/assets-manifest.txt` (CMS images + sponsor logos).
 
 ### Tag taxonomy → Newsroom topics
 
@@ -168,17 +168,20 @@ on the site) before deciding the Sanity event/session model.
 
 ## Open items
 
-- **Asset backup is time-sensitive.** The 249 CDN assets live on Webflow's CDN;
-  with the plan lapsed, they should be backed up before anything is unpublished.
-- Still want clean **Tags + Sponsors CSV** exports for raw import parity (the
-  API JSON is captured, but CSVs keep the export uniform).
+- **Asset strategy — decided:** leave the 294 assets on the Webflow CDN for now
+  and pull them straight into Sanity at import time (Sanity ingests from URL).
+  Risk accepted: if the site is unpublished before import, CDN URLs may break —
+  so run the import (or a backup) before letting the Webflow site lapse fully.
+- Clean **Tags CSV** still wanted for export parity (Tags captured via API JSON;
+  all other collections now have CSVs).
 - Confirm sponsor-tier mapping, newsroom-topic curation, and the ROS/Past Events
   question above.
 
 ## Next steps
 
-1. ✅ Stage CSV exports + asset manifest + tags JSON under `migration/`.
-2. Back up the 249 assets (pending decision on where).
-3. Update `content-model.md` per the reconciliation once decisions are made.
-4. Write the Sanity import (NDJSON via `sanity dataset import`) once a project
-   exists — transform Webflow items → Sanity docs, rewrite asset refs.
+1. ✅ Stage CSV exports (incl. Sponsors) + asset manifest + tags JSON under `migration/`.
+2. Update `content-model.md` per the reconciliation once decisions are made.
+3. Write the Sanity import (NDJSON via `sanity dataset import`) once a project
+   exists — transform Webflow items → Sanity docs, pulling each asset from its
+   CDN URL and rewriting refs. **Do this before the Webflow site is fully
+   unpublished** so the CDN URLs still resolve.
