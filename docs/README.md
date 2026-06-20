@@ -6,6 +6,8 @@ Planning materials driving the Texas House website rebuild.
 
 - **`planning-sheet.md`** — the master planning sheet (source of truth).
 - **`architecture.md`** — stack decision: **Astro + Sanity + Vercel** and why.
+- **`build-plan.md`** — design-first workflow (Claude Design → import → Astro +
+  Sanity → Vercel) and the phased build sequence.
 - **`content-model.md`** — Sanity schema for every CMS type (events, schedule,
   sponsors, newsroom, people, partnerships, settings).
 - **`information-architecture.md`** — pages → sections → components → CMS source.
@@ -26,6 +28,7 @@ Planning materials driving the Texas House website rebuild.
 | CMS             | Sanity                       | architecture.md / content-model.md |
 | Hosting         | Vercel                       | architecture.md |
 | Styling         | Tailwind CSS                 | architecture.md |
+| Design workflow | Claude Design → import       | build-plan.md |
 
 ## Pending input
 

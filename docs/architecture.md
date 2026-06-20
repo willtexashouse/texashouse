@@ -14,6 +14,14 @@
 | Forms        | Vercel-hosted API route → email/CRM     |
 | 3D / motion  | React Three Fiber **or** Spline/Rive embed (spinning hat-on-globe) |
 
+## Design workflow
+
+The site is **designed first in Claude Design** (branded), then imported into
+this repo and built out on Astro + Sanity. Claude Design exports **React +
+Tailwind** components, which Astro consumes natively via `@astrojs/react` — so
+the branded design ports in directly rather than being rebuilt. The full
+sequence and how the import maps into Astro is documented in `build-plan.md`.
+
 ## Why Astro
 
 The site is content- and brand-led: a marketing homepage, an About page, a
