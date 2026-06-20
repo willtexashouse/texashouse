@@ -5,8 +5,11 @@ for the new site, which is hosted on [Vercel](https://vercel.com).
 
 ## Status
 
-🚧 **Early concept / planning phase.** We are in the process of drafting concept
-work from a planning sheet before committing to a final stack and build.
+🚧 **Concept / planning phase.** Planning sheet captured and translated into an
+architecture, CMS content model, and information architecture (see `docs/`).
+
+**Stack decision:** Astro + React islands · TypeScript · Tailwind CSS · Sanity
+CMS · deployed on Vercel. Rationale in [`docs/architecture.md`](docs/architecture.md).
 
 ## Repository layout
 
