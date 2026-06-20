@@ -1,0 +1,31 @@
+{
+  "_comment": "Webflow 'Tags' collection (67c525be82aba6829db96295), pulled via Data API 2026-06-20. 26 items. Used on Past Events / ROS Segments — NOT yet on Newsroom articles. Duplicates flagged for cleanup before import.",
+  "items": [
+    { "name": "Innovation", "slug": "innovation" },
+    { "name": "Innovation", "slug": "innovation-2", "_dedupe": "duplicate of 'innovation'" },
+    { "name": "Environmentalism", "slug": "environmentalism" },
+    { "name": "Sustainability", "slug": "sustainability" },
+    { "name": "Cuisine", "slug": "cuisine" },
+    { "name": "Cusisine", "slug": "cusisine", "_dedupe": "typo duplicate of 'cuisine'" },
+    { "name": "Fashion", "slug": "fashion" },
+    { "name": "Music", "slug": "music" },
+    { "name": "Culture", "slug": "culture" },
+    { "name": "Texcellence", "slug": "texcellence" },
+    { "name": "Conservation", "slug": "conservation" },
+    { "name": "Film", "slug": "film" },
+    { "name": "Venture Capital", "slug": "venture-capital" },
+    { "name": "Keynote", "slug": "keynote" },
+    { "name": "Texas Academia", "slug": "texas-academia" },
+    { "name": "Artificial Intelligence", "slug": "artificial-intelligence" },
+    { "name": "Party & Entertainment", "slug": "party-entertainment" },
+    { "name": "Funded House", "slug": "funded-house" },
+    { "name": "Networking", "slug": "networking" },
+    { "name": "SXSW Official", "slug": "sxsw-official" },
+    { "name": "Policy", "slug": "policy" },
+    { "name": "Economic Development", "slug": "economic-development" },
+    { "name": "Defense", "slug": "defense" },
+    { "name": "Blockchain", "slug": "blockchain" },
+    { "name": "Energy", "slug": "energy" },
+    { "name": "Entrepreneurship", "slug": "entrepreneurship" }
+  ]
+}
