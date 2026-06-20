@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { safeFetch } from '../lib/sanity/safeFetch';
 import {
   HOME_PAGE_QUERY,
-  UPCOMING_EVENTS_QUERY,
   PAST_EVENTS_QUERY,
   FEATURED_ARTICLE_QUERY,
   RECENT_ARTICLES_QUERY,
@@ -11,7 +10,6 @@ import {
 
 // Data wiring is in place; the branded markup arrives via the Claude Design import.
 const home = await safeFetch<any>(HOME_PAGE_QUERY, {}, null);
-const upcomingEvents = await safeFetch<any[]>(UPCOMING_EVENTS_QUERY, {}, []);
 const pastEvents = await safeFetch<any[]>(PAST_EVENTS_QUERY, {}, []);
 const featured = await safeFetch<any>(FEATURED_ARTICLE_QUERY, {}, null);
 const recent = await safeFetch<any[]>(RECENT_ARTICLES_QUERY, { limit: 3 }, []);
@@ -37,7 +35,6 @@ const recent = await safeFetch<any[]>(RECENT_ARTICLES_QUERY, { limit: 3 }, []);
     -->
     <ul class="mt-10 space-y-1 text-sm text-neutral-600">
       <li>Home content: {home ? 'loaded' : 'not configured yet'}</li>
-      <li>Upcoming events: {upcomingEvents.length}</li>
       <li>Past events: {pastEvents.length}</li>
       <li>Featured article: {featured ? 'yes' : 'none'}</li>
       <li>Recent articles: {recent.length}</li>

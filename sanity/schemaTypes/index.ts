@@ -1,14 +1,13 @@
 import type { SchemaTypeDefinition } from 'sanity';
 
 // Objects
-import { scheduleItem } from './objects/scheduleItem';
-import { sponsorTier } from './objects/sponsorTier';
 import { postcard } from './objects/postcard';
 import { navLink } from './objects/navLink';
 import { socialLink } from './objects/socialLink';
 
 // Documents
 import { event } from './documents/event';
+import { session } from './documents/session';
 import { article } from './documents/article';
 import { topic } from './documents/topic';
 import { person } from './documents/person';
@@ -25,13 +24,12 @@ import { partnershipsPage } from './singletons/partnershipsPage';
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   // Objects
-  scheduleItem,
-  sponsorTier,
   postcard,
   navLink,
   socialLink,
   // Documents
   event,
+  session,
   article,
   topic,
   person,

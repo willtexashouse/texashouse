@@ -1,8 +1,14 @@
 # CMS Content Model (Sanity)
 
-> Status: **Draft for review.** Captured 2026-06-20. This maps every CMS type
-> implied by the planning sheet to a Sanity schema. Field names are proposals.
-> Will be reconciled against the export from the existing site.
+> Status: **Superseded in part by the implemented schema.** Captured 2026-06-20.
+> This was the initial proposal; after reviewing the real Webflow export and
+> confirming decisions with Will, the **live source of truth is the code** in
+> `sanity/schemaTypes/`. Key changes from this draft: events are the umbrella
+> past events (ex-Webflow "Activations"); panels are a separate `session` type
+> referencing the event; sponsor tiers are boolean flags on the sponsor
+> (`presenting` / `partner` / `experience` / `foodBeverage`); articles gained
+> `type`, `topics`, `featured`, `publishedAt`. See `webflow-migration.md` →
+> "Confirmed model".
 
 The planning sheet calls for **multiple CMS types**. They fall into four groups:
 

@@ -12,58 +12,68 @@ export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0]{
   logo, nav, socials, mission, footerLinks, contactEmail
 }`;
 
-// ---------- Events ----------
+// ---------- Events (all past; ordered by date desc) ----------
 
-export const UPCOMING_EVENTS_QUERY = `*[_type == "event" && status in ["upcoming", "active"]]
-  | order(startDate asc){
-    _id, title, slug, status, startDate, endDate, location, lumaUrl,
-    heroImage, panelGraphic, summary
-  }`;
+export const EVENTS_QUERY = `*[_type == "event"] | order(date desc){
+  _id, title, slug, date, city, coverImage, recapVideo, featured
+}`;
 
-// The single active event drives the homepage Schedule section.
-export const ACTIVE_EVENT_QUERY = `*[_type == "event" && status == "active"]
-  | order(startDate asc)[0]{
-    _id, title, slug, startDate, endDate, location, panelGraphic, summary,
-    schedule[]{
-      time, title, description, panelImage,
-      panelists[]->{ _id, name, role, headshot }
-    },
-    sponsorTiers[]{
-      tier,
-      sponsors[]->{ _id, name, logo, url }
-    }
-  }`;
+// Alias kept for the homepage "Past Events" section.
+export const PAST_EVENTS_QUERY = EVENTS_QUERY;
 
-export const PAST_EVENTS_QUERY = `*[_type == "event" && status == "past"]
-  | order(startDate desc){
-    _id, title, slug, startDate, endDate, location, heroImage, summary
-  }`;
+export const EVENT_BY_SLUG_QUERY = `*[_type == "event" && slug.current == $slug][0]{
+  _id, title, slug, date, city, coverImage, recapVideo, description,
+  gallery, gallery2Title, gallery2,
+  "sessions": *[_type == "session" && event._ref == ^._id] | order(date asc){
+    _id, title, slug, date, endTime, room, eventDay, shortDescription, image, rsvpLink,
+    "topics": topics[]->{ _id, title, slug },
+    "sponsors": sponsors[]->{ _id, name, logo, link }
+  }
+}`;
+
+export const EVENT_SLUGS_QUERY = `*[_type == "event" && defined(slug.current)].slug.current`;
+
+// ---------- Sessions ----------
+
+export const SESSIONS_FOR_EVENT_QUERY = `*[_type == "session" && event._ref == $eventId] | order(date asc){
+  _id, title, slug, date, endTime, room, eventDay, shortDescription, image, rsvpLink,
+  "topics": topics[]->{ _id, title, slug },
+  "sponsors": sponsors[]->{ _id, name, logo, link }
+}`;
+
+// ---------- Sponsors ----------
+
+export const SPONSORS_QUERY = `*[_type == "sponsor"]{
+  _id, name, slug, logo, link, presenting, partner, experience, foodBeverage, workedWith
+}`;
+
+export const BRANDS_WORKED_WITH_QUERY = `*[_type == "sponsor" && workedWith == true]{
+  _id, name, logo, link
+}`;
 
 // ---------- Newsroom ----------
 
 export const FEATURED_ARTICLE_QUERY = `*[_type == "article" && featured == true]
   | order(publishedAt desc)[0]{
-    _id, title, slug, excerpt, heroImage, publishedAt,
-    "topics": topics[]->{ _id, title, slug },
-    "author": author->{ _id, name }
+    _id, title, slug, type, summary, mainImage, publishedAt, author,
+    "topics": topics[]->{ _id, title, slug }
   }`;
 
 export const RECENT_ARTICLES_QUERY = `*[_type == "article"]
   | order(publishedAt desc)[0...$limit]{
-    _id, title, slug, excerpt, heroImage, publishedAt,
+    _id, title, slug, type, summary, mainImage, publishedAt,
     "topics": topics[]->{ _id, title, slug }
   }`;
 
 export const ALL_ARTICLES_QUERY = `*[_type == "article"]
   | order(publishedAt desc){
-    _id, title, slug, excerpt, heroImage, publishedAt, featured,
+    _id, title, slug, type, summary, mainImage, publishedAt, featured,
     "topics": topics[]->{ _id, title, slug }
   }`;
 
 export const ARTICLE_BY_SLUG_QUERY = `*[_type == "article" && slug.current == $slug][0]{
-  _id, title, slug, excerpt, heroImage, publishedAt, body,
-  "topics": topics[]->{ _id, title, slug },
-  "author": author->{ _id, name, role, headshot }
+  _id, title, slug, type, summary, mainImage, publishedAt, author, body,
+  "topics": topics[]->{ _id, title, slug }
 }`;
 
 export const ARTICLE_SLUGS_QUERY = `*[_type == "article" && defined(slug.current)].slug.current`;
@@ -92,7 +102,7 @@ export const PARTNERSHIPS_PAGE_QUERY = `*[_type == "partnershipsPage"][0]{
   whatWeDo, whatToExpect,
   "partnershipTypes": partnershipTypes[]->{ _id, title, description },
   "faqs": faqs[]->{ _id, question, answer },
-  "brands": *[_type == "sponsor" && workedWith == true]{ _id, name, logo, url }
+  "brands": *[_type == "sponsor" && workedWith == true]{ _id, name, logo, link }
 }`;
 
 // ---------- Helper ----------

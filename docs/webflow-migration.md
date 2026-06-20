@@ -159,12 +159,25 @@ Sponsors carry boolean tier flags. Proposed mapping (confirm with Will):
 \*Approximate from the 52-item pull. Sponsors also reference the Activation(s)
 they sponsored, so per-event sponsor lists can be derived.
 
-## Event hierarchy — open question
+## Confirmed model (2026-06-20)
 
-`ROS Segments` (~58) and `Past Events` (~34) share an identical schema and both
-look like individual panel/sessions tied to an Activation. Need to confirm which
-is canonical (likely ROS = full run-of-show; Past Events = curated subset shown
-on the site) before deciding the Sanity event/session model.
+Decisions locked with Will; the Sanity schema (`sanity/schemaTypes/`) is now the
+source of truth and matches this:
+
+1. **Everything is a past event.** No upcoming/active distinction needed.
+2. **Events = the Webflow "Activations"** (SXSW 25, SXSW London 2025, Race
+   Weekend / F1 2025, SXSW 26…), ordered by `date` (newest first):
+   SXSW 25 → SXSW London → Race Weekend (F1) → SXSW 26.
+3. **`Past Events` + `ROS Segments` → `session`** documents (panels), each
+   referencing its parent `event`. Both Webflow collections collapse into one
+   `session` type.
+4. **Sponsor tiers (confirmed mapping):** `tier-1` → Presenting (`presenting`),
+   `tier-2` → Partner (`partner`), `tier-3` → Experience (`experience`),
+   `food-beverage` → Food & Beverage (`foodBeverage`). Sponsors also reference
+   the events they supported.
+5. **Newsroom topics:** curated from the existing Tags during import (low stakes
+   — only 4 articles); `type` (Blog/Media), `featured`, and `publishedAt`
+   carried/added.
 
 ## Open items
 
@@ -174,8 +187,8 @@ on the site) before deciding the Sanity event/session model.
   so run the import (or a backup) before letting the Webflow site lapse fully.
 - Clean **Tags CSV** still wanted for export parity (Tags captured via API JSON;
   all other collections now have CSVs).
-- Confirm sponsor-tier mapping, newsroom-topic curation, and the ROS/Past Events
-  question above.
+- ✅ Sponsor-tier mapping, newsroom topics, and the event/session model are
+  confirmed (see "Confirmed model" above) and reflected in the schema.
 
 ## Next steps
 

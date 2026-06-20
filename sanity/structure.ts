@@ -37,6 +37,7 @@ export const deskStructure: StructureResolver = (S) =>
 
       // Events
       S.documentTypeListItem('event').title('Events'),
+      S.documentTypeListItem('session').title('Sessions / Panels'),
       S.divider(),
 
       // Newsroom
@@ -60,6 +61,7 @@ export const deskStructure: StructureResolver = (S) =>
           item.getId() != null &&
           ![
             'event',
+            'session',
             'article',
             'topic',
             'person',

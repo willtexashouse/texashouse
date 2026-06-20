@@ -1,5 +1,7 @@
 import { defineType, defineField, defineArrayMember } from 'sanity';
 
+// Newsroom article — maps from the Webflow "Newsrooms" collection. `topics` and
+// `featured` are net-new (not in Webflow) and get set during/after import.
 export const article = defineType({
   name: 'article',
   title: 'Article',
@@ -12,6 +14,19 @@ export const article = defineType({
       type: 'slug',
       options: { source: 'title', maxLength: 96 },
       validation: (r) => r.required(),
+    }),
+    defineField({
+      name: 'type',
+      title: 'Type',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Blog', value: 'blog' },
+          { title: 'Media', value: 'media' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'blog',
     }),
     defineField({
       name: 'featured',
@@ -27,14 +42,9 @@ export const article = defineType({
       of: [defineArrayMember({ type: 'reference', to: [{ type: 'topic' }] })],
       description: 'Drives the Newsroom topic filter.',
     }),
-    defineField({ name: 'excerpt', title: 'Excerpt', type: 'text', rows: 3 }),
-    defineField({ name: 'heroImage', title: 'Hero image', type: 'image', options: { hotspot: true } }),
-    defineField({
-      name: 'author',
-      title: 'Author',
-      type: 'reference',
-      to: [{ type: 'person' }],
-    }),
+    defineField({ name: 'summary', title: 'Summary', type: 'text', rows: 3 }),
+    defineField({ name: 'mainImage', title: 'Main image', type: 'image', options: { hotspot: true } }),
+    defineField({ name: 'author', title: 'Author', type: 'string' }),
     defineField({
       name: 'publishedAt',
       title: 'Published at',
@@ -53,17 +63,13 @@ export const article = defineType({
     }),
   ],
   orderings: [
-    {
-      title: 'Published, newest first',
-      name: 'publishedAtDesc',
-      by: [{ field: 'publishedAt', direction: 'desc' }],
-    },
+    { title: 'Published, newest first', name: 'publishedAtDesc', by: [{ field: 'publishedAt', direction: 'desc' }] },
   ],
   preview: {
-    select: { title: 'title', date: 'publishedAt', media: 'heroImage', featured: 'featured' },
-    prepare({ title, date, media, featured }) {
+    select: { title: 'title', date: 'publishedAt', media: 'mainImage', featured: 'featured', type: 'type' },
+    prepare({ title, date, media, featured, type }) {
       const d = date ? new Date(date).toLocaleDateString() : 'Unpublished';
-      return { title, subtitle: `${featured ? '★ ' : ''}${d}`, media };
+      return { title, subtitle: `${featured ? '★ ' : ''}${type ?? ''} · ${d}`, media };
     },
   },
 });

@@ -1,5 +1,9 @@
 import { defineType, defineField, defineArrayMember } from 'sanity';
 
+// Umbrella past event / showcase — maps from the Webflow "Activations" collection
+// (e.g. SXSW 2025, SXSW London 2025, Race Weekend / F1 2025, SXSW 2026).
+// Individual panels live in `session` and reference this. Everything is past;
+// ordered by `date`.
 export const event = defineType({
   name: 'event',
   title: 'Event',
@@ -14,56 +18,30 @@ export const event = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
-      name: 'status',
-      title: 'Status',
-      type: 'string',
-      description:
-        'Upcoming = shows in Upcoming Events. Active = also surfaces the Schedule section. Past = shows in Past Events.',
-      options: {
-        list: [
-          { title: 'Upcoming', value: 'upcoming' },
-          { title: 'Active (show schedule)', value: 'active' },
-          { title: 'Past', value: 'past' },
-        ],
-        layout: 'radio',
-      },
-      initialValue: 'upcoming',
+      name: 'date',
+      title: 'Date',
+      type: 'datetime',
+      description: 'Used to order events (newest first). e.g. SXSW 25 < SXSW London < Race Weekend < SXSW 26.',
       validation: (r) => r.required(),
     }),
-    defineField({ name: 'startDate', title: 'Start date', type: 'datetime' }),
-    defineField({ name: 'endDate', title: 'End date', type: 'datetime' }),
-    defineField({ name: 'location', title: 'Location', type: 'string' }),
     defineField({
-      name: 'lumaUrl',
-      title: 'Luma URL',
-      type: 'url',
-      description: 'Link out to the Luma event page.',
+      name: 'city',
+      title: 'City',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Austin', value: 'austin' },
+          { title: 'London', value: 'london' },
+        ],
+      },
     }),
-    defineField({ name: 'heroImage', title: 'Hero image', type: 'image', options: { hotspot: true } }),
+    defineField({ name: 'coverImage', title: 'Cover image', type: 'image', options: { hotspot: true } }),
+    defineField({ name: 'recapVideo', title: 'Recap video (URL)', type: 'url' }),
     defineField({
-      name: 'panelGraphic',
-      title: 'Panel graphic (landscape)',
-      type: 'image',
-      options: { hotspot: true },
-    }),
-    defineField({ name: 'summary', title: 'Summary', type: 'text', rows: 3 }),
-    defineField({
-      name: 'body',
-      title: 'Body',
+      name: 'description',
+      title: 'Description',
       type: 'array',
       of: [defineArrayMember({ type: 'block' })],
-    }),
-    defineField({
-      name: 'schedule',
-      title: 'Schedule (panels / sessions)',
-      type: 'array',
-      of: [defineArrayMember({ type: 'scheduleItem' })],
-    }),
-    defineField({
-      name: 'sponsorTiers',
-      title: 'Sponsor tiers',
-      type: 'array',
-      of: [defineArrayMember({ type: 'sponsorTier' })],
     }),
     defineField({
       name: 'gallery',
@@ -71,19 +49,23 @@ export const event = defineType({
       type: 'array',
       of: [defineArrayMember({ type: 'image', options: { hotspot: true } })],
     }),
+    defineField({ name: 'gallery2Title', title: 'Gallery 2 title', type: 'string' }),
+    defineField({
+      name: 'gallery2',
+      title: 'Gallery 2',
+      type: 'array',
+      of: [defineArrayMember({ type: 'image', options: { hotspot: true } })],
+    }),
     defineField({ name: 'featured', title: 'Featured', type: 'boolean', initialValue: false }),
   ],
   orderings: [
-    {
-      title: 'Start date, newest first',
-      name: 'startDateDesc',
-      by: [{ field: 'startDate', direction: 'desc' }],
-    },
+    { title: 'Date, newest first', name: 'dateDesc', by: [{ field: 'date', direction: 'desc' }] },
   ],
   preview: {
-    select: { title: 'title', status: 'status', media: 'heroImage' },
-    prepare({ title, status, media }) {
-      return { title, subtitle: status ? `Status: ${status}` : undefined, media };
+    select: { title: 'title', date: 'date', media: 'coverImage' },
+    prepare({ title, date, media }) {
+      const d = date ? new Date(date).toLocaleDateString() : '';
+      return { title, subtitle: d, media };
     },
   },
 });
