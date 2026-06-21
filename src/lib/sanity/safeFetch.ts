@@ -4,10 +4,10 @@ import { projectId } from './client';
 const isConfigured = Boolean(projectId) && projectId !== 'placeholder-project-id';
 
 /**
- * Fetch from Sanity but never crash the build. Until a real Sanity project is
- * configured (see docs/setup.md), this returns the provided fallback so pages
- * still render and `astro build` succeeds. Once env vars are set, it returns
- * live content.
+ * Fetch from Sanity but never crash the build. Returns the provided fallback if
+ * the project isn't configured or a query fails (e.g. an empty/private dataset
+ * before content is imported), so `astro build` always succeeds. Once content
+ * exists, it returns live data.
  */
 export async function safeFetch<T>(
   query: string,

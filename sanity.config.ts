@@ -7,7 +7,7 @@ import { deskStructure } from './sanity/structure';
 const projectId =
   import.meta.env?.PUBLIC_SANITY_PROJECT_ID ||
   process.env.PUBLIC_SANITY_PROJECT_ID ||
-  'placeholder-project-id';
+  'naolvj96';
 
 const dataset =
   import.meta.env?.PUBLIC_SANITY_DATASET ||

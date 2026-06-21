@@ -7,7 +7,7 @@ import vercel from '@astrojs/vercel';
 import tailwindcss from '@tailwindcss/vite';
 
 const {
-  PUBLIC_SANITY_PROJECT_ID = 'placeholder-project-id',
+  PUBLIC_SANITY_PROJECT_ID = 'naolvj96',
   PUBLIC_SANITY_DATASET = 'production',
   PUBLIC_SANITY_API_VERSION = '2024-01-01',
 } = loadEnv(process.env.NODE_ENV ?? 'development', process.cwd(), '');

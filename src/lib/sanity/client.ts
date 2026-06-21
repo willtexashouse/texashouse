@@ -1,10 +1,9 @@
 import { createClient } from '@sanity/client';
 
-// Falls back to a valid-format placeholder so the client constructs without a
-// real project configured. `safeFetch` treats this placeholder as "unconfigured"
-// and returns fallbacks instead of querying. See docs/setup.md.
+// Texas House Sanity project. projectId/dataset are public (safe to commit);
+// the read token (if any) stays in env. Override via env vars if needed.
 export const projectId =
-  import.meta.env.PUBLIC_SANITY_PROJECT_ID || 'placeholder-project-id';
+  import.meta.env.PUBLIC_SANITY_PROJECT_ID || 'naolvj96';
 export const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';
 export const apiVersion = import.meta.env.PUBLIC_SANITY_API_VERSION || '2024-01-01';
 
