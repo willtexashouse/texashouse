@@ -10,7 +10,10 @@
     "preview": "astro preview",
     "astro": "astro",
     "sanity": "sanity",
-    "typecheck": "astro check"
+    "typecheck": "astro check",
+    "import:build": "node migration/import/transform.mjs",
+    "import:run": "sanity dataset import migration/import/dist/texashouse.ndjson production --replace",
+    "import": "npm run import:build && npm run import:run"
   },
   "dependencies": {
     "@astrojs/react": "^4.2.0",
@@ -31,9 +34,13 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
+    "@sanity/block-tools": "^3.0.0",
+    "@sanity/schema": "^3.99.0",
     "@types/node": "^22.10.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "csv-parse": "^5.6.0",
+    "jsdom": "^25.0.1",
     "typescript": "^5.7.0"
   }
 }
