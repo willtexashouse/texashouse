@@ -300,14 +300,23 @@ Option 1 alone is enough for launch.
 4. Sample color. Once the first six to eight renders are approved, pull hex
    values from them for the token file. Code follows imagery, not the reverse.
 
-Claude Code and Higgsfield: Higgsfield has an MCP connector. Whether image
-generation is exposed through it or through an API key needs to be verified
-before we plan on it. If it is, the workflow is: this document lives in the
-repo, the fixed blocks live in `brand/prompts/`, Claude Code assembles block 4
-per asset, calls Higgsfield with the approved Midjourney reference, and writes
-results to `public/brand/` with the naming convention below. If it is not
-exposed, Higgsfield stays a manual step and Claude Code handles placement,
-optimization, and the sequence pipeline.
+Claude Code and Higgsfield, verified 3 September 2026: the Higgsfield MCP
+connector in Claude Code is a website builder plus the Marketing Studio preset
+widget; it does not take a prompt and return an image. The **Higgsfield API**
+does (`https://api.higgsfield.ai`, key id + secret from
+https://cloud.higgsfield.ai, one asynchronous request shape, outputs kept for
+seven days). So the workflow is: this document lives in the repo, the fixed
+blocks live in `brand/prompts/`, Claude Code assembles block 4 per asset and
+runs `scripts/higgsfield.mjs`, which submits to the API with the approved
+reference attached, polls, downloads into `public/brand/` under the naming
+convention below, and logs the prompt in `brand/renders.md`. Credentials go in
+`.env` (gitignored; see `.env.example`). Image models available through the
+API: `nano-banana` (default; 21:9, takes reference images), `soul` (2K/4K),
+`soul-reference` (style reference with strength), `flux` (Kontext Max),
+`reve` and `reve-remix`. Video: `veo` (Veo 3.1 image-to-video and
+first/last-frame) and `kling` (2.5 turbo). Estimate cost before a batch with
+the `estimate` command. Midjourney has no API; it stays the manual concept
+step, or the concept step moves to the API models with the same blocks.
 
 Naming: `tier-register-subject-aspect-v#.ext`. Example:
 `scene-orbit-robot-coffee-21x9-v2.png`. Sequences: `seq-eras-0001.webp`

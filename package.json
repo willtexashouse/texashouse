@@ -13,7 +13,8 @@
     "typecheck": "astro check",
     "import:build": "node migration/import/transform.mjs",
     "import:run": "sanity dataset import migration/import/dist/texashouse.ndjson production --replace",
-    "import": "npm run import:build && npm run import:run"
+    "import": "npm run import:build && npm run import:run",
+    "hf": "node scripts/higgsfield.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^4.2.0",
