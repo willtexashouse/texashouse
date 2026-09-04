@@ -17,6 +17,10 @@
     node scripts/higgsfield.mjs video     --subject eras-01 --image <url|file> --prompt "..." [--model veo|kling] [--duration 6] [--last <url|file>]
     node scripts/higgsfield.mjs upload    <file>            # prints a public URL usable as a reference
     node scripts/higgsfield.mjs status    <request_id>
+    node scripts/higgsfield.mjs intake    <file|url> [...]  --tier scene --register orbit --subject robot-coffee [--ar 21:9] [--prompt "..."]
+                                            # the normal path: finals made and refined in Higgsfield, pulled in here,
+                                            # named, filed in public/brand/, logged. Also empties brand/inbox/ when
+                                            # called with no files.
 
   The story block (--story) should be under 120 words; blocks 1, 2, 3 and 5
   are added verbatim around it. Use --raw to send --story as the whole prompt.
@@ -126,8 +130,30 @@ function log(line) { fs.appendFileSync(LOG, line + '\n'); }
 // ---- commands -------------------------------------------------------------
 async function main() {
   if (!cmd || cmd === 'help' || args.help) { console.log(fs.readFileSync(fileURLToPath(import.meta.url), 'utf8').split('*/')[0].replace(/^\/\*\s*/, '')); return; }
-  const headers = needAuth();
+  const headers = cmd === 'intake' ? null : needAuth();
 
+  if (cmd === 'intake') {
+    if (!args.tier || !args.register || !args.subject) throw new Error('--tier, --register and --subject are required to name the files');
+    const INBOX = path.join(ROOT, 'brand', 'inbox');
+    let sources = positional.slice();
+    if (sources.length === 0 && fs.existsSync(INBOX)) sources = fs.readdirSync(INBOX).filter((f) => /\.(png|jpe?g|webp|mp4)$/i.test(f)).map((f) => path.join(INBOX, f));
+    if (sources.length === 0) throw new Error('nothing to take in: pass files or URLs, or drop finals into brand/inbox/');
+    const ar = args.ar || '21:9';
+    const base = `${args.tier}-${args.register}-${args.subject}-${ar.replace(':', 'x')}`;
+    const filed = [];
+    for (const src of sources) {
+      const isUrl = /^https?:\/\//.test(src);
+      const ext = ((isUrl ? src.split('?')[0] : src).match(/\.(png|jpe?g|webp|mp4)$/i) || [, 'png'])[1].toLowerCase().replace('jpeg', 'jpg');
+      const dest = path.join(OUT, `${base}-v${nextVersion(base, ext)}.${ext}`);
+      if (isUrl) await download(src, dest); else { fs.mkdirSync(OUT, { recursive: true }); fs.copyFileSync(path.resolve(src), dest); }
+      filed.push({ rel: path.relative(ROOT, dest), src });
+      if (!isUrl && path.resolve(src).startsWith(INBOX)) fs.unlinkSync(path.resolve(src));
+    }
+    const date = new Date().toISOString().slice(0, 10);
+    for (const f of filed) log(`\n## ${f.rel}\n- Date: ${date} · Made in Higgsfield, taken in by hand · Aspect: ${ar}\n- Tier: ${args.tier} · Register: ${args.register}\n- Source: ${f.src}${args.prompt ? `\n- Prompt: ${args.prompt}` : ''}`);
+    console.log(filed.map((f) => f.rel).join('\n'));
+    return;
+  }
   if (cmd === 'status') { console.log(JSON.stringify(await (await fetch(`${API}/requests/${positional[0]}/status`, { headers })).json(), null, 2)); return; }
   if (cmd === 'upload') { console.log(await upload(path.resolve(positional[0]), headers)); return; }
 

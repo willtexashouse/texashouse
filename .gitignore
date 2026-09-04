@@ -50,3 +50,7 @@ feedback/
 
 # Sanity runtime cache
 .sanity/
+
+# Raw Higgsfield drops (filed into public/brand by the intake command)
+brand/inbox/*
+!brand/inbox/README.md
