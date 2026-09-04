@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+/*
+  Terms of Service — scaffold. Real copy exists on the live Webflow site; see
+  migration/webflow-pages/raw/privacy-policy.html for the current text.
+*/
+---
+<BaseLayout title="Terms of Service — Texas House">
+  <main class="txh-legal" data-section="Terms of Service">
+    <div class="txh-sechead">
+      <div>
+        <div class="txh-sechead__num">§09<em>Legal</em></div>
+        <h1 class="txh-display txh-sechead__title">Terms of Service</h1>
+      </div>
+    </div>
+    <div class="txh-legal__body">
+      <p>This page is being rebuilt. The current Terms of Service is available on the existing site.</p>
+    </div>
+  </main>
+</BaseLayout>
+<style>
+  .txh-legal { padding: var(--space-8) var(--page-gutter) var(--space-9); }
+  .txh-legal__body { max-width: 68ch; margin-top: var(--space-7); font-size: var(--fs-body); line-height: var(--lh-body); color: var(--txh-fg-2); }
+</style>

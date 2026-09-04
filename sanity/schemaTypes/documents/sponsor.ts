@@ -43,6 +43,15 @@ export const sponsor = defineType({
       type: 'boolean',
       initialValue: false,
     }),
+    // Deliberately NO initialValue: the 52 imported sponsors have no value for
+    // this field, and unset must mean "shown". Only an explicit `false` hides.
+    defineField({
+      name: 'marquee',
+      title: 'Show in marquee',
+      type: 'boolean',
+      description:
+        'Controls the scrolling logo strip on the home page. On by default — switch this off to keep this logo out of the strip (the sponsor stays everywhere else).',
+    }),
   ],
   preview: {
     select: { title: 'name', media: 'logo' },

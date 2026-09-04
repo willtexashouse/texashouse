@@ -1,7 +1,9 @@
 # Information Architecture
 
-> Status: **Draft.** Captured 2026-06-20. Maps the four pages → sections →
-> components → CMS source. Use this as the build checklist for concept work.
+> Status: **Partially superseded, 2026-08-19.** Captured 2026-06-20, covering four
+> pages. `wireframe-brief.md` (approved) expands the site to nine pages and adds
+> sections to every page here. **Where the two differ, the wireframe brief wins.**
+> The CMS-source column below is still accurate and carries forward.
 
 ## Pages & routes
 

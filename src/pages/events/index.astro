@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { safeFetch } from '../../lib/sanity/safeFetch';
+import { UPCOMING_EVENTS_QUERY, PAST_EVENTS_QUERY, ACTIVE_EVENTS_QUERY } from '../../lib/sanity/queries';
+
+/*
+  Events index — scaffold. Full build (calendar view, list/calendar toggle,
+  past-events archive by year) is Page 5 in docs/wireframe-brief.md.
+  Wired to the real date-derived status queries, so it is already truthful about
+  what is upcoming vs past. See docs/events-model.md.
+*/
+const active = await safeFetch<any[]>(ACTIVE_EVENTS_QUERY, {}, []);
+const upcoming = await safeFetch<any[]>(UPCOMING_EVENTS_QUERY, {}, []);
+const past = await safeFetch<any[]>(PAST_EVENTS_QUERY, {}, []);
+
+const year = (d: string) => (d ? new Date(d).getUTCFullYear() : 0);
+const fmt = (d: string) =>
+  d ? new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(new Date(d)) : '';
+const years = [...new Set(past.map((e) => year(e.date)))].sort((a, b) => b - a);
+---
+
+<BaseLayout title="Events — Texas House" description="Texas House activations, past and upcoming.">
+  <main class="txh-page">
+    <section data-section="Events">
+      <div class="txh-sechead">
+        <div>
+          <div class="txh-sechead__num">§02<em>Activations</em></div>
+          <h1 class="txh-display txh-sechead__title">Events</h1>
+        </div>
+        <a class="txh-sechead__link" href="/partnerships">Partner with us</a>
+      </div>
+      <p class="txh-page__lede">
+        Texas House shows up where the world is already looking — SXSW Austin,
+        SXSW London, Race Weekend.
+      </p>
+    </section>
+
+    {(active.length > 0 || upcoming.length > 0) && (
+      <section data-section="Upcoming">
+        <div class="txh-year">{active.length ? 'Happening now' : 'Upcoming'}</div>
+        <div class="txh-grid">
+          {[...active, ...upcoming].map((e, i) => (
+            <a class="txh-item" href={`/events/${e.slug.current}`}>
+              <span class="txh-item__meta"><strong>{fmt(e.date)}</strong></span>
+              <span class="txh-chip txh-item__tag">{e.status}</span>
+              <span class="txh-item__title">{e.title}</span>
+              <span class="txh-item__read">Details →</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section data-section="Past">
+      {years.map((y) => (
+        <>
+          <div class="txh-year">{y}</div>
+          <div class="txh-grid">
+            {past.filter((e) => year(e.date) === y).map((e) => (
+              <a class="txh-item" href={`/events/${e.slug.current}`}>
+                <span class="txh-item__meta"><strong>{fmt(e.date)}</strong></span>
+                {e.city && <span class="txh-chip txh-item__tag">{e.city}</span>}
+                <span class="txh-item__title">{e.title}</span>
+                <span class="txh-item__read">Recap →</span>
+              </a>
+            ))}
+          </div>
+        </>
+      ))}
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .txh-page { padding: var(--space-8) var(--page-gutter) var(--space-9); }
+  .txh-page__lede { font-size: var(--fs-body-lg); line-height: var(--lh-body); color: var(--txh-fg-2); margin-top: var(--space-5); max-width: 52ch; }
+</style>

@@ -1,0 +1,334 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ds/Button.astro';
+
+/*
+  Texas House — Brand Specimen.
+  The living reference for the locked foundation. Reference only, not public.
+  Renders in the real licensed faces served from /fonts.
+*/
+
+const core = [
+  ['Gun Metal', '#181210', '--txh-gunmetal', 'Primary background — almost all surfaces'],
+  ['Ivory', '#faf6f0', '--txh-ivory', 'Primary text & foreground'],
+  ['Clay', '#793f34', '--txh-clay', 'Buttons, accents, rules, inverted background'],
+  ['Black', '#000000', '--txh-black', 'Seldom used — absolute voids only'],
+];
+
+const surfaces = [
+  ['Raised', '#1d1612', '--txh-bg-raised', 'Cards, elevated surfaces'],
+  ['Deep', '#0e0b09', '--txh-bg-deep', 'Modals, deep wells'],
+  ['Input', '#221a16', '--txh-bg-input', 'Form fills'],
+  ['Ivory dim', '#e7decd', '--txh-ivory-dim', 'Secondary text on dark'],
+  ['Clay bright', '#9a4d3e', '--txh-clay-bright', 'Hover'],
+  ['Clay deep', '#5b2d24', '--txh-clay-deep', 'Pressed'],
+];
+
+const earth = [
+  ['Rust', '#b85a3a', '--txh-rust'], ['Dune', '#c7a87a', '--txh-dune'],
+  ['Sage', '#6b7a5a', '--txh-sage'], ['Bluebonnet', '#3d4a76', '--txh-bluebonnet'],
+  ['Bone', '#ece4d2', '--txh-bone'],
+];
+
+const safeText = [
+  ['Accent', '--txh-accent-text', '#d96b56', '5.46:1', 'clay lifted — raw clay-bright was 3.09:1'],
+  ['Dune', '--txh-gold', '#c7a87a', '8.22:1', 'as-is'],
+  ['Sage', '--txh-good-text', '#93a67f', '7.06:1', 'lifted — raw was 4.02:1'],
+  ['Rust', '--txh-warn-text', '#d4805d', '6.22:1', 'lifted — raw was 4.03:1'],
+  ['Bluebonnet', '--txh-blue-text', '#8fa1cf', '7.21:1', 'lifted — raw was 2.15:1'],
+];
+
+const fgTiers = [
+  ['--txh-fg-1', 'Primary text', '—'],
+  ['--txh-fg-2', 'Secondary text', '—'],
+  ['--txh-fg-3', 'Tertiary / meta', '5.79:1'],
+  ['--txh-fg-4', 'Muted — timestamps, counts', '5.01:1'],
+  ['--txh-decor', 'Ornament only. NEVER text', '2.77:1'],
+];
+
+const typeScale = [
+  ['--fs-h1', '56px'], ['--fs-h2', '40px'], ['--fs-h3', '28px'], ['--fs-h4', '22px'],
+  ['--fs-body-lg', '20px'], ['--fs-body', '17px'], ['--fs-small', '14px'], ['--fs-micro', '12px'],
+];
+
+const casing = [
+  ['Display headlines', 'ALL CAPS', 'GET ON THE LIST'],
+  ['Section / programme names', 'ALL CAPS', 'GLOBAL INNOVATION RODEO'],
+  ['Partner tier labels', 'ALL CAPS', 'PRESENTING PARTNERS'],
+  ['Page titles (web)', 'lowercase', 'partner with us'],
+  ['Event titles in schedule', 'Title Case', 'The Rise of Y’all Street'],
+  ['Bracketed format tags', 'ALL CAPS', '[MUSIC SHOWCASE]'],
+  ['Sub-CTA triplets', 'all lowercase', 'no registration, no entry, no fun'],
+  ['Times', 'ALL CAPS', '10:30 AM – 12:30 PM'],
+];
+
+const space = ['1','2','3','4','5','6','7','8','9','10'];
+const spacePx = {1:'4',2:'8',3:'12',4:'16',5:'24',6:'32',7:'48',8:'64',9:'96',10:'128'};
+---
+
+<BaseLayout title="Texas House — Brand Specimen" chrome={false}>
+  <main style="padding: var(--space-8) var(--space-7); max-width: 1180px; margin: 0 auto">
+
+    <!-- ── Masthead ─────────────────────────────────────────────── -->
+    <div class="txh-eyebrow" style="color: var(--txh-accent-text)">Brand specimen · locked 2026-08-19</div>
+    <h1 class="txh-display" style="font-size: var(--fs-display); margin-top: var(--space-4)">
+      Texas House
+    </h1>
+    <p style="font-size: var(--fs-body-lg); line-height: var(--lh-body); color: var(--txh-fg-2); max-width: 54ch; margin-top: var(--space-4)">
+      Gun Metal is the ground. Ivory is the figure. Clay is the punctuation mark.
+    </p>
+    <p style="font-size: var(--fs-small); color: var(--txh-fg-4); max-width: 62ch; margin-top: var(--space-3)">
+      Source of truth: the Texas House CRM, reconciled against the Texas House
+      Design System. Dark everywhere, no exceptions. No light theme ships.
+    </p>
+
+    <hr style="height:2px; background: var(--txh-clay); border:0; margin: var(--space-7) 0" />
+
+    <!-- ── Core palette ─────────────────────────────────────────── -->
+    <div class="txh-eyebrow" style="color: var(--txh-fg-4)">Official palette — four colours</div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: var(--space-4); margin-top: var(--space-4)">
+      {core.map(([name, hex, token, use]) => (
+        <div>
+          <div style={`background:${hex}; height:88px; border:1px solid var(--txh-rule-strong); border-radius: var(--radius-1)`}></div>
+          <div style="font-size: var(--fs-small); font-weight:700; margin-top: var(--space-2)">{name}</div>
+          <div class="txh-mono" style="color: var(--txh-fg-3)">{hex} · {token}</div>
+          <div style="font-size:12px; color: var(--txh-fg-4); margin-top:2px">{use}</div>
+        </div>
+      ))}
+    </div>
+
+    <!-- ── Derived surfaces ─────────────────────────────────────── -->
+    <div class="txh-eyebrow" style="color: var(--txh-fg-4); margin-top: var(--space-7)">Derived surfaces — system use only</div>
+    <div style="display:flex; flex-wrap:wrap; gap: var(--space-3); margin-top: var(--space-3)">
+      {surfaces.map(([name, hex, token, use]) => (
+        <div style="width:168px">
+          <div style={`background:${hex}; height:52px; border:1px solid var(--txh-rule-strong); border-radius: var(--radius-1)`}></div>
+          <div style="font-size:12px; font-weight:700; margin-top:6px">{name}</div>
+          <div class="txh-mono" style="font-size:10px; color: var(--txh-fg-4)">{token}</div>
+          <div style="font-size:11px; color: var(--txh-fg-4)">{use}</div>
+        </div>
+      ))}
+    </div>
+
+    <!-- ── Earth secondaries ────────────────────────────────────── -->
+    <div class="txh-eyebrow" style="color: var(--txh-fg-4); margin-top: var(--space-7)">
+      Earth secondaries — tags &amp; editorial accents. One per surface, never as backgrounds.
+    </div>
+    <div style="display:flex; flex-wrap:wrap; gap: var(--space-3); margin-top: var(--space-3)">
+      {earth.map(([name, hex, token]) => (
+        <div style="width:132px">
+          <div style={`background:${hex}; height:44px; border:1px solid var(--txh-rule-strong); border-radius: var(--radius-1)`}></div>
+          <div style="font-size:12px; font-weight:700; margin-top:6px">{name}</div>
+          <div class="txh-mono" style="font-size:10px; color: var(--txh-fg-4)">{hex}</div>
+        </div>
+      ))}
+    </div>
+
+    <!-- ── Text-safe readings ───────────────────────────────────── -->
+    <div class="txh-eyebrow" style="color: var(--txh-fg-4); margin-top: var(--space-7)">
+      Text-safe accent readings — measured on Gun Metal
+    </div>
+    <p style="font-size:12px; color: var(--txh-fg-4); max-width:64ch; margin-top:6px">
+      The raw brand values above are for fills, dots and borders where 3:1 is the bar.
+      When an accent carries type, use these instead.
+    </p>
+    <div style="margin-top: var(--space-4)">
+      {safeText.map(([name, token, hex, ratio, note]) => (
+        <div style="display:flex; align-items:baseline; gap: var(--space-4); padding: 7px 0; border-bottom:1px solid var(--txh-rule)">
+          <span style={`color: var(${token}); font-size: var(--fs-body); min-width:120px; font-weight:600`}>{name}</span>
+          <span class="txh-mono" style="color: var(--txh-fg-3); min-width:160px">{token}</span>
+          <span class="txh-mono" style="color: var(--txh-fg-4); min-width:70px">{hex}</span>
+          <span class="txh-mono" style="color: var(--txh-good-text); min-width:60px">{ratio}</span>
+          <span style="font-size:12px; color: var(--txh-fg-4)">{note}</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- ── Foreground tiers ─────────────────────────────────────── -->
+    <div class="txh-eyebrow" style="color: var(--txh-fg-4); margin-top: var(--space-7)">Foreground tiers</div>
+    <div style="margin-top: var(--space-3)">
+      {fgTiers.map(([token, use, ratio]) => (
+        <div style="display:flex; align-items:baseline; gap: var(--space-4); padding: 6px 0; border-bottom:1px solid var(--txh-rule)">
+          <span style={`color: var(${token}); font-size: var(--fs-body); min-width:280px`}>
+            Texan voices leading global conversations
+          </span>
+          <span class="txh-mono" style="color: var(--txh-fg-3); min-width:130px">{token}</span>
+          <span class="txh-mono" style="color: var(--txh-fg-4); min-width:60px">{ratio}</span>
+          <span style="font-size:12px; color: var(--txh-fg-4)">{use}</span>
+        </div>
+      ))}
+    </div>
+
+    <hr class="txh-rule-dashed" style="margin: var(--space-8) 0 var(--space-7)" />
+
+    <!-- ── Display type ─────────────────────────────────────────── -->
+    <div class="txh-eyebrow" style="color: var(--txh-fg-4)">
+      Display — TAY Dreamboat. Everywhere, print and web. Tracking is never zero, never positive.
+    </div>
+    <div class="txh-display" style="font-size: clamp(48px, 8vw, 108px); margin-top: var(--space-4)">
+      Recognizing Texcellence.
+    </div>
+    <div class="txh-mono" style="color: var(--txh-fg-4); margin-top: var(--space-2)">
+      .txh-display · --ls-dreamboat -0.12em · hero scale only
+    </div>
+
+    <h2 class="txh-display-sm" style="font-size: var(--fs-h2); margin-top: var(--space-6)">
+      Display below 36px
+    </h2>
+    <div class="txh-mono" style="color: var(--txh-fg-4); margin-top:6px">
+      .txh-display-sm · --ls-dreamboat-sm -0.05em · at hero tracking these letters would merge
+    </div>
+
+    <div style="font-family: var(--font-alt); font-size: 34px; margin-top: var(--space-6)">
+      Laslo — secondary display
+    </div>
+    <div class="txh-mono" style="color: var(--txh-fg-4); margin-top:6px">
+      --font-alt · softer, slightly hand-cut. Subheads.
+    </div>
+
+    <div class="txh-eyebrow" style="margin-top: var(--space-6); color: var(--txh-fg-2)">
+      BN Bergen St — engineered eyebrow caps
+    </div>
+    <div class="txh-mono" style="color: var(--txh-fg-4); margin-top:6px">
+      .txh-eyebrow · --ls-eyebrow 0.12em — deliberately reduced from 0.18em: more
+      tracking breaks caps into loose letters instead of words, the cue a dyslexic reader uses
+    </div>
+
+    <!-- ── Type scale ───────────────────────────────────────────── -->
+    <div class="txh-eyebrow" style="color: var(--txh-fg-4); margin-top: var(--space-7)">Type scale — Lato body</div>
+    <div style="margin-top: var(--space-3)">
+      {typeScale.map(([token, px]) => (
+        <div style="display:flex; align-items:baseline; gap: var(--space-4); padding:4px 0">
+          <span class="txh-mono" style="color: var(--txh-fg-4); min-width:120px">{token}</span>
+          <span class="txh-mono" style="color: var(--txh-fg-4); min-width:52px">{px}</span>
+          <span style={`font-size: var(${token}); line-height: var(--lh-heading); color: var(--txh-fg-2)`}>
+            Bringing Texas to the world, and the world to Texas
+          </span>
+        </div>
+      ))}
+    </div>
+
+    <hr class="txh-rule-dashed" style="margin: var(--space-8) 0 var(--space-7)" />
+
+    <!-- ── Components ───────────────────────────────────────────── -->
+    <div class="txh-eyebrow" style="color: var(--txh-fg-4)">Bracket tags — the CRM chip idiom</div>
+    <div style="display:flex; flex-wrap:wrap; gap: var(--space-2); margin-top: var(--space-3)">
+      <span class="txh-chip">Music showcase</span>
+      <span class="txh-chip">Film feature</span>
+      <span class="txh-chip">Culture exchange</span>
+      <span class="txh-chip">Private event</span>
+      <span class="txh-chip">Gather &amp; grow</span>
+    </div>
+
+    <div class="txh-eyebrow" style="color: var(--txh-fg-4); margin-top: var(--space-7)">
+      Buttons — prototypes. Hover each: the label rolls, the arrow rolls diagonally, scanlines glitch underneath.
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: var(--space-6) var(--space-5); margin-top: var(--space-5)">
+
+      <div>
+        <div class="txh-mono" style="color: var(--txh-fg-4); margin-bottom: var(--space-3)">A · clay pill</div>
+        <Button href="#" fill="clay">Become a Partner</Button>
+      </div>
+
+      <div>
+        <div class="txh-mono" style="color: var(--txh-fg-4); margin-bottom: var(--space-3)">B · ivory pill</div>
+        <Button href="#" fill="ivory">Become a Partner</Button>
+      </div>
+
+      <div>
+        <div class="txh-mono" style="color: var(--txh-fg-4); margin-bottom: var(--space-3)">C · clay sharp — "like cut paper"</div>
+        <Button href="#" fill="clay" shape="sharp">Become a Partner</Button>
+      </div>
+
+      <div>
+        <div class="txh-mono" style="color: var(--txh-fg-4); margin-bottom: var(--space-3)">D · ivory sharp</div>
+        <Button href="#" fill="ivory" shape="sharp">Become a Partner</Button>
+      </div>
+
+      <div>
+        <div class="txh-mono" style="color: var(--txh-fg-4); margin-bottom: var(--space-3)">E · bracket idiom</div>
+        <Button href="#" fill="clay" shape="sharp" bracket>Become a Partner</Button>
+      </div>
+
+      <div>
+        <div class="txh-mono" style="color: var(--txh-fg-4); margin-bottom: var(--space-3)">F · ivory + bracket</div>
+        <Button href="#" fill="ivory" shape="sharp" bracket>Become a Partner</Button>
+      </div>
+
+      <div>
+        <div class="txh-mono" style="color: var(--txh-fg-4); margin-bottom: var(--space-3)">G · standing ring</div>
+        <Button href="#" fill="ivory" ring>Become a Partner</Button>
+      </div>
+
+      <div>
+        <div class="txh-mono" style="color: var(--txh-fg-4); margin-bottom: var(--space-3)">H · ring + sharp + bracket</div>
+        <Button href="#" fill="clay" shape="sharp" bracket ring>Become a Partner</Button>
+      </div>
+
+      <div>
+        <div class="txh-mono" style="color: var(--txh-fg-4); margin-bottom: var(--space-3)">I · ghost — secondary</div>
+        <Button href="#" fill="ghost" shape="sharp">View schedule</Button>
+      </div>
+
+    </div>
+
+    <div class="txh-eyebrow" style="color: var(--txh-fg-4); margin-top: var(--space-7)">Rules</div>
+    <div style="margin-top: var(--space-3)">
+      <hr style="height:2px; background: var(--txh-clay); border:0" />
+      <div class="txh-mono" style="color: var(--txh-fg-4); margin-top:6px">Signature clay rule — 2px, full content width</div>
+      <hr class="txh-rule-dashed" style="margin-top: var(--space-4)" />
+      <div class="txh-mono" style="color: var(--txh-fg-4); margin-top:6px">Dashed clay — section separator (CRM idiom)</div>
+      <hr style={`border:0; border-top:1px solid var(--txh-rule); margin-top: var(--space-4)`} />
+      <div class="txh-mono" style="color: var(--txh-fg-4); margin-top:6px">Hairline — between sections on dark</div>
+    </div>
+
+    <!-- ── Spacing & radii ──────────────────────────────────────── -->
+    <div class="txh-eyebrow" style="color: var(--txh-fg-4); margin-top: var(--space-7)">Spacing — 4px base</div>
+    <div style="display:flex; align-items:flex-end; gap: var(--space-3); margin-top: var(--space-3)">
+      {space.map((n) => (
+        <div style="text-align:center">
+          <div style={`width: var(--space-${n}); height: var(--space-${n}); background: var(--txh-clay); min-width:4px`}></div>
+          <div class="txh-mono" style="font-size:10px; color: var(--txh-fg-4); margin-top:6px">{n}</div>
+          <div class="txh-mono" style="font-size:9px; color: var(--txh-decor)">{spacePx[n]}</div>
+        </div>
+      ))}
+    </div>
+
+    <div class="txh-eyebrow" style="color: var(--txh-fg-4); margin-top: var(--space-7)">
+      Radii — mostly zero. Rectangles are sharp, like cut paper.
+    </div>
+    <div style="display:flex; gap: var(--space-4); margin-top: var(--space-3)">
+      {['0','1','2','3'].map((n) => (
+        <div style="text-align:center">
+          <div style={`width:74px; height:50px; background: var(--txh-bg-raised); border:1px solid var(--txh-rule-strong); border-radius: var(--radius-${n})`}></div>
+          <div class="txh-mono" style="font-size:10px; color: var(--txh-fg-4); margin-top:6px">radius-{n}</div>
+        </div>
+      ))}
+    </div>
+
+    <!-- ── Casing ───────────────────────────────────────────────── -->
+    <div class="txh-eyebrow" style="color: var(--txh-fg-4); margin-top: var(--space-7)">Casing rules</div>
+    <div style="margin-top: var(--space-3)">
+      {casing.map(([usecase, rule, example]) => (
+        <div style="display:flex; gap: var(--space-4); padding:7px 0; border-bottom:1px solid var(--txh-rule); font-size: var(--fs-small)">
+          <span style="min-width:230px; color: var(--txh-fg-3)">{usecase}</span>
+          <span class="txh-mono" style="min-width:120px; color: var(--txh-fg-4)">{rule}</span>
+          <span style="color: var(--txh-fg-1)">{example}</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- ── Not in the system ────────────────────────────────────── -->
+    <div class="txh-eyebrow" style="color: var(--txh-accent-text); margin-top: var(--space-8)">Not in the system</div>
+    <ul style="margin-top: var(--space-3); font-size: var(--fs-small); color: var(--txh-fg-3); line-height:2; list-style:none">
+      <li>— No light theme. Gun Metal is the ground, everywhere.</li>
+      <li>— No gradients. Flat fields only.</li>
+      <li>— No shadows on layout elements. Matte print system.</li>
+      <li>— No Changa One. The two-track font rule is retired; TAY Dreamboat is the display face on web too.</li>
+      <li>— No emoji, no exclamation marks in headlines, no hashtags in body copy.</li>
+      <li>— No <span class="txh-mono">--txh-decor</span> on text. Ornament only.</li>
+    </ul>
+
+  </main>
+</BaseLayout>

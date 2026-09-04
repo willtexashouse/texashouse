@@ -1,0 +1,112 @@
+---
+/*
+  Fixed hairline status strip pinned to the bottom of the viewport — the status
+  line of a powered-on instrument. See brand-specimen.md §5.2.
+
+  Readouts: identity · visitor↔Austin · active section (the one accent beat) ·
+  scroll % · Austin wall clock.
+
+  The portfolio original was already Austin-native; that idea carries unchanged.
+  One rAF-throttled scroll listener + one 1s clock interval. Hidden ≤680px.
+*/
+interface Props { identity?: string }
+const { identity = 'Texas House' } = Astro.props;
+---
+
+<div class="txh-telemetry" aria-hidden="true">
+  <span class="txh-telemetry__item" data-tb="identity">{identity} ©{new Date().getFullYear()}</span>
+  <span class="txh-telemetry__item" data-tb="visitor">visitor / locating…</span>
+  <span class="txh-telemetry__item txh-telemetry__item--beat" data-tb="section">section / —</span>
+  <span class="txh-telemetry__item" data-tb="scroll">scroll 0%</span>
+  <span class="txh-telemetry__item" data-tb="clock">austin —</span>
+</div>
+
+<style>
+  .txh-telemetry {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: var(--z-nav);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--space-4);
+    padding: 7px var(--space-5);
+    background: var(--txh-bg);
+    border-top: 1px solid var(--txh-rule);
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: .06em; text-transform: uppercase;
+    color: var(--txh-fg-4);
+    pointer-events: none;
+  }
+  .txh-telemetry__item { white-space: nowrap; }
+  .txh-telemetry__item--beat { color: var(--txh-accent-text); }
+  @media (max-width: 680px) { .txh-telemetry { display: none; } }
+</style>
+
+<script>
+  const bar = document.querySelector('.txh-telemetry');
+  if (bar) {
+    const el = (k: string) => bar.querySelector(`[data-tb="${k}"]`) as HTMLElement | null;
+    const AUSTIN: [number, number] = [30.2672, -97.7431];
+    const TZ: Record<string, [number, number]> = {
+      'America/New_York': [40.71, -74.01], 'America/Chicago': [41.88, -87.63],
+      'America/Denver': [39.74, -104.99], 'America/Los_Angeles': [34.05, -118.24],
+      'America/Toronto': [43.65, -79.38], 'America/Mexico_City': [19.43, -99.13],
+      'Europe/London': [51.51, -0.13], 'Europe/Paris': [48.85, 2.35],
+      'Europe/Berlin': [52.52, 13.4], 'Europe/Madrid': [40.42, -3.7],
+      'Asia/Dubai': [25.2, 55.27], 'Asia/Singapore': [1.35, 103.82],
+      'Asia/Tokyo': [35.68, 139.69], 'Australia/Sydney': [-33.87, 151.21],
+    };
+
+    // visitor ↔ Austin
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const here = TZ[tz];
+      const label = tz === 'America/Chicago' ? 'central us' : (tz?.split('/').pop() || 'elsewhere').replace(/_/g, ' ');
+      let dist = '';
+      if (here) {
+        const R = 3959, toRad = (d: number) => (d * Math.PI) / 180;
+        const dLat = toRad(AUSTIN[0] - here[0]), dLon = toRad(AUSTIN[1] - here[1]);
+        const a = Math.sin(dLat / 2) ** 2 +
+          Math.cos(toRad(here[0])) * Math.cos(toRad(AUSTIN[0])) * Math.sin(dLon / 2) ** 2;
+        const mi = Math.round(2 * R * Math.asin(Math.sqrt(a)));
+        dist = mi > 20 ? ` · ${mi.toLocaleString()} mi` : '';
+      }
+      const v = el('visitor');
+      if (v) v.textContent = `visitor / ${label} ↔ austin${dist}`;
+    } catch { /* leave the placeholder */ }
+
+    // clock
+    const clock = () => {
+      const c = el('clock');
+      if (!c) return;
+      c.textContent = 'austin ' + new Intl.DateTimeFormat('en-US', {
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hour12: false, timeZone: 'America/Chicago',
+      }).format(new Date());
+    };
+    clock();
+    setInterval(clock, 1000);
+
+    // scroll % + active section, one rAF-throttled listener
+    let raf = 0;
+    const apply = () => {
+      raf = 0;
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - window.innerHeight;
+      const pct = max > 0 ? Math.round((window.scrollY / max) * 100) : 100;
+      const s = el('scroll');
+      if (s) s.textContent = `scroll ${pct}%`;
+
+      const marks = [...document.querySelectorAll<HTMLElement>('[data-section]')];
+      if (marks.length) {
+        const mid = window.innerHeight / 2;
+        let active = marks[0];
+        for (const m of marks) if (m.getBoundingClientRect().top <= mid) active = m;
+        const idx = String(marks.indexOf(active) + 1).padStart(2, '0');
+        const sec = el('section');
+        if (sec) sec.textContent = `section / ${idx} — ${active.dataset.section}`;
+      }
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(apply); };
+    apply();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+  }
+</script>

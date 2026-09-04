@@ -1,0 +1,246 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+/*
+  TEMPORARY dev-only review board — the CRM's /feedback lifecycle on the disk
+  inbox. Reports land here pending; Will approves or declines; "Hand off" turns
+  the Approved queue into a brief (the CRM's language, adapted) written to
+  feedback/briefs/ and copied to the clipboard, and moves the items to Sent.
+  Claude marks items Resolved as fixes verify.
+
+  In production builds the /__feedback endpoints do not exist, so this page
+  renders its empty shell only. Unlinked from nav; delete with the widget +
+  config plugin when the loop ends.
+*/
+---
+
+<BaseLayout title="Feedback — review queue" chrome={false} cta={false}>
+  <main class="fbq">
+    <header class="fbq__head">
+      <div>
+        <div class="txh-eyebrow" style="color: var(--txh-accent-text)">Dev only · disk inbox</div>
+        <h1 class="txh-display fbq__title">Feedback</h1>
+      </div>
+      <div class="fbq__actions">
+        <a class="txh-mono fbq__back" href="/">← back to the site</a>
+        <button class="fbq__handoff txh-mono" data-handoff hidden>Hand off approved →</button>
+      </div>
+    </header>
+
+    <nav class="fbq__tabs txh-mono" data-tabs aria-label="Filter"></nav>
+
+    <p class="fbq__empty txh-mono" data-empty hidden></p>
+    <div class="fbq__list" data-list></div>
+  </main>
+</BaseLayout>
+
+<style is:global>
+  .fbq { max-width: 980px; margin: 0 auto; padding: var(--space-7) var(--page-gutter) var(--space-10); }
+  .fbq__head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-5); flex-wrap: wrap; }
+  .fbq__title { font-size: clamp(34px, 5vw, 64px); margin-top: var(--space-3); }
+  .fbq__actions { display: flex; align-items: center; gap: var(--space-4); }
+  .fbq__back { color: var(--txh-fg-4); text-decoration: none; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+  .fbq__back:hover { color: var(--txh-fg-2); }
+  .fbq__handoff {
+    background: var(--txh-clay); color: var(--txh-on-accent);
+    border: 1px solid var(--txh-clay); border-radius: var(--radius-1);
+    padding: 9px 16px; cursor: pointer; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  }
+  .fbq__handoff:hover { background: var(--txh-clay-bright); }
+
+  .fbq__tabs { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-6); border-bottom: 1px solid var(--txh-rule); padding-bottom: var(--space-4); }
+  .fbq__tabs button {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    background: transparent; border: 1px solid var(--txh-rule-strong); border-radius: var(--radius-1);
+    color: var(--txh-fg-3); padding: 5px 10px; cursor: pointer;
+  }
+  .fbq__tabs button[aria-pressed='true'] { color: var(--txh-on-accent); background: var(--txh-clay); border-color: var(--txh-clay); }
+
+  .fbq__empty { color: var(--txh-fg-4); margin-top: var(--space-6); font-size: 12px; }
+  .fbq__list { display: flex; flex-direction: column; gap: var(--space-4); margin-top: var(--space-6); }
+
+  .fbc { border: 1px solid var(--txh-rule); border-left: 3px solid var(--kind-ink, var(--txh-rule-strong)); padding: var(--space-5); }
+  .fbc__top { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+  .fbc__kind { font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--kind-ink); }
+  .fbc__kind::before { content: '[ '; opacity: .6; } .fbc__kind::after { content: ' ]'; opacity: .6; }
+  .fbc__state { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--txh-fg-4); margin-left: auto; }
+  .fbc__title { font-family: var(--font-body-web); font-weight: 700; font-size: var(--fs-h4); color: var(--txh-fg-1); margin-top: var(--space-3); }
+  .fbc__body { font-size: var(--fs-small); line-height: var(--lh-body); color: var(--txh-fg-2); margin-top: var(--space-2); white-space: pre-wrap; max-width: 72ch; }
+  /* Copy edits read as a diff, not a paragraph: the text that is on the page
+     now, and the text meant to replace it, both verbatim. */
+  .fbc__diff { display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-3); max-width: 72ch; }
+  .fbc__difflabel { font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--txh-fg-4); }
+  .fbc__difftext {
+    font-size: var(--fs-small); line-height: var(--lh-body); color: var(--txh-fg-2);
+    white-space: pre-wrap; margin-top: var(--space-2);
+    border-left: 1px solid var(--txh-rule-strong); padding-left: var(--space-3);
+  }
+  .fbc__diffblock--after .fbc__difftext { color: var(--txh-fg-1); border-left-color: var(--kind-ink, var(--txh-rule-strong)); }
+  .fbc__meta { font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em; color: var(--txh-fg-4); margin-top: var(--space-3); display: flex; gap: var(--space-4); flex-wrap: wrap; }
+  .fbc__shots { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-3); }
+  .fbc__shots a img { display: block; height: 84px; width: auto; border: 1px solid var(--txh-rule-strong); border-radius: var(--radius-1); }
+  .fbc__row { display: flex; gap: var(--space-2); margin-top: var(--space-4); flex-wrap: wrap; }
+  .fbc__row button {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    background: var(--txh-bg-input); color: var(--txh-fg-2);
+    border: 1px solid var(--txh-border-input); border-radius: var(--radius-1);
+    padding: 6px 11px; cursor: pointer;
+  }
+  .fbc__row button[data-act='approve'] { color: var(--txh-good-text); }
+  .fbc__row button[data-act='decline'] { color: var(--txh-warn-text); }
+  .fbc__row button:hover { border-color: var(--txh-clay); color: var(--txh-fg-1); }
+</style>
+
+<script>
+  import { KINDS, kindOf, FILTERS, triageOf, tally, buildBrief } from '../lib/feedback/triage';
+
+  const list = document.querySelector('[data-list]') as HTMLElement;
+  const tabs = document.querySelector('[data-tabs]') as HTMLElement;
+  const empty = document.querySelector('[data-empty]') as HTMLElement;
+  const handoff = document.querySelector('[data-handoff]') as HTMLButtonElement;
+
+  let items: any[] = [];
+  let filter = new URLSearchParams(location.search).get('show') || 'pending';
+  if (!FILTERS.some((f) => f.key === filter)) filter = 'pending';
+
+  const load = async () => {
+    try {
+      const r = await fetch('/__feedback/list');
+      items = (await r.json()).items ?? [];
+    } catch {
+      items = [];
+      empty.hidden = false;
+      empty.textContent = 'The inbox lives on the dev server — run `npm run dev` and open this page from localhost:4321.';
+      return;
+    }
+    draw();
+  };
+
+  const update = async (id: string, patch: Record<string, unknown>) => {
+    await fetch('/__feedback/update', {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ id, ...patch }),
+    });
+    await load();
+  };
+
+  const stateLabel = (i: any) => {
+    if (i.resolved) return 'resolved';
+    if (i.sent_at) return `sent · ${i.batch ?? ''}`.trim();
+    return triageOf(i);
+  };
+
+  const draw = () => {
+    const counts = tally(items);
+    tabs.innerHTML = '';
+    for (const f of FILTERS) {
+      const b = document.createElement('button');
+      b.textContent = `${f.label} · ${counts[f.key]}`;
+      b.setAttribute('aria-pressed', String(f.key === filter));
+      b.addEventListener('click', () => {
+        filter = f.key;
+        history.replaceState(null, '', f.key === 'pending' ? '/feedback' : `/feedback?show=${f.key}`);
+        draw();
+      });
+      tabs.appendChild(b);
+    }
+
+    handoff.hidden = counts.approved === 0;
+    handoff.textContent = `Hand off approved (${counts.approved}) →`;
+
+    const def = FILTERS.find((f) => f.key === filter)!;
+    const rows = items.filter(def.test);
+    empty.hidden = rows.length > 0;
+    empty.textContent = def.empty;
+
+    list.innerHTML = '';
+    for (const i of rows) {
+      const k = kindOf(i.kind);
+      const card = document.createElement('article');
+      card.className = 'fbc';
+      card.style.setProperty('--kind-ink', k.ink);
+
+      const shots = (i.shots ?? [])
+        .map((s: string) => `<a href="/__feedback/shot/${encodeURIComponent(s)}" target="_blank" rel="noopener"><img src="/__feedback/shot/${encodeURIComponent(s)}" alt="screenshot" loading="lazy" /></a>`)
+        .join('');
+
+      const t = triageOf(i);
+      const actions: string[] = [];
+      if (!i.resolved && !i.sent_at) {
+        if (t === 'pending') actions.push('approve', 'decline');
+        if (t === 'approved') actions.push('unapprove', 'decline');
+        if (t === 'declined') actions.push('reopen');
+      }
+      if (i.sent_at && !i.resolved) actions.push('resolve');
+      if (i.resolved) actions.push('unresolve');
+
+      // A copy edit carries its own body: the before/after of one element.
+      const copy = i.kind === 'copy' && i.edit ? i.edit : null;
+
+      card.innerHTML = `
+        <div class="fbc__top">
+          <span class="fbc__kind">${k.label}</span>
+          <span class="fbc__state">${stateLabel(i)}</span>
+        </div>
+        ${i.title ? `<div class="fbc__title"></div>` : ''}
+        ${copy ? `
+        <div class="fbc__diff">
+          <div class="fbc__diffblock">
+            <div class="fbc__difflabel">Before</div>
+            <div class="fbc__difftext" data-before></div>
+          </div>
+          <div class="fbc__diffblock fbc__diffblock--after">
+            <div class="fbc__difflabel">After</div>
+            <div class="fbc__difftext" data-after></div>
+          </div>
+        </div>` : `<div class="fbc__body"></div>`}
+        <div class="fbc__meta">
+          <span>${i.page ?? ''}</span><span>${i.viewport ?? ''}</span>
+          ${copy ? `<span data-selector></span>` : ''}
+          <span>${new Date(i.created_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}</span>
+          <span>id ${i.id}</span>
+        </div>
+        <div class="fbc__shots">${shots}</div>
+        <div class="fbc__row">${actions.map((a) => `<button data-act="${a}">${a}</button>`).join('')}</div>
+      `;
+      // Text nodes, not innerHTML — reports are free text.
+      if (i.title) card.querySelector('.fbc__title')!.textContent = i.title;
+      if (copy) {
+        card.querySelector('[data-before]')!.textContent = copy.before ?? '';
+        card.querySelector('[data-after]')!.textContent = copy.after ?? '';
+        card.querySelector('[data-selector]')!.textContent =
+          [copy.tag, copy.selector].filter(Boolean).join(' · ');
+      } else {
+        card.querySelector('.fbc__body')!.textContent = i.body || '';
+      }
+
+      card.querySelectorAll('[data-act]').forEach((b) => {
+        b.addEventListener('click', () => {
+          const act = (b as HTMLElement).dataset.act!;
+          if (act === 'approve') update(i.id, { triage: 'approved' });
+          if (act === 'decline') update(i.id, { triage: 'declined' });
+          if (act === 'unapprove' || act === 'reopen') update(i.id, { triage: 'pending' });
+          if (act === 'resolve') update(i.id, { resolved: true });
+          if (act === 'unresolve') update(i.id, { resolved: false });
+        });
+      });
+      list.appendChild(card);
+    }
+  };
+
+  handoff.addEventListener('click', async () => {
+    const batch = items.filter((i) => triageOf(i) === 'approved' && !i.sent_at && !i.resolved);
+    if (batch.length === 0) return;
+    const brief = buildBrief(batch);
+    const r = await fetch('/__feedback/brief', {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ ids: batch.map((i) => i.id), brief }),
+    });
+    const d = await r.json();
+    try { await navigator.clipboard.writeText(brief); } catch {}
+    alert(`Brief written to ${d.briefFile} and copied to the clipboard.\n\nPaste it to Claude, or just say: "process the feedback batch".`);
+    filter = 'sent';
+    await load();
+  });
+
+  load();
+</script>

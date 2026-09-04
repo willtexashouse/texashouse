@@ -1,0 +1,134 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ds/Button.astro';
+
+/* Button decision page. Reference only. */
+const radii = [
+  ['0px — sharp', 'txh-btn--r0'],
+  ['2px', 'txh-btn--r1'],
+  ['6px — current', 'txh-btn--r2'],
+  ['12px', 'txh-btn--r3'],
+  ['20px', 'txh-btn--r4'],
+];
+---
+
+<BaseLayout title="Button prototypes — Texas House" chrome={false}>
+  <main class="p">
+
+    <div class="txh-eyebrow" style="color: var(--txh-accent-text)">Decision page</div>
+    <h1 class="txh-display" style="font-size: clamp(34px, 5vw, 64px); margin-top: var(--space-4)">
+      Pick a button
+    </h1>
+    <p class="p__lede">
+      Brackets and the arrow box are gone. Corners are softened. Hover any of them —
+      the label still rolls and the scanlines still glitch underneath.
+      Site default is now <strong>clay at 6px</strong>.
+    </p>
+
+    <section class="p__row">
+      <div class="p__rowhead">
+        <span class="txh-eyebrow" style="color: var(--txh-fg-2)">How much rounding</span>
+        <span class="p__note">The question at hand. Same button, five radii.</span>
+      </div>
+      <div class="p__grid">
+        {radii.map(([label, cls]) => (
+          <div class="p__cell">
+            <div class="p__label">{label}</div>
+            <Button href="#" fill="clay" class={cls}>Become a Partner</Button>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="p__row">
+      <div class="p__rowhead">
+        <span class="txh-eyebrow" style="color: var(--txh-fg-2)">Fill</span>
+        <span class="p__note">At the current 6px radius.</span>
+      </div>
+      <div class="p__grid">
+        <div class="p__cell">
+          <div class="p__label">Clay — current</div>
+          <Button href="#" fill="clay">Become a Partner</Button>
+        </div>
+        <div class="p__cell">
+          <div class="p__label">Ivory</div>
+          <Button href="#" fill="ivory">Become a Partner</Button>
+        </div>
+        <div class="p__cell">
+          <div class="p__label">Ghost — secondary</div>
+          <Button href="#" fill="ghost">View schedule</Button>
+        </div>
+      </div>
+    </section>
+
+    <section class="p__row">
+      <div class="p__rowhead">
+        <span class="txh-eyebrow" style="color: var(--txh-fg-2)">Still available</span>
+        <span class="p__note">Not the default, but one prop away if you want them back.</span>
+      </div>
+      <div class="p__grid">
+        <div class="p__cell">
+          <div class="p__label">With arrow box</div>
+          <Button href="#" fill="clay" arrow>Become a Partner</Button>
+        </div>
+        <div class="p__cell">
+          <div class="p__label">With brackets</div>
+          <Button href="#" fill="clay" bracket>Become a Partner</Button>
+        </div>
+        <div class="p__cell">
+          <div class="p__label">Standing ring</div>
+          <Button href="#" fill="clay" ring>Become a Partner</Button>
+        </div>
+        <div class="p__cell">
+          <div class="p__label">Full pill</div>
+          <Button href="#" fill="clay" shape="pill">Become a Partner</Button>
+        </div>
+      </div>
+    </section>
+
+    <hr class="txh-rule-dashed" style="margin: var(--space-9) 0 var(--space-8)" />
+
+    <div class="txh-eyebrow" style="color: var(--txh-fg-2)">In context — a CTA band</div>
+    <p class="p__note" style="margin-top: var(--space-2)">
+      Primary and secondary at the size and spacing they actually run at.
+    </p>
+
+    <div class="p__ctx">
+      <div>
+        <h2 class="txh-display-sm" style="font-size: clamp(26px, 3.4vw, 42px)">Partner with Texas House</h2>
+        <p class="p__triplet">connect, celebrate, entertain</p>
+      </div>
+      <div class="p__pair">
+        <Button href="#" fill="clay">Become a Partner</Button>
+        <Button href="#" fill="ghost">View schedule</Button>
+      </div>
+    </div>
+
+    <div class="p__ctx">
+      <div>
+        <h2 class="txh-display-sm" style="font-size: clamp(26px, 3.4vw, 42px)">Partner with Texas House</h2>
+        <p class="p__triplet">connect, celebrate, entertain</p>
+      </div>
+      <div class="p__pair">
+        <Button href="#" fill="ivory">Become a Partner</Button>
+        <Button href="#" fill="ghost">View schedule</Button>
+      </div>
+    </div>
+
+  </main>
+</BaseLayout>
+
+<style>
+  .p { max-width: 1180px; margin: 0 auto; padding: var(--space-8) var(--space-7) var(--space-10); }
+  .p__lede { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--txh-fg-3); margin-top: var(--space-4); max-width: 62ch; }
+  .p__lede strong { color: var(--txh-accent-text); font-weight: 400; }
+  .p__row { margin-top: var(--space-8); padding-top: var(--space-5); border-top: 1px solid var(--txh-rule); }
+  .p__rowhead { display: flex; align-items: baseline; gap: var(--space-4); flex-wrap: wrap; }
+  .p__note { font-family: var(--font-mono); font-size: 11px; letter-spacing: .05em; color: var(--txh-fg-4); }
+  .p__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-6) var(--space-5); margin-top: var(--space-5); align-items: start; }
+  .p__cell { display: flex; flex-direction: column; gap: var(--space-3); align-items: flex-start; }
+  .p__label { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--txh-fg-4); }
+  .p__ctx { display: flex; align-items: center; justify-content: space-between; gap: var(--space-6); flex-wrap: wrap; padding: var(--space-7) 0; border-top: 1px solid var(--txh-rule); }
+  .p__pair { display: flex; gap: var(--space-4); flex-wrap: wrap; align-items: center; }
+  .p__triplet { font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; color: var(--txh-fg-3); margin-top: var(--space-3); }
+</style>

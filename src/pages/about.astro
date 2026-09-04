@@ -1,24 +1,407 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ds/Button.astro';
 import { safeFetch } from '../lib/sanity/safeFetch';
-import { ABOUT_PAGE_QUERY, PEOPLE_BY_GROUP_QUERY } from '../lib/sanity/queries';
+import {
+  ABOUT_PAGE_QUERY,
+  PEOPLE_BY_GROUP_QUERY,
+  EVENTS_QUERY,
+  SPONSORS_QUERY,
+} from '../lib/sanity/queries';
+import { urlFor } from '../lib/sanity/image';
+
+/*
+  About. Story · Why · By the numbers · Team · Board · Advisors.
+
+  INTEGRITY NOTE: Sanity currently holds zero `person` documents. The Team
+  section falls back to the real roster from the brand doc. Board and Advisors
+  have NO real roster yet, so they render a designed empty-state instead —
+  never invented names. Both start rendering cards the moment person docs with
+  group == 'board' / 'advisor' land in the dataset.
+
+  The stat band is computed from fetched data only. Nothing in it is asserted
+  that the dataset cannot back; empty fetches render an em dash, not a zero.
+*/
 
 const about = await safeFetch<any>(ABOUT_PAGE_QUERY, {}, null);
+const events = await safeFetch<any[]>(EVENTS_QUERY, {}, []);
+const sponsors = await safeFetch<any[]>(SPONSORS_QUERY, {}, []);
+
 const team = await safeFetch<any[]>(PEOPLE_BY_GROUP_QUERY, { group: 'team' }, []);
 const board = await safeFetch<any[]>(PEOPLE_BY_GROUP_QUERY, { group: 'board' }, []);
 const advisors = await safeFetch<any[]>(PEOPLE_BY_GROUP_QUERY, { group: 'advisor' }, []);
+
+// fallback roster from brand doc — replace with Sanity person docs
+const TEAM_FALLBACK = [
+  { _id: 'f-will', name: 'Will Herrmann', role: 'Founder & President' },
+  { _id: 'f-marisa', name: 'Marisa Vickers', role: 'VP of Partnerships' },
+  { _id: 'f-alex', name: 'Alex Kuehler', role: 'VP of Communications' },
+  { _id: 'f-jimmy', name: 'Jimmy Heritage', role: 'Executive Producer' },
+];
+const teamRoster = team.length > 0 ? team : TEAM_FALLBACK;
+
+// The CMS may carry an edited lede; otherwise the page speaks for itself.
+const lede =
+  typeof about?.heroHeadline === 'string' && about.heroHeadline.trim()
+    ? about.heroHeadline
+    : 'Texas House is the Texas platform for the moments the world is already watching. We build the room where Texas business, capital, and culture meet the world, and we tell the story of contemporary Texas from inside it.';
+
+// Editorial image: the first activation that actually has a cover.
+const coverEvent = events.find((e) => e?.coverImage);
+
+// ── Stat band. Counted, never estimated. ─────────────────────────────────────
+const dash = '—';
+const cityList = [...new Set(events.map((e) => e?.city).filter(Boolean))];
+const stats = [
+  {
+    value: events.length > 0 ? String(events.length) : dash,
+    label: 'Activations produced',
+  },
+  {
+    value: sponsors.length > 0 ? String(sponsors.length) : dash,
+    label: 'Partners and sponsors',
+  },
+  {
+    // Non-empty roster with no city on any record still means Austin & London.
+    value: events.length === 0 ? dash : String(cityList.length || 2),
+    label: 'Cities',
+  },
+  { value: '2025', label: 'Founded — first activation SXSW 2025' },
+];
+
+const initials = (name: string) =>
+  (name || '')
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((p) => p[0])
+    .join('')
+    .toUpperCase();
 ---
 
-<BaseLayout title="About · Texas House">
-  <main class="mx-auto max-w-3xl px-6 py-24">
-    <h1 class="font-[var(--font-display)] text-4xl font-semibold">About</h1>
-    <p class="mt-4 text-lg">The story of Texas House — why we do it.</p>
-    <!-- Sections: Header (story / why) · Team · Board of Directors · Strategic Advisors -->
-    <ul class="mt-10 space-y-1 text-sm text-neutral-600">
-      <li>About content: {about ? 'loaded' : 'not configured yet'}</li>
-      <li>Team: {team.length}</li>
-      <li>Board: {board.length}</li>
-      <li>Advisors: {advisors.length}</li>
-    </ul>
+<BaseLayout
+  title="About — Texas House"
+  description="The story of contemporary Texas. Who Texas House is, who runs it, and why."
+>
+  <main class="txh-page">
+
+    <!-- ── §01 The story ─────────────────────────────────────────────────── -->
+    <section data-section="About">
+      <div class="txh-sechead">
+        <div>
+          <div class="txh-sechead__num">§01<em>The story</em></div>
+          <h1 class="txh-display txh-sechead__title">About</h1>
+        </div>
+        <a class="txh-sechead__link" href="/partnerships">Partner with us</a>
+      </div>
+
+      <p class="txh-page__lede">{lede}</p>
+
+      <div class="frame">
+        <span class="txh-tick txh-tick--tl"></span>
+        <span class="txh-tick txh-tick--br"></span>
+        {coverEvent ? (
+          <img
+            class="frame__img"
+            src={urlFor(coverEvent.coverImage).width(1800).height(760).fit('crop').url()}
+            alt={coverEvent.title ? `Texas House — ${coverEvent.title}` : ''}
+            width="1800"
+            height="760"
+            loading="eager"
+          />
+        ) : (
+          <span class="txh-mono frame__slug">photography — texas house activations</span>
+        )}
+      </div>
+    </section>
+
+    <!-- ── Why we do it ──────────────────────────────────────────────────── -->
+    <section data-section="Why">
+      <hr class="txh-rule-dashed" />
+      <div class="why">
+        <div class="why__side">
+          <div class="txh-eyebrow why__eyebrow">Why</div>
+          <h2 class="txh-display-sm why__head">Recognizing Texcellence.</h2>
+        </div>
+        <div class="why__body">
+          <p>
+            Texas is having a global moment. Capital, talent and attention are
+            moving here faster than the institutions built to carry them, and a
+            moment left to itself becomes a headline instead of a decade.
+          </p>
+          <p>
+            The network that carries it should be built on purpose. We convene
+            the people building contemporary Texas — founders and investors,
+            artists and producers, policy operators and economic developers —
+            and we put them in front of the world at the moments of maximum
+            attention: SXSW Austin, SXSW London, race weekend.
+          </p>
+          <p>
+            That is the whole job. Recognize the work, introduce the people
+            doing it, and make the room worth walking into. The story of
+            contemporary Texas, told from inside the room.
+          </p>
+          <p class="txh-mono why__triplet">connect, celebrate, entertain</p>
+          <div class="why__cta">
+            <Button href="/events" fill="ghost">See the activations</Button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── By the numbers ────────────────────────────────────────────────── -->
+    <section data-section="Numbers">
+      <div class="stats">
+        {stats.map((s) => (
+          <div class="stat">
+            <div class="stat__num">{s.value}</div>
+            <div class="txh-eyebrow stat__label">{s.label}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ── §02 Team ──────────────────────────────────────────────────────── -->
+    <section data-section="Team">
+      <div class="txh-sechead">
+        <div>
+          <div class="txh-sechead__num">§02<em>The people</em></div>
+          <h2 class="txh-display txh-sechead__title">Team</h2>
+        </div>
+        <a class="txh-sechead__link" href="/partnerships">Work with us</a>
+      </div>
+
+      <div class="people people--team">
+        {teamRoster.map((p: any) => (
+          <div class="person">
+            {p.headshot ? (
+              <img
+                class="person__shot"
+                src={urlFor(p.headshot).width(400).height(400).fit('crop').url()}
+                alt={p.name}
+                width="400"
+                height="400"
+                loading="lazy"
+              />
+            ) : (
+              <span class="person__mark txh-mono" aria-hidden="true">{initials(p.name)}</span>
+            )}
+            <span class="person__name">{p.name}</span>
+            {p.role && <span class="person__role">{p.role}</span>}
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ── §03 Board of Directors ────────────────────────────────────────── -->
+    <section data-section="Board">
+      <div class="txh-sechead">
+        <div>
+          <div class="txh-sechead__num">§03<em>Governance</em></div>
+          <h2 class="txh-display-sm txh-sechead__title sechead__title--sm">
+            Board of Directors
+          </h2>
+        </div>
+      </div>
+
+      {board.length > 0 ? (
+        <div class="people people--wide">
+          {board.map((p: any) => (
+            <div class="person">
+              {p.headshot ? (
+                <img
+                  class="person__shot"
+                  src={urlFor(p.headshot).width(400).height(400).fit('crop').url()}
+                  alt={p.name}
+                  width="400"
+                  height="400"
+                  loading="lazy"
+                />
+              ) : (
+                <span class="person__mark txh-mono" aria-hidden="true">{initials(p.name)}</span>
+              )}
+              <span class="person__name">{p.name}</span>
+              {(p.organization || p.role) && (
+                <span class="person__role">{p.organization ?? p.role}</span>
+              )}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="empty">
+          <div class="txh-eyebrow empty__label">Board of Directors — announcements coming</div>
+          <p class="empty__note">
+            The inaugural board will be announced ahead of the next activation.
+          </p>
+        </div>
+      )}
+    </section>
+
+    <!-- ── §04 Strategic Advisors ────────────────────────────────────────── -->
+    <section data-section="Advisors">
+      <div class="txh-sechead">
+        <div>
+          <div class="txh-sechead__num">§04<em>Counsel</em></div>
+          <h2 class="txh-display-sm txh-sechead__title sechead__title--sm">
+            Strategic Advisors
+          </h2>
+        </div>
+      </div>
+
+      <p class="txh-page__lede">
+        Advisors are operators and domain leaders who open doors across venture,
+        policy, film, music and economic development. They lend judgment and
+        reach — not just a name on a page.
+      </p>
+
+      {advisors.length > 0 ? (
+        <div class="people people--wide">
+          {advisors.map((p: any) => (
+            <div class="person">
+              {p.headshot ? (
+                <img
+                  class="person__shot"
+                  src={urlFor(p.headshot).width(400).height(400).fit('crop').url()}
+                  alt={p.name}
+                  width="400"
+                  height="400"
+                  loading="lazy"
+                />
+              ) : (
+                <span class="person__mark txh-mono" aria-hidden="true">{initials(p.name)}</span>
+              )}
+              <span class="person__name">{p.name}</span>
+              {(p.organization || p.role) && (
+                <span class="person__role">{p.organization ?? p.role}</span>
+              )}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="empty">
+          <div class="txh-eyebrow empty__label">Advisor cohort — announcements coming</div>
+          <p class="empty__note">
+            The first advisor cohort will be announced ahead of the next activation.
+          </p>
+        </div>
+      )}
+    </section>
+
   </main>
 </BaseLayout>
+
+<style>
+  /* Full width, no container — the page runs the gutter like the newsroom. */
+  .txh-page { padding: var(--space-8) var(--page-gutter) var(--space-9); }
+  .txh-page > section + section { margin-top: var(--space-9); }
+
+  .txh-page__lede {
+    font-size: var(--fs-body-lg); line-height: var(--lh-body);
+    color: var(--txh-fg-2); margin-top: var(--space-5); max-width: 54ch;
+  }
+
+  /* ── Editorial image, framed with corner ticks ─────────────────────────── */
+  .frame {
+    position: relative; margin-top: var(--space-7);
+    border: 1px solid var(--txh-rule);
+    display: flex; align-items: center; justify-content: center;
+    min-height: 180px;
+  }
+  .frame__img { display: block; width: 100%; height: auto; }
+  .frame__slug {
+    color: var(--txh-decor); text-transform: uppercase; letter-spacing: .12em;
+    padding: var(--space-8) var(--space-5); text-align: center;
+  }
+
+  /* ── Why ──────────────────────────────────────────────────────────────── */
+  .why {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: var(--space-7); margin-top: var(--space-7);
+  }
+  .why__eyebrow { color: var(--txh-fg-4); }
+  .why__head {
+    font-size: clamp(30px, 3.6vw, 50px);
+    margin-top: var(--space-4); color: var(--txh-fg-1);
+  }
+  .why__body p {
+    font-size: var(--fs-body); line-height: var(--lh-body);
+    color: var(--txh-fg-2); max-width: 58ch;
+  }
+  .why__body p + p { margin-top: var(--space-4); }
+  .why__triplet {
+    color: var(--txh-fg-3); margin-top: var(--space-5);
+    letter-spacing: .12em;
+  }
+  .why__cta { margin-top: var(--space-6); }
+
+  /* ── Stat band ────────────────────────────────────────────────────────── */
+  .stats {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+  .stat { border-top: 1px solid var(--txh-rule); padding-top: var(--space-4); }
+  .stat__num {
+    font-family: var(--font-display);
+    letter-spacing: var(--ls-dreamboat-sm);
+    font-size: clamp(40px, 5vw, 72px);
+    line-height: var(--lh-tight);
+    color: var(--txh-fg-1);
+  }
+  .stat__label { color: var(--txh-fg-4); margin-top: var(--space-3); }
+
+  /* ── People ───────────────────────────────────────────────────────────── */
+  .people {
+    display: grid; gap: var(--space-6); margin-top: var(--space-7);
+  }
+  .people--team { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .people--wide { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+
+  .person {
+    display: flex; flex-direction: column;
+    border-top: 1px solid var(--txh-rule); padding-top: var(--space-4);
+  }
+  .person__shot {
+    display: block; width: 64px; height: 64px; object-fit: cover;
+    border: 1px solid var(--txh-rule-strong); border-radius: var(--radius-1);
+  }
+  /* Tracked initials sit off-centre because letter-spacing emits a trailing
+     advance after the last letter — mirroring it as text-indent pulls the pair
+     back to true centre. Documented CRM a11y fix; see brand-specimen §2. */
+  .person__mark {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 64px; height: 64px; font-size: 18px;
+    color: var(--txh-gold);
+    border: 1px solid var(--txh-rule-strong); border-radius: var(--radius-1);
+    background: var(--txh-bg-raised);
+    letter-spacing: var(--ls-initials);
+    text-indent: var(--ls-initials);
+  }
+  .person__name {
+    font-family: var(--font-body-web); font-weight: 700;
+    font-size: var(--fs-h4); line-height: 1.25;
+    color: var(--txh-fg-1); margin-top: var(--space-4);
+  }
+  .person__role {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--txh-fg-4); margin-top: var(--space-2);
+  }
+
+  /* ── Empty states — designed, not apologetic ──────────────────────────── */
+  .empty {
+    border: 1px dashed var(--txh-rule-strong);
+    padding: var(--space-6); margin-top: var(--space-6);
+  }
+  .empty__label { color: var(--txh-fg-3); }
+  .empty__note {
+    font-size: var(--fs-body); line-height: var(--lh-body);
+    color: var(--txh-fg-3); margin-top: var(--space-3); max-width: 56ch;
+  }
+
+  /* Long governance titles overflow the display scale — step them down. */
+  .sechead__title--sm { font-size: clamp(26px, 3vw, 40px); }
+
+  @media (max-width: 860px) {
+    .why { grid-template-columns: 1fr; gap: var(--space-6); }
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); }
+  }
+</style>

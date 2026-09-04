@@ -12,17 +12,71 @@ export const SITE_SETTINGS_QUERY = `*[_type == "siteSettings"][0]{
   logo, nav, socials, mission, footerLinks, contactEmail
 }`;
 
-// ---------- Events (all past; ordered by date desc) ----------
+// ---------- Events ----------
+/*
+  Status is DERIVED from dates, never stored — see sanity/schemaTypes/documents/
+  event.ts. `date` is the start, `endDate` the end (blank endDate = single-day,
+  so the start doubles as the end).
+
+  ⚠️ BUILD-TIME EVALUATION. astro.config.mjs sets `output: 'static'`, so now() is
+  resolved when the site builds, not when a visitor loads it. An event therefore
+  retires on the next deploy, not at the stroke of midnight. Schedule a daily
+  rebuild (Vercel cron → deploy hook) or events will linger. Day-level accuracy
+  is fine for multi-day events; if "happening now" ever needs to be exact, that
+  one badge should be computed client-side.
+*/
+
+// Reusable projection. `statusOverride` wins when an editor has set it.
+const EVENT_STATUS = `"status": select(
+    defined(statusOverride) => statusOverride,
+    dateTime(coalesce(endDate, date)) < dateTime(now()) => "past",
+    dateTime(date) > dateTime(now()) => "upcoming",
+    "active"
+  )`;
 
 export const EVENTS_QUERY = `*[_type == "event"] | order(date desc){
-  _id, title, slug, date, city, coverImage, recapVideo, featured
+  _id, title, slug, date, endDate, city, coverImage, recapVideo, featured,
+  ${EVENT_STATUS}
 }`;
 
-// Alias kept for the homepage "Past Events" section.
-export const PAST_EVENTS_QUERY = EVENTS_QUERY;
+// Past — newest first. Anything finished, plus anything forced past.
+export const PAST_EVENTS_QUERY = `*[_type == "event" && (
+  statusOverride == "past" ||
+  (!defined(statusOverride) && dateTime(coalesce(endDate, date)) < dateTime(now()))
+)] | order(date desc){
+  _id, title, slug, date, endDate, city, coverImage, recapVideo, featured,
+  ${EVENT_STATUS}
+}`;
+
+// Upcoming — soonest first. Excludes cancelled.
+export const UPCOMING_EVENTS_QUERY = `*[_type == "event" && (
+  statusOverride == "upcoming" ||
+  (!defined(statusOverride) && dateTime(date) > dateTime(now()))
+) && statusOverride != "cancelled"] | order(date asc){
+  _id, title, slug, date, endDate, city, coverImage, description,
+  ${EVENT_STATUS}
+}`;
+
+// Happening now — the run has started but not finished. Usually 0 or 1.
+export const ACTIVE_EVENTS_QUERY = `*[_type == "event" && (
+  statusOverride == "active" ||
+  (!defined(statusOverride)
+    && dateTime(date) <= dateTime(now())
+    && dateTime(coalesce(endDate, date)) >= dateTime(now()))
+)] | order(date asc){
+  _id, title, slug, date, endDate, city, coverImage,
+  ${EVENT_STATUS}
+}`;
+
+// Home "Upcoming Events": whatever is live now, then what's next.
+export const HOME_EVENTS_QUERY = `{
+  "active": ${ACTIVE_EVENTS_QUERY},
+  "upcoming": ${UPCOMING_EVENTS_QUERY}[0...3]
+}`;
 
 export const EVENT_BY_SLUG_QUERY = `*[_type == "event" && slug.current == $slug][0]{
-  _id, title, slug, date, city, coverImage, recapVideo, description,
+  _id, title, slug, date, endDate, city, coverImage, recapVideo, description,
+  ${EVENT_STATUS},
   gallery, gallery2Title, gallery2,
   "sessions": *[_type == "session" && event._ref == ^._id] | order(date asc){
     _id, title, slug, date, endTime, room, eventDay, shortDescription, image, rsvpLink,
@@ -43,8 +97,14 @@ export const SESSIONS_FOR_EVENT_QUERY = `*[_type == "session" && event._ref == $
 
 // ---------- Sponsors ----------
 
-export const SPONSORS_QUERY = `*[_type == "sponsor"]{
+export const SPONSORS_QUERY = `*[_type == "sponsor"] | order(name asc){
   _id, name, slug, logo, link, presenting, partner, experience, foodBeverage, workedWith
+}`;
+
+// Home-page logo strip. `marquee != false` is deliberate — it keeps docs where
+// the field is unset, so a sponsor is only hidden by an explicit switch-off.
+export const MARQUEE_SPONSORS_QUERY = `*[_type == "sponsor" && defined(logo) && marquee != false] | order(name asc){
+  _id, name, logo, link
 }`;
 
 export const BRANDS_WORKED_WITH_QUERY = `*[_type == "sponsor" && workedWith == true]{
@@ -83,7 +143,7 @@ export const TOPICS_QUERY = `*[_type == "topic"] | order(order asc){ _id, title,
 // ---------- People ----------
 
 export const PEOPLE_BY_GROUP_QUERY = `*[_type == "person" && group == $group]
-  | order(order asc){ _id, name, role, headshot, bio, socials }`;
+  | order(order asc){ _id, name, role, organization, headshot, bio, socials }`;
 
 // ---------- Page singletons ----------
 

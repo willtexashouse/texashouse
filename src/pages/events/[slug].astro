@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { sanityFetch } from '../../lib/sanity/queries';
+import { EVENT_BY_SLUG_QUERY, EVENT_SLUGS_QUERY } from '../../lib/sanity/queries';
+import { isConfigured } from '../../lib/sanity/safeFetch';
+import { urlFor } from '../../lib/sanity/image';
+
+/*
+  Event detail — scaffold. Full build (day-tabbed schedule, speakers grid,
+  tiered sponsors, gallery) is Page 6 in docs/wireframe-brief.md.
+  Sessions are already fetched and grouped by day below.
+*/
+export async function getStaticPaths() {
+  if (!isConfigured) return [];
+  try {
+    const slugs = await sanityFetch<string[]>(EVENT_SLUGS_QUERY);
+    return slugs.map((slug) => ({ params: { slug } }));
+  } catch { return []; }
+}
+
+const { slug } = Astro.params;
+const event = await sanityFetch<any>(EVENT_BY_SLUG_QUERY, { slug });
+const sessions: any[] = event?.sessions ?? [];
+
+const dayKey = (d: string) =>
+  d ? new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC' }).format(new Date(d)) : 'Schedule';
+const time = (d: string) =>
+  d ? new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'UTC' }).format(new Date(d)).toUpperCase() : '';
+
+const days = [...new Set(sessions.map((s) => dayKey(s.date)))];
+---
+
+<BaseLayout title={`${event?.title ?? 'Event'} — Texas House`} description={event?.title}>
+  <main class="txh-page">
+    <section data-section="Event">
+      <div class="txh-sechead">
+        <div>
+          <div class="txh-sechead__num">
+            §<em>{event?.status ?? 'Event'}</em>
+          </div>
+          <h1 class="txh-display txh-sechead__title">{event?.title ?? 'Event'}</h1>
+        </div>
+        <a class="txh-sechead__link" href="/events">All events</a>
+      </div>
+    </section>
+
+    {event?.coverImage && (
+      <figure class="txh-event__hero">
+        <img src={urlFor(event.coverImage).width(1800).height(900).fit('crop').url()} alt="" width="1800" height="900" />
+      </figure>
+    )}
+
+    {days.map((day) => (
+      <section data-section="Schedule">
+        <div class="txh-year">{day}</div>
+        <div class="txh-sched">
+          {sessions.filter((s) => dayKey(s.date) === day).map((s) => (
+            <div class="txh-sched__row">
+              <div class="txh-sched__time">{time(s.date)}{s.endTime && ` – ${time(s.endTime)}`}</div>
+              <div>
+                {s.topics?.[0] && <span class="txh-chip">{s.topics[0].title}</span>}
+                <div class="txh-sched__title">{s.title}</div>
+                {s.shortDescription && <p class="txh-sched__desc">{s.shortDescription}</p>}
+              </div>
+              <div class="txh-sched__room">{s.room?.replace('_', ' ') ?? ''}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    {sessions.length === 0 && <p class="txh-page__empty">Schedule to be announced.</p>}
+  </main>
+</BaseLayout>
+
+<style>
+  .txh-page { padding: var(--space-8) var(--page-gutter) var(--space-9); }
+  .txh-page__empty { color: var(--txh-fg-4); margin-top: var(--space-6); }
+  .txh-event__hero { margin-top: var(--space-7); }
+  .txh-event__hero img { display: block; width: 100%; height: auto; border: 1px solid var(--txh-rule); }
+
+  /* Left rule time gutter + right title column — the schedule pattern from the
+     Design System's layout principles. */
+  .txh-sched { margin-top: var(--space-5); }
+  .txh-sched__row {
+    display: grid; grid-template-columns: 190px minmax(0, 1fr) 150px;
+    gap: var(--space-5); align-items: start;
+    padding: var(--space-5) 0; border-bottom: 1px solid var(--txh-rule);
+  }
+  .txh-sched__time, .txh-sched__room {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--txh-fg-4);
+  }
+  .txh-sched__room { text-align: right; }
+  .txh-sched__title {
+    font-family: var(--font-body-web); font-weight: 700; font-size: var(--fs-h4);
+    line-height: 1.25; color: var(--txh-fg-1); margin-top: var(--space-3);
+  }
+  .txh-sched__desc { font-size: var(--fs-small); line-height: var(--lh-body); color: var(--txh-fg-3); margin-top: var(--space-3); }
+  @media (max-width: 820px) {
+    .txh-sched__row { grid-template-columns: 1fr; gap: var(--space-3); }
+    .txh-sched__room { text-align: left; }
+  }
+</style>

@@ -1,11 +1,16 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PortableBody from '../../components/PortableBody.jsx';
 import { sanityFetch } from '../../lib/sanity/queries';
-import { ARTICLE_BY_SLUG_QUERY, ARTICLE_SLUGS_QUERY } from '../../lib/sanity/queries';
+import {
+  ARTICLE_BY_SLUG_QUERY,
+  ARTICLE_SLUGS_QUERY,
+  ALL_ARTICLES_QUERY,
+} from '../../lib/sanity/queries';
 import { isConfigured } from '../../lib/sanity/safeFetch';
+import { safeFetch } from '../../lib/sanity/safeFetch';
+import { urlFor } from '../../lib/sanity/image';
 
-// Pre-render an article page per slug. Before Sanity is configured there are no
-// slugs, so this generates zero pages and the build still succeeds.
 export async function getStaticPaths() {
   if (!isConfigured) return [];
   try {
@@ -18,13 +23,126 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 const article = await sanityFetch<any>(ARTICLE_BY_SLUG_QUERY, { slug });
+const all = await safeFetch<any[]>(ALL_ARTICLES_QUERY, {}, []);
+const related = all.filter((a) => a.slug?.current !== slug).slice(0, 3);
+
+const fmt = (d: string) =>
+  d ? new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
+        .format(new Date(d))
+    : '';
 ---
 
-<BaseLayout title={`${article?.title ?? 'Article'} · Texas House`}>
-  <main class="mx-auto max-w-2xl px-6 py-24">
-    <h1 class="font-[var(--font-display)] text-4xl font-semibold">
-      {article?.title ?? 'Article'}
-    </h1>
-    <!-- Portable Text body will render here once the design lands. -->
-  </main>
+<BaseLayout
+  title={`${article?.title ?? 'Article'} · Texas House`}
+  description={article?.summary}
+>
+  <article class="txh-article">
+
+    <header class="txh-article__head" data-section="Article">
+      <div class="txh-article__meta">
+        {article?.topics?.[0] && <span class="txh-chip">{article.topics[0].title}</span>}
+        <span>{fmt(article?.publishedAt)}</span>
+        {article?.type && <><span>·</span><span>{article.type === 'media' ? 'In the press' : 'Field note'}</span></>}
+        {article?.author && <><span>·</span><span>{article.author}</span></>}
+      </div>
+
+      <h1 class="txh-article__title">{article?.title ?? 'Article'}</h1>
+      {article?.summary && <p class="txh-article__standfirst">{article.summary}</p>}
+    </header>
+
+    {article?.mainImage && (
+      <figure class="txh-article__hero">
+        <img
+          src={urlFor(article.mainImage).width(1600).height(900).fit('crop').url()}
+          alt=""
+          width="1600"
+          height="900"
+        />
+      </figure>
+    )}
+
+    {article?.body && (
+      <div class="txh-prose" data-section="Body">
+        <PortableBody value={article.body} />
+      </div>
+    )}
+
+    {related.length > 0 && (
+      <section class="txh-article__related" data-section="Related">
+        <div class="txh-sechead">
+          <div>
+            <div class="txh-sechead__num">§<em>More dispatches</em></div>
+          </div>
+          <a class="txh-sechead__link" href="/newsroom">All articles</a>
+        </div>
+        <div class="txh-grid">
+          {related.map((a, i) => (
+            <a class="txh-item" href={`/newsroom/${a.slug.current}`}>
+              <span class="txh-item__meta">
+                <strong>N / {String(i + 1).padStart(2, '0')}</strong>
+              </span>
+              {a.topics?.[0] && <span class="txh-chip txh-item__tag">{a.topics[0].title}</span>}
+              <span class="txh-item__title">{a.title}</span>
+              <span class="txh-item__read">Read →</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+  </article>
 </BaseLayout>
+
+<style>
+  /* The article itself keeps a reading measure (see .txh-prose), but the page
+     furniture — hero, related grid — runs full width to match the newsroom. */
+  .txh-article { padding: var(--space-8) var(--page-gutter) var(--space-9); }
+
+  .txh-article__head { max-width: 62ch; }
+  .txh-article__meta {
+    display: flex; align-items: center; gap: .6em; flex-wrap: wrap;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--txh-fg-4);
+  }
+  .txh-article__title {
+    font-family: var(--font-display); text-transform: uppercase;
+    letter-spacing: var(--ls-dreamboat-sm); line-height: 1.02;
+    font-size: clamp(34px, 5vw, 68px);
+    margin-top: var(--space-5); color: var(--txh-fg-1);
+  }
+  .txh-article__standfirst {
+    font-size: var(--fs-body-lg); line-height: var(--lh-body);
+    color: var(--txh-fg-2); margin-top: var(--space-5);
+  }
+
+  .txh-article__hero { margin: var(--space-8) 0 0; }
+  .txh-article__hero img {
+    display: block; width: 100%; height: auto;
+    border: 1px solid var(--txh-rule);
+  }
+
+  /* Body column — narrow measure, editorial. */
+  .txh-prose { max-width: 68ch; margin: var(--space-8) 0 0; font-size: var(--fs-body); line-height: var(--lh-body); color: var(--txh-fg-2); }
+  .txh-prose :global(p) { margin-bottom: var(--space-5); }
+  .txh-prose :global(h2) {
+    font-family: var(--font-display); text-transform: uppercase;
+    letter-spacing: var(--ls-dreamboat-sm); font-size: var(--fs-h2);
+    line-height: var(--lh-heading); color: var(--txh-fg-1);
+    margin: var(--space-8) 0 var(--space-4);
+  }
+  .txh-prose :global(h3) {
+    font-family: var(--font-body-web); font-weight: 700; font-size: var(--fs-h3);
+    color: var(--txh-fg-1); margin: var(--space-7) 0 var(--space-3);
+  }
+  .txh-prose :global(a) { color: var(--txh-accent-text); text-decoration: underline; text-underline-offset: 3px; }
+  .txh-prose :global(blockquote) {
+    margin: var(--space-7) 0; padding-left: var(--space-5);
+    border-left: 2px solid var(--txh-clay);
+    font-size: var(--fs-body-lg); color: var(--txh-fg-1);
+  }
+  .txh-prose :global(ul), .txh-prose :global(ol) { margin: 0 0 var(--space-5) var(--space-5); }
+  .txh-prose :global(li) { margin-bottom: var(--space-2); }
+  .txh-prose :global(img) { display: block; width: 100%; height: auto; margin: var(--space-7) 0; }
+
+  .txh-article__related { margin-top: var(--space-10); }
+</style>

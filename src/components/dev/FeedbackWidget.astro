@@ -1,0 +1,404 @@
+---
+/*
+  TEMPORARY dev-only feedback widget — a port of the CRM's FeedbackWidget
+  (texas-house-crm/web/src/components/feedback-widget.tsx) onto the disk inbox.
+  The KINDS taxonomy, prompts, and lifecycle language are the CRM's, verbatim —
+  one vocabulary across both properties. Triage happens on /feedback.
+
+  Differences from the CRM, deliberate:
+  · Disk instead of Supabase — reports land in ./feedback/ via /__feedback.
+  · "Capture tab" (native getDisplayMedia) added alongside paste — this site
+    has no auth'd users pasting from Slack; Will is reviewing solo.
+  · Drafts (kind/title/body) persist in localStorage across close/reopen, like
+    the CRM's useDraft. Shots persist while the tab stays open.
+
+  Delete with the astro.config plugin + /feedback page when the loop ends.
+*/
+---
+
+<div class="fb" data-fb>
+  <div class="fb__bar">
+    <button class="fb__btn txh-mono" data-fb-open aria-label="Feedback — report a problem or suggest a change" aria-expanded="false">
+      <span class="fb__dot"></span> Feedback <span data-fb-count></span>
+    </button>
+    <button class="fb__btn txh-mono" data-fb-edit aria-pressed="false">Edit copy <span data-fb-editcount></span></button>
+  </div>
+
+  <div class="fb__panel" data-fb-panel hidden>
+    <div class="fb__head txh-mono">
+      <span>Feedback</span>
+      <a class="fb__queue" href="/feedback">Review queue →</a>
+      <button class="fb__x" data-fb-close aria-label="Close">×</button>
+    </div>
+
+    <div class="fb__kinds" role="radiogroup" aria-label="What kind of report is this" data-fb-kinds></div>
+
+    <input data-fb-title type="text" placeholder="Short summary" aria-label="Short summary" />
+
+    <textarea data-fb-body rows="4" aria-label="" placeholder=""></textarea>
+
+    <div class="fb__shots" data-fb-shots hidden></div>
+
+    <div class="fb__row">
+      <button class="fb__act txh-mono" data-fb-capture>Capture tab</button>
+      <span class="txh-mono fb__hint">or paste shots — ⌘V · up to 5</span>
+    </div>
+
+    <div class="fb__row">
+      <button class="fb__save txh-mono" data-fb-save>Send</button>
+      <span class="txh-mono fb__status" data-fb-status role="status"></span>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  .fb { position: fixed; right: var(--space-5); bottom: 44px; z-index: var(--z-overlay); }
+  .fb__bar { display: flex; align-items: center; gap: var(--space-2); justify-content: flex-end; flex-wrap: wrap; }
+  .fb__btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--txh-bg-raised); color: var(--txh-accent-text);
+    border: 1px solid var(--txh-clay); border-radius: var(--radius-1);
+    padding: 7px 12px; cursor: pointer; letter-spacing: .1em; text-transform: uppercase;
+  }
+  .fb__btn:hover { background: var(--txh-clay); color: var(--txh-on-accent); }
+  .fb__btn[aria-pressed='true'] { background: var(--txh-clay); color: var(--txh-on-accent); }
+  .fb__dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .fb__panel {
+    position: absolute; right: 0; bottom: calc(100% + 8px); width: 380px;
+    background: var(--txh-bg-raised); border: 1px solid var(--txh-rule-strong);
+    border-radius: var(--radius-1); padding: var(--space-4);
+    display: flex; flex-direction: column; gap: var(--space-3);
+    max-height: min(72vh, 640px); overflow-y: auto;
+  }
+  .fb__head { display: flex; align-items: center; gap: var(--space-3); color: var(--txh-fg-3); text-transform: uppercase; letter-spacing: .1em; font-size: 11px; }
+  .fb__queue { margin-left: auto; color: var(--txh-accent-text); text-decoration: none; }
+  .fb__x { background: none; border: 0; color: var(--txh-fg-3); font-size: 16px; cursor: pointer; padding: 0 2px; }
+  .fb__kinds { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+  .fb__kinds button {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    background: transparent; border: 1px solid var(--txh-rule-strong); border-radius: var(--radius-1);
+    color: var(--txh-fg-3); padding: 5px 9px; cursor: pointer;
+  }
+  .fb__kinds button[aria-checked='true'] { color: var(--txh-on-accent); background: var(--txh-clay); border-color: var(--txh-clay); }
+  input[data-fb-title], textarea[data-fb-body] {
+    width: 100%; background: var(--txh-bg-input); color: var(--txh-fg-1);
+    border: 1px solid var(--txh-border-input); border-radius: var(--radius-1);
+    padding: 9px 11px; font-family: var(--font-body-web); font-size: 13px;
+  }
+  textarea[data-fb-body] { resize: vertical; line-height: 1.5; }
+  .fb__shots { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+  .fb__shots figure { position: relative; width: 64px; margin: 0; }
+  .fb__shots img { display: block; width: 64px; height: 44px; object-fit: cover; border: 1px solid var(--txh-rule-strong); border-radius: var(--radius-1); }
+  .fb__shots button {
+    position: absolute; top: -6px; right: -6px; width: 17px; height: 17px; line-height: 1;
+    background: var(--txh-gunmetal-deep); color: var(--txh-fg-2);
+    border: 1px solid var(--txh-rule-strong); border-radius: 50%; cursor: pointer; font-size: 10px; padding: 0;
+  }
+  .fb__row { display: flex; gap: var(--space-3); align-items: center; }
+  .fb__act {
+    background: var(--txh-bg-input); color: var(--txh-fg-2);
+    border: 1px solid var(--txh-border-input); border-radius: var(--radius-1);
+    padding: 7px 10px; cursor: pointer; font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
+  }
+  .fb__hint { color: var(--txh-decor); font-size: 10px; }
+  .fb__save {
+    background: var(--txh-clay); color: var(--txh-on-accent);
+    border: 1px solid var(--txh-clay); border-radius: var(--radius-1);
+    padding: 8px 16px; cursor: pointer; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  }
+  .fb__save:hover { background: var(--txh-clay-bright); }
+  .fb__status { color: var(--txh-good-text); font-size: 10px; }
+  @media (max-width: 680px) { .fb { bottom: var(--space-5); } .fb__panel { width: calc(100vw - 2 * var(--space-5)); } }
+</style>
+
+<!-- Edit-copy mode marks elements at runtime, so these rules must be global:
+     scoped styles are compiled against the markup above and would never match. -->
+<style is:global>
+  .txh-edit-target {
+    outline: 1px dashed color-mix(in srgb, var(--txh-clay) 60%, transparent);
+    outline-offset: 4px;
+    cursor: text;
+  }
+  .txh-edit-target:focus { outline: 1px solid var(--txh-clay); }
+  [data-txh-edited] { outline-color: var(--txh-sage, #93a67f); }
+</style>
+
+<script>
+  import { KINDS, kindOf } from '../../lib/feedback/triage';
+
+  const root = document.querySelector('[data-fb]') as HTMLElement | null;
+  if (root) {
+    const $ = (sel: string) => root.querySelector(sel) as HTMLElement;
+    const panel = $('[data-fb-panel]');
+    const btn = $('[data-fb-open]') as HTMLButtonElement;
+    const kindsEl = $('[data-fb-kinds]');
+    const titleEl = $('[data-fb-title]') as HTMLInputElement;
+    const bodyEl = $('[data-fb-body]') as HTMLTextAreaElement;
+    const shotsEl = $('[data-fb-shots]');
+    const status = $('[data-fb-status]');
+    const countEl = $('[data-fb-count]');
+    const MAX_SHOTS = 5;
+    let shots: string[] = [];
+
+    // Drafts survive close/reopen — the CRM's useDraft behaviour.
+    const draft = {
+      get: (k: string, d: string) => localStorage.getItem(`txh-fb.${k}`) ?? d,
+      set: (k: string, v: string) => localStorage.setItem(`txh-fb.${k}`, v),
+      clear: () => ['kind', 'title', 'body'].forEach((k) => localStorage.removeItem(`txh-fb.${k}`)),
+    };
+    // Through kindOf, not a direct lookup — a stale draft token still renders.
+    let kind = kindOf(draft.get('kind', 'bug')).key;
+    titleEl.value = draft.get('title', '');
+    bodyEl.value = draft.get('body', '');
+
+    const drawKinds = () => {
+      kindsEl.innerHTML = '';
+      for (const k of KINDS) {
+        const b = document.createElement('button');
+        b.type = 'button'; b.setAttribute('role', 'radio');
+        b.setAttribute('aria-checked', String(k.key === kind));
+        b.textContent = k.label;
+        b.addEventListener('click', () => { kind = k.key; draft.set('kind', kind); drawKinds(); });
+        kindsEl.appendChild(b);
+      }
+      const def = kindOf(kind);
+      bodyEl.placeholder = def.prompt;
+      bodyEl.setAttribute('aria-label', def.ask);
+      titleEl.placeholder = kind === 'bug' ? 'Short summary (e.g. "Stage chip doesn’t save")' : 'Short summary';
+    };
+    drawKinds();
+    titleEl.addEventListener('input', () => draft.set('title', titleEl.value));
+    bodyEl.addEventListener('input', () => draft.set('body', bodyEl.value));
+
+    const setCount = (n: number) => { countEl.textContent = n ? `· ${n}` : ''; };
+    fetch('/__feedback').then((r) => r.json()).then((d) => setCount(d.count)).catch(() => {});
+
+    const drawShots = () => {
+      shotsEl.hidden = shots.length === 0;
+      shotsEl.innerHTML = '';
+      shots.forEach((s, i) => {
+        const fig = document.createElement('figure');
+        const img = document.createElement('img'); img.src = s; img.alt = `screenshot ${i + 1}`;
+        const x = document.createElement('button'); x.type = 'button'; x.textContent = '×';
+        x.setAttribute('aria-label', `Remove screenshot ${i + 1}`);
+        x.addEventListener('click', () => { shots.splice(i, 1); drawShots(); });
+        fig.append(img, x); shotsEl.appendChild(fig);
+      });
+    };
+
+    // 1600px longest side, JPEG 0.85 — the CRM's feedback-shots reasoning.
+    const downscale = (src: CanvasImageSource, w: number, h: number) => {
+      const sc = Math.min(1, 1600 / Math.max(w, h));
+      const c = document.createElement('canvas');
+      c.width = Math.round(w * sc); c.height = Math.round(h * sc);
+      c.getContext('2d')!.drawImage(src, 0, 0, c.width, c.height);
+      return c.toDataURL('image/jpeg', 0.85);
+    };
+    const addShot = (uri: string) => {
+      if (shots.length >= MAX_SHOTS) { status.textContent = `up to ${MAX_SHOTS} screenshots`; return; }
+      shots.push(uri); drawShots();
+    };
+
+    $('[data-fb-capture]').addEventListener('click', async () => {
+      try {
+        root.style.visibility = 'hidden';
+        const stream = await (navigator.mediaDevices as any).getDisplayMedia({
+          video: { displaySurface: 'browser' }, preferCurrentTab: true, selfBrowserSurface: 'include',
+        });
+        const v = document.createElement('video');
+        v.srcObject = stream; await v.play();
+        await new Promise((r) => setTimeout(r, 350));
+        addShot(downscale(v, v.videoWidth, v.videoHeight));
+        stream.getTracks().forEach((t: MediaStreamTrack) => t.stop());
+      } catch { /* picker cancelled */ }
+      finally { root.style.visibility = ''; }
+    });
+
+    document.addEventListener('paste', (e) => {
+      if (panel.hidden) return;
+      for (const item of e.clipboardData?.items ?? []) {
+        if (!item.type.startsWith('image/')) continue;
+        const img = new Image();
+        img.onload = () => { addShot(downscale(img, img.naturalWidth, img.naturalHeight)); URL.revokeObjectURL(img.src); };
+        img.src = URL.createObjectURL(item.getAsFile()!);
+      }
+    });
+
+    // ── Edit copy ──────────────────────────────────────────────
+    // The other half of the loop: instead of describing a wording change in a
+    // paragraph, Will rewrites the text where he reads it and the widget records
+    // the literal before/after as a 'copy' item. Nothing on the page is saved —
+    // the edit is a report, and the source file is still changed by hand.
+    const editBtn = $('[data-fb-edit]') as HTMLButtonElement;
+    const editCountEl = $('[data-fb-editcount]');
+
+    // Text blocks worth rewording. LEAF is the same list without the ancestor
+    // prefixes: an element that contains another one of these is a wrapper, not
+    // a block of copy, and editing it would swallow its children's markup.
+    const EDITABLE =
+      'main h1, main h2, main h3, main h4, main p, main li, main blockquote, main dt, main dd,' +
+      ' main figcaption, main .txh-eyebrow, main .txh-cta__sub, footer p';
+    const LEAF = 'h1, h2, h3, h4, p, li, blockquote, dt, dd, figcaption, .txh-eyebrow, .txh-cta__sub';
+    // The widget itself, anything interactive, and the nav: editing these would
+    // either report the reporter or break the control being edited.
+    // Source markup wraps paragraphs across lines; collapse whitespace so Before/After are literal sentences.
+    const norm = (t: string | null | undefined) => (t ?? '').replace(/\s+/g, ' ').trim();
+    const SKIP = '[data-fb], .fbq, form, .txh-filter, .txh-btn, .txh-btn-ring, nav';
+
+    const originals = new WeakMap<HTMLElement, string>();
+    let editing = false;
+    let edits = 0;
+    const setEditCount = (n: number) => { editCountEl.textContent = n ? `· ${n}` : ''; };
+
+    const targets = () =>
+      Array.from(document.querySelectorAll<HTMLElement>(EDITABLE))
+        .filter((el) => !el.closest(SKIP) && !el.querySelector(LEAF));
+
+    // A path a human can follow back to the element: the nearest id or
+    // data-section anchor, then nth-of-type steps down to the element itself.
+    const pathTo = (el: HTMLElement) => {
+      const steps: string[] = [];
+      let anchor = '';
+      let node: HTMLElement | null = el;
+      while (node && steps.length < 6) {
+        const cur: HTMLElement = node;
+        if (cur.id) { anchor = `#${cur.id}`; break; }
+        const section = cur.getAttribute('data-section');
+        if (section) { anchor = `[data-section="${section}"]`; break; }
+        const parent = cur.parentElement;
+        if (!parent) break;
+        const kin = Array.from(parent.children).filter((c) => c.tagName === cur.tagName);
+        steps.unshift(`${cur.tagName.toLowerCase()}:nth-of-type(${kin.indexOf(cur) + 1})`);
+        node = parent;
+      }
+      return [anchor, ...steps].filter(Boolean).join(' > ');
+    };
+
+    const isTarget = (n: EventTarget | null): HTMLElement | null => {
+      const el = n as HTMLElement | null;
+      return el && el.classList?.contains('txh-edit-target') ? el : null;
+    };
+
+    const setEditing = (on: boolean) => {
+      editBtn.setAttribute('aria-pressed', String(on));
+      if (on) {
+        editing = true;
+        document.documentElement.dataset.txhEditing = '1';
+        for (const el of targets()) {
+          el.contentEditable = 'true';
+          el.spellcheck = false;
+          el.classList.add('txh-edit-target');
+          if (!originals.has(el)) originals.set(el, norm(el.textContent));
+        }
+      } else {
+        // Blur first, while `editing` is still true, so an edit in progress is
+        // recorded on the way out instead of being thrown away by Escape.
+        // (Clicking the button blurs on its own, before the click lands.)
+        isTarget(document.activeElement)?.blur();
+        editing = false;
+        delete document.documentElement.dataset.txhEditing;
+        for (const el of Array.from(document.querySelectorAll<HTMLElement>('.txh-edit-target'))) {
+          el.removeAttribute('contenteditable');
+          el.classList.remove('txh-edit-target');
+        }
+      }
+    };
+
+    editBtn.addEventListener('click', () => setEditing(!editing));
+
+    // Leaving a block commits it. Unchanged text reports nothing.
+    document.addEventListener('focusout', async (e) => {
+      if (!editing) return;
+      const el = isTarget(e.target);
+      if (!el) return;
+      const before = originals.get(el) ?? '';
+      const after = norm(el.textContent);
+      if (after === before) return;
+      const tag = el.tagName.toLowerCase();
+      const selector = pathTo(el);
+      try {
+        const r = await fetch('/__feedback', {
+          method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            kind: 'copy',
+            title: `Copy edit · ${tag} · ${location.pathname}`,
+            body: `Before:\n${before}\n\nAfter:\n${after}`,
+            page: location.pathname, viewport: `${innerWidth}×${innerHeight}`, shots: [],
+            edit: { selector, before, after, tag },
+          }),
+        });
+        const d = await r.json();
+        if (!d.ok) throw new Error(d.error);
+        originals.set(el, after);
+        el.dataset.txhEdited = '';
+        edits += 1; setEditCount(edits);
+        setCount(d.count);
+        status.textContent = `copy edit recorded — ${d.count} awaiting review`;
+        setTimeout(() => { status.textContent = ''; }, 2600);
+      } catch {
+        // No data-txh-edited mark: the block keeps the clay outline rather than
+        // the sage one, so an unrecorded edit still looks unfinished.
+        status.textContent = 'edit not saved — is this the dev server?';
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!editing || e.key !== 'Enter') return;
+      const el = isTarget(e.target);
+      if (!el) return;
+      // Enter commits instead of opening a second line inside a heading.
+      e.preventDefault();
+      el.blur();
+    });
+
+    // Plain text only — pasted markup would land in the page and in the report.
+    document.addEventListener('paste', (e) => {
+      if (!editing || !isTarget(e.target)) return;
+      e.preventDefault();
+      const text = e.clipboardData?.getData('text/plain') ?? '';
+      if (text) document.execCommand('insertText', false, text);
+    });
+
+    // Link text has to be editable without the click navigating away.
+    document.addEventListener('click', (e) => {
+      if (!editing) return;
+      if ((e.target as HTMLElement | null)?.closest?.('main a')) e.preventDefault();
+    }, true);
+
+    btn.addEventListener('click', () => {
+      panel.hidden = !panel.hidden;
+      btn.setAttribute('aria-expanded', String(!panel.hidden));
+      if (!panel.hidden) bodyEl.focus();
+    });
+    $('[data-fb-close]').addEventListener('click', () => { panel.hidden = true; });
+    // Escape closes the panel first; with no panel open it leaves edit mode.
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (!panel.hidden) { panel.hidden = true; return; }
+      if (editing) setEditing(false);
+    });
+
+    $('[data-fb-save]').addEventListener('click', async () => {
+      if (!bodyEl.value.trim() && !titleEl.value.trim() && shots.length === 0) {
+        status.textContent = 'write something or add a shot'; return;
+      }
+      status.textContent = 'sending…';
+      try {
+        const r = await fetch('/__feedback', {
+          method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            kind, title: titleEl.value.trim(), body: bodyEl.value.trim(),
+            page: location.pathname, viewport: `${innerWidth}×${innerHeight}`, shots,
+          }),
+        });
+        const d = await r.json();
+        if (!d.ok) throw new Error(d.error);
+        shots = []; drawShots();
+        titleEl.value = ''; bodyEl.value = ''; draft.clear();
+        setCount(d.count);
+        status.textContent = `sent — ${d.count} awaiting review`;
+        setTimeout(() => { status.textContent = ''; }, 2600);
+      } catch { status.textContent = 'send failed — is this the dev server?'; }
+    });
+  }
+</script>

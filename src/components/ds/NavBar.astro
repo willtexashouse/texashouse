@@ -1,0 +1,302 @@
+---
+import Button from './Button.astro';
+/*
+  Nav, modelled on the portfolio's two-stage behaviour:
+
+    1. A static header in normal flow at the top of the page. Scrolls away.
+    2. A separate FIXED bar that slides down from off-screen once the static one
+       has scrolled out of view — and slides back up when the footer comes into
+       view, because the footer's own nav stack takes over there.
+
+  Adapted for a multi-page site: the portfolio triggers on a 100vh hero, which
+  would leave nav-less pages like /newsroom. Here the trigger is the static
+  header's own height, so it behaves the same on every page, hero or not.
+
+  The backdrop dissolves downward via a mask — no hard bottom edge.
+*/
+const links = [
+  { label: 'About', href: '/about' },
+  { label: 'Events', href: '/events' },
+  { label: 'Newsroom', href: '/newsroom' },
+];
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => path.startsWith(href);
+---
+
+{/* ── 1. Static header, in flow ─────────────────────────────────────────── */}
+<header class="txh-nav txh-nav--static" data-nav-static>
+  <a class="txh-nav__brand" href="/" aria-label="Texas House — home">
+    <img src="/logos/Texas House Cursive logo.png" alt="" width="500" height="500" />
+  </a>
+  <nav class="txh-nav__links">
+    {links.map((l) => (
+      <a href={l.href} class="txh-nav__link nav-bracket" aria-current={isCurrent(l.href) ? 'page' : undefined}>
+        {l.label}
+      </a>
+    ))}
+  </nav>
+  <div class="txh-nav__cta">
+    <Button href="/partnerships" fill="clay" ring>Become a Partner</Button>
+  </div>
+  <button class="txh-nav__menu" data-nav-toggle aria-label="Menu" aria-expanded="false" aria-controls="txh-drawer">
+    <span></span><span></span>
+  </button>
+</header>
+
+{/* ── 2. Sticky bar, fixed, slides in ───────────────────────────────────── */}
+<header class="txh-nav txh-nav--sticky" data-nav-sticky aria-hidden="true">
+  <div class="txh-nav__backdrop" aria-hidden="true"></div>
+  <a class="txh-nav__brand" href="#top" data-nav-top aria-label="Texas House — back to top">
+    <img src="/logos/Texas House Cursive logo.png" alt="" width="500" height="500" />
+  </a>
+  <nav class="txh-nav__links">
+    {links.map((l) => (
+      <a href={l.href} class="txh-nav__link nav-bracket" tabindex="-1" aria-current={isCurrent(l.href) ? 'page' : undefined}>
+        {l.label}
+      </a>
+    ))}
+  </nav>
+  <div class="txh-nav__cta">
+    <Button href="/partnerships" fill="clay" ring>Become a Partner</Button>
+  </div>
+  <button class="txh-nav__menu" data-nav-toggle aria-label="Menu" aria-expanded="false" aria-controls="txh-drawer" tabindex="-1">
+    <span></span><span></span>
+  </button>
+</header>
+
+<div class="txh-drawer" id="txh-drawer" data-drawer hidden>
+  <nav class="txh-drawer__nav">
+    {links.map((l) => (
+      <a href={l.href} class="txh-drawer__link" aria-current={isCurrent(l.href) ? 'page' : undefined}>
+        <span>{l.label}</span>
+        <span class="txh-drawer__chev" aria-hidden="true">→</span>
+      </a>
+    ))}
+  </nav>
+  <div class="txh-drawer__cta">
+    <Button href="/partnerships" fill="clay">Become a Partner</Button>
+  </div>
+</div>
+
+<style>
+  .txh-nav {
+    display: flex; align-items: center; gap: var(--space-7);
+    padding: var(--space-5) var(--page-gutter);
+  }
+  .txh-nav--static { background: var(--txh-bg); }
+
+  /* Fixed bar — parked off-screen until the static header scrolls away. */
+  .txh-nav--sticky {
+    position: fixed; top: 0; left: 0; right: 0; z-index: var(--z-nav);
+    padding: var(--space-4) var(--page-gutter);
+    transform: translateY(-100%);
+    transition: transform var(--dur-base) var(--ease-out);
+    will-change: transform;
+    pointer-events: none;
+  }
+  .txh-nav--sticky[data-shown] { transform: translateY(0); pointer-events: auto; }
+
+  /* Progressive backdrop: blur that dissolves downward, masked so there is no
+     bottom edge. Extends past the bar so the fade happens outside it. */
+  .txh-nav__backdrop {
+    position: absolute; top: 0; left: 0; right: 0; bottom: -80px;
+    z-index: -1; pointer-events: none;
+    backdrop-filter: blur(8px) brightness(0.78);
+    -webkit-backdrop-filter: blur(8px) brightness(0.78);
+    background: linear-gradient(to bottom,
+      rgba(14,11,9,0.46) 0%, rgba(14,11,9,0.20) 45%, rgba(14,11,9,0) 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 30%, rgba(0,0,0,0.5) 62%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 30%, rgba(0,0,0,0.5) 62%, transparent 100%);
+  }
+
+  /* overflow:hidden keeps the wordmark's dead canvas (see below) from hanging
+     outside the bar as an invisible click target over the hero. */
+  .txh-nav__brand { display: flex; align-items: center; margin-right: auto; overflow: hidden; flex: none; }
+
+  /* Cursive wordmark. The file is NOT cropped to the lettering: it is a 500×500
+     SQUARE canvas with the ink floating in the middle — 45.6% of the height
+     (27.2% empty above and below) and 80.6% of the width. Because the natural
+     ratio is 1:1, a plain `height: 68px` draws a 68px SQUARE and the wordmark
+     inside it lands at ~31px. That is what made the old 44px setting read as
+     tiny in a bar with plenty of room.
+
+     So --wordmark is the height we want the INK to be. The canvas is drawn as
+     an explicit square scaled by 1/0.456 ≈ 2.193, and the empty margin is
+     pulled back off with negative margins, leaving a link box that measures the
+     wordmark instead of the canvas. The pull is rounded ~0.5% short of the true
+     padding so subpixel rounding can never shave the ink.
+
+     Both axes are stated (and flex sizing switched off) on purpose: as a flex
+     item with `width: auto` the image gets shrunk to the link's own
+     content-derived width and renders squashed.
+
+     If the PNG is ever re-cropped tight to the ink, delete the multipliers and
+     the overflow above, and set `height: var(--wordmark); width: auto`. */
+  .txh-nav__brand img {
+    --wordmark: 68px;                                 /* static bar, desktop */
+    --canvas: calc(var(--wordmark) * 2.193);
+    display: block; flex: none; max-width: none;
+    width: var(--canvas); height: var(--canvas);
+    margin-block: calc(var(--wordmark) * -0.594);
+    margin-inline-start: calc(var(--wordmark) * -0.213);
+    margin-inline-end: calc(var(--wordmark) * -0.209);
+  }
+  /* Sticky bar stays condensed — smaller mark on tighter padding. */
+  .txh-nav--sticky .txh-nav__brand img { --wordmark: 56px; }
+
+  .txh-nav__links { display: flex; align-items: center; gap: var(--space-7); }
+  .txh-nav__link {
+    font-family: var(--font-eyebrow); font-size: 13px;
+    letter-spacing: var(--ls-eyebrow); text-transform: uppercase;
+    color: var(--txh-ivory); text-decoration: none;
+    opacity: .78;
+    transition: opacity var(--dur-fast) var(--ease-out);
+  }
+  .txh-nav__link:hover { opacity: 1; }
+  .txh-nav__link[aria-current='page'] { opacity: 1; }
+
+  /* Brackets fly in from outside on hover — the same idiom as .txh-chip. */
+  .nav-bracket { position: relative; }
+  .nav-bracket::before, .nav-bracket::after {
+    position: absolute; top: 0; color: var(--txh-accent-text);
+    opacity: 0; pointer-events: none;
+    transition: opacity var(--dur-fast) var(--ease-out),
+                transform var(--dur-fast) var(--ease-out);
+  }
+  .nav-bracket::before { content: "["; right: 100%; margin-right: .32em; transform: translateX(5px); }
+  .nav-bracket::after  { content: "]"; left: 100%;  margin-left: .32em;  transform: translateX(-5px); }
+  .nav-bracket:hover::before, .nav-bracket:hover::after,
+  .nav-bracket[aria-current='page']::before, .nav-bracket[aria-current='page']::after {
+    opacity: 1; transform: translateX(0);
+  }
+
+  /* Dual-line hamburger; lines rotate to × when open (brand doc). */
+  .txh-nav__menu {
+    display: none; flex-direction: column; justify-content: center;
+    gap: 6px; width: 44px; height: 44px;
+    background: none; border: 0; cursor: pointer; padding: 0;
+    align-items: flex-end;
+  }
+  .txh-nav__menu span {
+    display: block; width: 26px; height: 1.5px; background: var(--txh-ivory);
+    transition: transform var(--dur-base) var(--ease-out),
+                background var(--dur-fast) var(--ease-out);
+  }
+  .txh-nav__menu[aria-expanded='true'] span { background: var(--txh-accent-text); }
+  .txh-nav__menu[aria-expanded='true'] span:first-child { transform: translateY(3.75px) rotate(45deg); }
+  .txh-nav__menu[aria-expanded='true'] span:last-child  { transform: translateY(-3.75px) rotate(-45deg); }
+
+  /* Dropdown. Gunmetal like the rest of the site — never black. */
+  .txh-drawer {
+    display: none; flex-direction: column;
+    padding: var(--space-4) var(--page-gutter) var(--space-6);
+    background: var(--txh-bg);
+    border-top: 1px solid var(--txh-rule);
+    border-bottom: 1px solid var(--txh-clay);
+  }
+  .txh-drawer[data-open] { animation: txh-drawer-in var(--dur-base) var(--ease-out) both; }
+  @keyframes txh-drawer-in {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .txh-drawer__nav { display: flex; flex-direction: column; }
+  .txh-drawer__link {
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-display); text-transform: uppercase;
+    letter-spacing: var(--ls-dreamboat-sm); font-size: 28px;
+    color: var(--txh-fg-1); text-decoration: none;
+    padding: var(--space-4) 0; border-bottom: 1px solid var(--txh-rule);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .txh-drawer__link[aria-current='page'] { color: var(--txh-accent-text); }
+  .txh-drawer__chev { font-family: var(--font-mono); font-size: 16px; color: var(--txh-decor); }
+  .txh-drawer__link[aria-current='page'] .txh-drawer__chev { color: var(--txh-accent-text); }
+  .txh-drawer__cta { margin-top: var(--space-5); }
+  /* The ring wrapper shrink-wraps as inline-flex, which was silently defeating
+     the button's width:100% — stretch it so the drawer CTA truly spans. */
+  .txh-drawer__cta :global(.txh-btn-ring) { display: flex; width: 100%; }
+  .txh-drawer__cta :global(.txh-btn) { width: 100%; justify-content: center; height: 3.4em; }
+
+  @media (max-width: 860px) {
+    .txh-nav__links, .txh-nav__cta { display: none; }
+    .txh-nav__menu { display: flex; }
+    .txh-drawer:not([hidden]) { display: flex; }
+    .txh-nav__brand img { --wordmark: 46px; }
+    .txh-nav--sticky .txh-nav__brand img { --wordmark: 40px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .txh-nav--sticky { transition: none; }
+  }
+</style>
+
+<script>
+  const staticNav = document.querySelector('[data-nav-static]') as HTMLElement | null;
+  const sticky = document.querySelector('[data-nav-sticky]') as HTMLElement | null;
+
+  if (staticNav && sticky) {
+    const links = sticky.querySelectorAll<HTMLElement>('a, button');
+    let shown = false;
+    let raf = 0;
+
+    const apply = () => {
+      raf = 0;
+      // Reveal once the static header has scrolled out of view. The portfolio
+      // keys off a 100vh hero; this works on pages that have no hero.
+      const pastHeader = window.scrollY > staticNav.offsetHeight;
+
+      // Hide again when the footer arrives — its own nav stack takes over.
+      const footer = document.querySelector('footer');
+      const footerInView = footer
+        ? footer.getBoundingClientRect().top < window.innerHeight - 80
+        : false;
+
+      const next = pastHeader && !footerInView;
+      if (next === shown) return;
+      shown = next;
+
+      if (shown) sticky.setAttribute('data-shown', '');
+      else sticky.removeAttribute('data-shown');
+      sticky.setAttribute('aria-hidden', String(!shown));
+      // Keep the off-screen copy out of the tab order.
+      links.forEach((el) => el.setAttribute('tabindex', shown ? '0' : '-1'));
+    };
+
+    apply();
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(apply); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+  }
+
+  // Logo in the sticky bar returns to the top.
+  document.querySelector('[data-nav-top]')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+  });
+
+  // Both Menu buttons drive the one drawer.
+  const drawer = document.querySelector('[data-drawer]') as HTMLElement | null;
+  const toggles = document.querySelectorAll('[data-nav-toggle]');
+
+  const setDrawer = (open: boolean) => {
+    if (!drawer) return;
+    drawer.hidden = !open;
+    if (open) drawer.setAttribute('data-open', '');
+    else drawer.removeAttribute('data-open');
+    toggles.forEach((b) => b.setAttribute('aria-expanded', String(open)));
+  };
+
+  toggles.forEach((btn) => {
+    btn.addEventListener('click', () => setDrawer(!!drawer?.hidden));
+  });
+
+  // Close on navigation and on Escape, so it never strands the user.
+  drawer?.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', () => setDrawer(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer && !drawer.hidden) {
+      setDrawer(false);
+      (toggles[0] as HTMLElement | undefined)?.focus();
+    }
+  });
+</script>

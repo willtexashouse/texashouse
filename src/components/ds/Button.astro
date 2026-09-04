@@ -1,0 +1,96 @@
+---
+/*
+  Texas House button. Zero JS — every interaction is CSS.
+  See docs/brand-specimen.md §5.4.
+
+  shape   'soft' (default, lightly rounded) · 'sharp' · 'pill'
+  arrow   show the rolling arrow box. Off by default.
+  bracket wrap the label in [ ]. Off by default.
+*/
+interface Props {
+  href?: string;
+  fill?: 'clay' | 'ivory' | 'ghost';
+  shape?: 'soft' | 'pill' | 'sharp';
+  bracket?: boolean;
+  /**
+   * Standing ivory ring. On by default for every fill, so a solid button and a
+   * ghost button sitting side by side occupy the same box. On ghost the ring is
+   * rendered but transparent — pass ring={true} to make it visible, ring={false}
+   * to drop the wrapper entirely.
+   */
+  ring?: boolean;
+  arrow?: boolean;
+  arrowGlyph?: string;
+  class?: string;
+}
+const {
+  href,
+  fill = 'clay',
+  shape = 'soft',
+  bracket = false,
+  arrow = false,
+  arrowGlyph = '↗',
+  class: extra = '',
+} = Astro.props;
+
+// The ring wrapper is on by default for every fill — that is what keeps a
+// solid/ghost pair on one footprint (the wrapper adds ~12px all round). On ghost
+// the wrapper is still drawn but its border is transparent, so the button looks
+// exactly as it always did while measuring the same as its solid neighbour.
+// An explicit ring={true} on a ghost opts into the real, visible ivory ring;
+// ring={false} removes the wrapper entirely, for any fill.
+const ring = Astro.props.ring ?? true;
+const ghostRing = fill === 'ghost' && Astro.props.ring === undefined;
+
+const Tag = href ? 'a' : 'button';
+const cls = [
+  'txh-btn',
+  `txh-btn--${fill}`,
+  shape === 'sharp' ? 'txh-btn--sharp' : '',
+  shape === 'pill' ? 'txh-btn--pill' : '',
+  bracket ? 'txh-btn--bracket' : '',
+  arrow ? '' : 'txh-btn--noarrow',
+  extra,
+].filter(Boolean).join(' ');
+const ringCls = [
+  'txh-btn-ring',
+  shape === 'sharp' ? 'txh-btn-ring--sharp' : '',
+  shape === 'pill' ? 'txh-btn-ring--pill' : '',
+  ghostRing ? 'txh-btn-ring--ghost' : '',
+].filter(Boolean).join(' ');
+const label = await Astro.slots.render('default');
+---
+
+{ring ? (
+  <span class={ringCls}>
+    <Tag href={href} class={cls}>
+      <span class="txh-btn__label">
+        <span class="txh-btn__roll">
+          <span class="txh-btn__line" set:html={label} />
+          <span class="txh-btn__line" aria-hidden="true" set:html={label} />
+        </span>
+      </span>
+      {arrow && (
+        <span class="txh-btn__arrowbox" aria-hidden="true">
+          <span class="txh-btn__arrow txh-btn__arrow--a">{arrowGlyph}</span>
+          <span class="txh-btn__arrow txh-btn__arrow--b">{arrowGlyph}</span>
+        </span>
+      )}
+    </Tag>
+  </span>
+) : (
+  <Tag href={href} class={cls}>
+    <span class="txh-btn__label">
+      <span class="txh-btn__roll">
+        <span class="txh-btn__line" set:html={label} />
+        <span class="txh-btn__line" aria-hidden="true" set:html={label} />
+      </span>
+    </span>
+    {arrow && (
+      <span class="txh-btn__arrowbox" aria-hidden="true">
+        <span class="txh-btn__arrow txh-btn__arrow--a">{arrowGlyph}</span>
+        <span class="txh-btn__arrow txh-btn__arrow--b">{arrowGlyph}</span>
+      </span>
+    )}
+  </Tag>
+)}

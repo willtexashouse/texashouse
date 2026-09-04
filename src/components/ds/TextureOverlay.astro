@@ -1,0 +1,57 @@
+---
+/*
+  Site-wide analog texture. Scanlines are the Texas House direction (the Design
+  System's paper-grain.png is retired — see brand-specimen.md §5.1); the
+  feTurbulence grain sits underneath as substrate.
+
+  Fixed, above the page, pointer-events:none. Zero JS.
+*/
+const GRAIN =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E" +
+  "%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E" +
+  "%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E" +
+  "%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E";
+---
+
+<div class="txh-texture" aria-hidden="true">
+  <div class="txh-texture__grain" style={`background-image:url("${GRAIN}")`}></div>
+  <div class="txh-texture__scan"></div>
+</div>
+
+<style>
+  .txh-texture {
+    position: fixed; inset: 0;
+    z-index: 50; pointer-events: none; overflow: hidden;
+  }
+  .txh-texture__grain {
+    position: absolute; inset: -8px;          /* oversize so drift never shows an edge */
+    background-repeat: repeat; background-size: 180px 180px;
+    opacity: 0.045; mix-blend-mode: overlay;
+    will-change: background-position;
+    animation: txh-grain-drift 8s steps(6, end) infinite;
+  }
+  /* Scanlines are subtractive black, deliberately not a brand colour — they
+     darken rather than tint, which is what keeps them off the palette. */
+  .txh-texture__scan {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent 0, transparent 2px,
+      rgba(0,0,0,0.16) 2px, rgba(0,0,0,0.16) 3px);
+    opacity: 0.5;
+  }
+  @keyframes txh-grain-drift {
+    0%   { background-position: 0 0; }
+    20%  { background-position: -3px 2px; }
+    40%  { background-position: 2px -4px; }
+    60%  { background-position: -2px -2px; }
+    80%  { background-position: 4px 3px; }
+    100% { background-position: 0 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .txh-texture__grain { animation: none; }
+  }
+  @media (max-width: 680px) {
+    .txh-texture__grain { opacity: 0.03; animation: none; }
+    .txh-texture__scan { display: none; }
+  }
+</style>

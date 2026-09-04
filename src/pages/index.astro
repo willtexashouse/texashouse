@@ -1,43 +1,377 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ds/Button.astro';
 import { safeFetch } from '../lib/sanity/safeFetch';
 import {
-  HOME_PAGE_QUERY,
+  MARQUEE_SPONSORS_QUERY,
+  HOME_EVENTS_QUERY,
   PAST_EVENTS_QUERY,
   FEATURED_ARTICLE_QUERY,
   RECENT_ARTICLES_QUERY,
 } from '../lib/sanity/queries';
+import { urlFor } from '../lib/sanity/image';
 
-// Data wiring is in place; the branded markup arrives via the Claude Design import.
-const home = await safeFetch<any>(HOME_PAGE_QUERY, {}, null);
+/*
+  Home. Composition follows docs/wireframe-brief.md; every card, section head
+  and grid idiom is the shared foundation vocabulary from global.css (ported
+  from the shoplift.media research page — see docs/component-inventory.md §3),
+  so the home page reads as the same publication as /newsroom and /events.
+
+  HERO OBJECT DEFERRED. The cowboy-hat-on-rotating-globe treatment is still open
+  (brand-specimen.md §8.3 — DitheringShader vs LiquidWordmark). The hero is
+  typographic for now, but the media slot stays in the composition rather than
+  being added back later: the two-column balance is the design, not a fallback.
+*/
+
+const marqueeSponsors = await safeFetch<any[]>(MARQUEE_SPONSORS_QUERY, {}, []);
+const homeEvents = await safeFetch<any>(HOME_EVENTS_QUERY, {}, { active: [], upcoming: [] });
 const pastEvents = await safeFetch<any[]>(PAST_EVENTS_QUERY, {}, []);
 const featured = await safeFetch<any>(FEATURED_ARTICLE_QUERY, {}, null);
-const recent = await safeFetch<any[]>(RECENT_ARTICLES_QUERY, { limit: 3 }, []);
+const recentAll = await safeFetch<any[]>(RECENT_ARTICLES_QUERY, { limit: 4 }, []);
+
+// Marquee: the query already filters to logo-bearing sponsors an editor hasn't
+// switched off; capped so the track stays a sane width to duplicate.
+const logos = marqueeSponsors.slice(0, 20);
+
+const liveEvents = [...(homeEvents?.active ?? []), ...(homeEvents?.upcoming ?? [])];
+const past = pastEvents.slice(0, 4);
+
+// The featured dispatch is pulled out of the recent list so it isn't shown twice.
+const recent = recentAll.filter((a) => a?._id !== featured?._id).slice(0, 3);
+
+const fmtDay = (d: string) =>
+  d
+    ? new Intl.DateTimeFormat('en-US', {
+        month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+      }).format(new Date(d))
+    : '';
+const fmtMonth = (d: string) =>
+  d
+    ? new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' })
+        .format(new Date(d)).toUpperCase()
+    : '';
+const num = (i: number) => String(i).padStart(2, '0');
 ---
 
-<BaseLayout title="Texas House">
-  <main class="mx-auto max-w-3xl px-6 py-24">
-    <p class="text-sm uppercase tracking-widest text-[var(--color-brand-accent)]">
-      Foundation scaffold
-    </p>
-    <h1 class="mt-4 font-[var(--font-display)] text-4xl font-semibold">Texas House</h1>
-    <p class="mt-4 text-lg">
-      Building the network of ascending leaders in Texas. This is the Astro +
-      Sanity foundation — branded design will be imported from Claude Design and
-      slotted into these sections.
-    </p>
+<BaseLayout
+  title="Texas House — Where Texas meets the world"
+  description="Texas House is the Texas platform at SXSW, Race Weekend, and SXSW London — the room where Texas business, capital, and culture meet the world, built for the partners who need to be in it."
+>
+  <main class="txh-page">
 
-    <!--
-      Section scaffold (see docs/information-architecture.md):
-      Hero · About (marquee, postcards, what we do) · Upcoming Events ·
-      Past Events · Recent Articles · Footer
-      Data fetched above is ready to feed the imported components.
-    -->
-    <ul class="mt-10 space-y-1 text-sm text-neutral-600">
-      <li>Home content: {home ? 'loaded' : 'not configured yet'}</li>
-      <li>Past events: {pastEvents.length}</li>
-      <li>Featured article: {featured ? 'yes' : 'none'}</li>
-      <li>Recent articles: {recent.length}</li>
-    </ul>
+    <section class="hero" data-section="Hero">
+      <div class="hero__copy">
+        <p class="txh-eyebrow hero__eyebrow">Texas House · Austin · London · Washington</p>
+
+        <h1 class="txh-display hero__head">Where Texas meets the world.</h1>
+
+        <p class="hero__lede">
+          The Texas platform at SXSW, Race Weekend, and SXSW London — the room where
+          Texas business, capital, and culture meet the world, built for the partners
+          who need to be in it.
+        </p>
+
+        <div class="hero__actions">
+          <Button fill="clay" href="/partnerships">Become a Partner</Button>
+          <Button fill="ghost" href="/events">See the activations</Button>
+        </div>
+      </div>
+
+      {/* Reserved media slot — the hero object is deferred, the slot is not. */}
+      <div class="hero__slot" aria-hidden="true">
+        <span class="txh-tick txh-tick--tl"></span>
+        <span class="txh-tick txh-tick--br"></span>
+        <span class="txh-mono hero__slot-label">reserved — hero object</span>
+      </div>
+    </section>
+
+    {logos.length > 0 && (
+      <section class="marquee" data-section="Partners">
+        <div class="marquee__viewport">
+          <div class="marquee__track">
+            <div class="marquee__row">
+              {logos.map((s) => (
+                <img src={urlFor(s.logo).height(120).url()} alt={s.name ?? ''} height="52" />
+              ))}
+            </div>
+            <div class="marquee__row" aria-hidden="true">
+              {logos.map((s) => (
+                <img src={urlFor(s.logo).height(120).url()} alt="" height="52" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <hr class="txh-rule-dashed about__rule" />
+
+    <section class="about" data-section="About">
+      <div>
+        <p class="txh-eyebrow about__eyebrow">About Texas House</p>
+        {/* Brand doc says "always with period"; the live site renders it with a
+            space before the period — unresolved (brand-specimen.md §8.4). */}
+        <h2 class="txh-display-sm about__head">Recognizing Texcellence.</h2>
+      </div>
+      <div class="about__body">
+        <p>
+          Texas House is a public affairs and innovation organization based in Austin.
+          We put Texas in front of the people already paying attention — with activations
+          at the moments the world shows up for: SXSW Austin, SXSW London, Formula 1.
+        </p>
+        <p>
+          Between those moments we work the network: curated connections, superconnector
+          programming, and rooms built across music, film, research, technology, policy,
+          and economic opportunity. Connect, celebrate, entertain.
+        </p>
+        <div class="about__cta">
+          <Button fill="ghost" href="/about">About Texas House</Button>
+        </div>
+      </div>
+    </section>
+
+    <section class="what" data-section="What we do">
+      <div class="what__col">
+        <span class="txh-mono what__num">01</span>
+        <h3 class="what__title">Activations</h3>
+        <p class="what__copy">
+          Flagship programming staged where the world is already looking. We do not
+          rent a booth — we build the room and set the agenda inside it.
+        </p>
+      </div>
+      <div class="what__col">
+        <span class="txh-mono what__num">02</span>
+        <h3 class="what__title">Superconnectors</h3>
+        <p class="what__copy">
+          The operators whose introductions actually move. Founders, funders, officials
+          and creators who show up for each other long after the week is over.
+        </p>
+      </div>
+      <div class="what__col">
+        <span class="txh-mono what__num">03</span>
+        <h3 class="what__title">Curated Connections</h3>
+        <p class="what__copy">
+          Rooms built on purpose, not badge scans. Every seat is considered, and every
+          introduction is made by someone who knows both sides of it.
+        </p>
+      </div>
+    </section>
+
+    <section class="block" data-section="Events">
+      <div class="txh-sechead">
+        <div>
+          <div class="txh-sechead__num">§03<em>Activations</em></div>
+          <h2 class="txh-display txh-sechead__title">Events</h2>
+        </div>
+        <a class="txh-sechead__link" href="/events">All events</a>
+      </div>
+
+      {liveEvents.length > 0 && (
+        <div class="txh-grid">
+          {liveEvents.map((e) => (
+            <a class="txh-item" href={`/events/${e.slug.current}`}>
+              <span class="txh-item__meta"><strong>{fmtDay(e.date)}</strong></span>
+              <span class="txh-chip txh-item__tag">{e.status}</span>
+              <span class="txh-item__title">{e.title}</span>
+              <span class="txh-item__read">Details →</span>
+            </a>
+          ))}
+        </div>
+      )}
+
+      {past.length > 0 && (
+        <>
+          <div class="txh-year">Past activations</div>
+          <div class="txh-grid">
+            {past.map((e) => (
+              <a class="txh-item" href={`/events/${e.slug.current}`}>
+                <span class="txh-item__meta"><strong>{fmtDay(e.date)}</strong></span>
+                {e.city && <span class="txh-chip txh-item__tag">{e.city}</span>}
+                <span class="txh-item__title">{e.title}</span>
+                <span class="txh-item__read">Recap →</span>
+              </a>
+            ))}
+          </div>
+        </>
+      )}
+    </section>
+
+    <section class="block" data-section="Dispatches">
+      <div class="txh-sechead">
+        <div>
+          <div class="txh-sechead__num">§04<em>Dispatches</em></div>
+          <h2 class="txh-display txh-sechead__title">Newsroom</h2>
+        </div>
+        <a class="txh-sechead__link" href="/newsroom">All articles</a>
+      </div>
+
+      {featured && (
+        <a class="txh-feature" href={`/newsroom/${featured.slug.current}`}>
+          <span class="txh-tick txh-tick--tl"></span>
+          <span class="txh-tick txh-tick--br"></span>
+
+          <span class="txh-feature__thumb">
+            {featured.mainImage && (
+              <img
+                src={urlFor(featured.mainImage).width(960).height(600).fit('crop').url()}
+                alt=""
+                loading="lazy"
+                width="960"
+                height="600"
+              />
+            )}
+            <span class="txh-feature__badge">N / 01 · Featured</span>
+          </span>
+
+          <span class="txh-feature__text">
+            <span class="txh-feature__meta">
+              <strong>N / 01</strong><span>·</span>
+              <span>{fmtMonth(featured.publishedAt)}</span><span>·</span>
+              <span>{featured.type === 'media' ? 'In the press' : 'Field note'}</span>
+            </span>
+            <span class="txh-feature__title">{featured.title}</span>
+            {featured.summary && <span class="txh-feature__excerpt">{featured.summary}</span>}
+            <span class="txh-feature__read">Read the dispatch</span>
+          </span>
+        </a>
+      )}
+
+      {recent.length > 0 && (
+        <div class="txh-grid">
+          {recent.map((a, i) => (
+            <a class="txh-item" href={`/newsroom/${a.slug.current}`}>
+              <span class="txh-item__meta">
+                <strong>N / {num(i + 2)}</strong><span>·</span>
+                <span>{fmtMonth(a.publishedAt)}</span>
+              </span>
+              {a.topics?.[0] && <span class="txh-chip txh-item__tag">{a.topics[0].title}</span>}
+              <span class="txh-item__title">{a.title}</span>
+              {a.summary && <span class="txh-item__excerpt">{a.summary}</span>}
+              <span class="txh-item__read">Read →</span>
+            </a>
+          ))}
+        </div>
+      )}
+    </section>
+
   </main>
 </BaseLayout>
+
+<style>
+  /* Full grid — no max-width container. The page runs edge to edge inside the
+     shared gutter, same as /newsroom and /events. */
+  .txh-page { padding: var(--space-8) var(--page-gutter) var(--space-9); }
+
+  /* ── Hero ────────────────────────────────────────────────────────────── */
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: center;
+    min-height: 78vh;
+  }
+  .hero__eyebrow { color: var(--txh-accent-text); }
+  .hero__head {
+    margin-top: var(--space-5);
+    /* One four-word line — display scale, set tight so the words read as a mark
+       rather than a sentence. Wraps to two or three rows by design. */
+    font-size: clamp(44px, 5.6vw, 84px);
+    letter-spacing: -0.12em;
+    line-height: .92;
+    max-width: 9ch;
+    color: var(--txh-fg-1);
+  }
+  .hero__lede {
+    margin-top: var(--space-6);
+    font-size: var(--fs-body-lg);
+    line-height: var(--lh-body);
+    color: var(--txh-fg-2);
+    max-width: 54ch;
+  }
+  .hero__actions {
+    display: flex; flex-wrap: wrap; align-items: center;
+    gap: var(--space-4); margin-top: var(--space-7);
+  }
+
+  .hero__slot {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    aspect-ratio: 4 / 5;
+    border: 1px solid var(--txh-rule);
+  }
+  .hero__slot-label { color: var(--txh-decor); }
+
+  /* ── Partner marquee ─────────────────────────────────────────────────── */
+  .marquee {
+    margin-top: var(--space-9);
+    border-top: 1px solid var(--txh-rule);
+    border-bottom: 1px solid var(--txh-rule);
+    padding: var(--space-6) 0;
+  }
+  .marquee__viewport { overflow: hidden; }
+  .marquee__track { display: flex; width: max-content; animation: txh-marquee 40s linear infinite; }
+  .marquee__row { display: flex; align-items: center; gap: var(--space-8); padding-right: var(--space-8); }
+  .marquee__row img {
+    height: 52px; width: auto; display: block;
+    filter: grayscale(1) brightness(1.6);
+    opacity: .6;
+    transition: opacity var(--dur-base) var(--ease-out);
+  }
+  .marquee__row img:hover { opacity: 1; }
+  @keyframes txh-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── About ───────────────────────────────────────────────────────────── */
+  .about__rule { margin-top: var(--space-9); }
+  .about {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: var(--space-8); margin-top: var(--space-8);
+  }
+  .about__eyebrow { color: var(--txh-accent-text); }
+  .about__head {
+    margin-top: var(--space-4);
+    font-size: clamp(30px, 3.6vw, 52px);
+    color: var(--txh-fg-1);
+  }
+  .about__body p {
+    font-size: var(--fs-body); line-height: var(--lh-body); color: var(--txh-fg-2);
+    max-width: 56ch;
+  }
+  .about__body p + p { margin-top: var(--space-4); }
+  .about__cta { margin-top: var(--space-6); }
+
+  /* ── What we do ──────────────────────────────────────────────────────── */
+  .what {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6); margin-top: var(--space-9);
+  }
+  .what__col { border-top: 1px solid var(--txh-rule); padding-top: var(--space-4); }
+  .what__num { display: block; color: var(--txh-fg-4); }
+  .what__title {
+    font-family: var(--font-body-web); font-weight: 700;
+    font-size: var(--fs-h4); line-height: 1.25;
+    margin-top: var(--space-3); color: var(--txh-fg-1);
+  }
+  .what__copy {
+    font-size: var(--fs-small); line-height: var(--lh-body);
+    color: var(--txh-fg-3); margin-top: var(--space-3);
+  }
+
+  /* ── Section blocks ──────────────────────────────────────────────────── */
+  .block { margin-top: var(--space-9); }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; min-height: 0; gap: var(--space-7); }
+    .hero__slot { max-width: 420px; }
+    .about { grid-template-columns: 1fr; gap: var(--space-6); }
+    .what { grid-template-columns: 1fr; }
+  }
+
+  /* Static row, no travel — the logos that fit are the logos you get. */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track { animation: none; }
+    .marquee__viewport { overflow: hidden; }
+  }
+</style>

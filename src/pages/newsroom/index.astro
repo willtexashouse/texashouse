@@ -1,29 +1,169 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { safeFetch } from '../../lib/sanity/safeFetch';
-import {
-  FEATURED_ARTICLE_QUERY,
-  ALL_ARTICLES_QUERY,
-  TOPICS_QUERY,
-} from '../../lib/sanity/queries';
+import { ALL_ARTICLES_QUERY, FEATURED_ARTICLE_QUERY } from '../../lib/sanity/queries';
+import { urlFor } from '../../lib/sanity/image';
+
+/*
+  Newsroom. Layout ported from the deployed shoplift.media research page and its
+  home preview — the only two patterns taken from that site — re-skinned onto
+  Texas House tokens. See docs/component-inventory.md §3.
+*/
 
 const featured = await safeFetch<any>(FEATURED_ARTICLE_QUERY, {}, null);
-const articles = await safeFetch<any[]>(ALL_ARTICLES_QUERY, {}, []);
-const topics = await safeFetch<any[]>(TOPICS_QUERY, {}, []);
+const all = await safeFetch<any[]>(ALL_ARTICLES_QUERY, {}, []);
+
+const rest = all.filter((a) => a?._id !== featured?._id);
+
+// Topics come from the articles themselves, not a fixed list — the real data
+// uses Economic Development / Innovation / Defense / Culture / Entrepreneurship,
+// not the placeholder set in the wireframe brief.
+const topics = [...new Set(all.flatMap((a) => (a.topics ?? []).map((t: any) => t.title)))].sort();
+
+const fmt = (d: string) =>
+  d ? new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' })
+        .format(new Date(d)).toUpperCase()
+    : '';
+const yearOf = (d: string) => (d ? new Date(d).getUTCFullYear() : 0);
+const num = (i: number) => String(i + 1).padStart(2, '0');
+
+// Group the archive by year so the list reads as a record, not a feed.
+const years = [...new Set(rest.map((a) => yearOf(a.publishedAt)))].sort((a, b) => b - a);
 ---
 
-<BaseLayout title="Newsroom · Texas House">
-  <main class="mx-auto max-w-3xl px-6 py-24">
-    <h1 class="font-[var(--font-display)] text-4xl font-semibold">Newsroom</h1>
-    <p class="mt-4 text-lg">Featured article, topic filter, and the archive.</p>
-    <!--
-      Sections: Featured article · Topic filter (island) · Archive grid.
-      Topics drive the working filter; articles drive featured + archive.
-    -->
-    <ul class="mt-10 space-y-1 text-sm text-neutral-600">
-      <li>Featured: {featured ? 'yes' : 'none'}</li>
-      <li>Articles: {articles.length}</li>
-      <li>Topics: {topics.length}</li>
-    </ul>
+<BaseLayout
+  title="Newsroom — Texas House"
+  description="The story of contemporary Texas — recaps, dispatches, and the people in the room, from Texas House."
+>
+  <main class="txh-page">
+
+    <section data-section="Newsroom">
+      <div class="txh-sechead">
+        <div>
+          <div class="txh-sechead__num">§01<em>Dispatches</em></div>
+          <h1 class="txh-display txh-sechead__title">Newsroom</h1>
+        </div>
+        <a class="txh-sechead__link" href="/partnerships">Partner with us</a>
+      </div>
+
+      <p class="txh-page__lede">
+        The story of contemporary Texas: recaps, dispatches, and the people in the room.
+      </p>
+
+      {topics.length > 0 && (
+        <div class="txh-filter" data-filter>
+          <button type="button" data-topic="*" aria-pressed="true">All</button>
+          {topics.map((t) => (
+            <button type="button" data-topic={t} aria-pressed="false">{t}</button>
+          ))}
+        </div>
+      )}
+    </section>
+
+    {featured && (
+      <section data-section="Featured">
+        <a class="txh-feature" href={`/newsroom/${featured.slug.current}`}>
+          <span class="txh-tick txh-tick--tl"></span>
+          <span class="txh-tick txh-tick--br"></span>
+
+          <span class="txh-feature__thumb">
+            {featured.mainImage && (
+              <img
+                src={urlFor(featured.mainImage).width(960).height(600).fit('crop').url()}
+                alt=""
+                loading="eager"
+                width="960"
+                height="600"
+              />
+            )}
+            <span class="txh-feature__badge">N / 01 · Featured</span>
+          </span>
+
+          <span class="txh-feature__text">
+            <span class="txh-feature__meta">
+              <strong>N / 01</strong><span>·</span>
+              <span>{fmt(featured.publishedAt)}</span><span>·</span>
+              <span>{featured.type === 'media' ? 'In the press' : 'Field note'}</span>
+            </span>
+            <span class="txh-feature__title">{featured.title}</span>
+            {featured.summary && <span class="txh-feature__excerpt">{featured.summary}</span>}
+            <span class="txh-feature__read">Read the dispatch</span>
+          </span>
+        </a>
+      </section>
+    )}
+
+    <section data-section="Archive">
+      {years.map((y) => (
+        <>
+          <div class="txh-year">{y}</div>
+          <div class="txh-grid">
+            {rest
+              .filter((a) => yearOf(a.publishedAt) === y)
+              .map((a, i) => (
+                <a
+                  class="txh-item"
+                  href={`/newsroom/${a.slug.current}`}
+                  data-topics={(a.topics ?? []).map((t: any) => t.title).join('|')}
+                >
+                  <span class="txh-item__meta">
+                    <strong>N / {num(i + 1)}</strong><span>·</span>
+                    <span>{fmt(a.publishedAt)}</span>
+                  </span>
+                  {a.topics?.[0] && <span class="txh-chip txh-item__tag">{a.topics[0].title}</span>}
+                  <span class="txh-item__title">{a.title}</span>
+                  {a.summary && <span class="txh-item__excerpt">{a.summary}</span>}
+                  <span class="txh-item__read">Read →</span>
+                </a>
+              ))}
+          </div>
+        </>
+      ))}
+
+      {rest.length === 0 && (
+        <p class="txh-page__empty">No further dispatches yet.</p>
+      )}
+    </section>
+
   </main>
 </BaseLayout>
+
+<style>
+  /* Full grid — the archive runs the width of the page rather than sitting in a
+     narrow column, so it reads as a newsroom of record. The auto-fill grid then
+     yields more columns on wider screens instead of stretching three. */
+  .txh-page { padding: var(--space-8) var(--page-gutter) var(--space-9); }
+  .txh-page__lede {
+    font-size: var(--fs-body-lg); line-height: var(--lh-body);
+    color: var(--txh-fg-2); margin-top: var(--space-5); max-width: 52ch;
+  }
+  .txh-page__empty { color: var(--txh-fg-4); margin-top: var(--space-6); }
+</style>
+
+<script>
+  // Topic filter. Plain DOM — no hydration needed.
+  const bar = document.querySelector('[data-filter]');
+  if (bar) {
+    const items = [...document.querySelectorAll<HTMLElement>('.txh-item')];
+    const years = [...document.querySelectorAll<HTMLElement>('.txh-year')];
+    bar.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest('button');
+      if (!btn) return;
+      const topic = btn.dataset.topic!;
+      bar.querySelectorAll('button').forEach((b) =>
+        b.setAttribute('aria-pressed', String(b === btn)));
+      items.forEach((el) => {
+        const list = (el.dataset.topics || '').split('|');
+        el.style.display = topic === '*' || list.includes(topic) ? '' : 'none';
+      });
+      // Hide a year heading whose grid has nothing left visible.
+      years.forEach((y) => {
+        const grid = y.nextElementSibling as HTMLElement | null;
+        const any = grid ? [...grid.querySelectorAll<HTMLElement>('.txh-item')]
+          .some((el) => el.style.display !== 'none') : false;
+        y.style.display = any ? '' : 'none';
+        if (grid) grid.style.display = any ? '' : 'none';
+      });
+    });
+  }
+</script>

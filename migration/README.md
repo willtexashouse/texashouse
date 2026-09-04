@@ -19,12 +19,20 @@ webflow-export/
 └── assets-manifest.txt   # 294 unique CDN asset URLs referenced by the content
 ```
 
+## Page capture
+
+`webflow-pages/` holds **50 pages of the live site** captured 2026-08-19 (raw
+HTML + a heading-level `CONTENT-MAP.md`). This closes the gap left by the
+Webflow Designer code export being blocked by the lapsed plan — see that
+folder's README.
+
 ## Status
 
 - ✅ 5 collections exported as CSV (Activations, Newsrooms, Past Events, ROS Segments, Sponsors)
 - ✅ Tags (26) pulled via API → `json/tags.json`; Sponsors (52) via CSV + API
 - ✅ Asset URL manifest built (294 URLs)
 - 🟢 Asset strategy: leave on CDN, pull into Sanity at import time
+- ✅ Live site pages captured (50 pages → `webflow-pages/`)
 - ⛏️ Pending: Tags CSV parity (optional), Sanity import script
 
 > Note: nothing here is wired into the site yet. Import happens once a Sanity

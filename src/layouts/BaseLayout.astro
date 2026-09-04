@@ -1,26 +1,45 @@
 ---
 import '../styles/global.css';
+import NavBar from '../components/ds/NavBar.astro';
+import SiteFooter from '../components/ds/SiteFooter.astro';
+import TextureOverlay from '../components/ds/TextureOverlay.astro';
+import TelemetryBar from '../components/ds/TelemetryBar.astro';
+import CtaBand from '../components/ds/CtaBand.astro';
+import FeedbackWidget from '../components/dev/FeedbackWidget.astro';
 
 interface Props {
   title?: string;
   description?: string;
+  /** Set false on reference pages that shouldn't carry the site shell. */
+  chrome?: boolean;
+  /** Set false where a page ends on its own CTA. */
+  cta?: boolean;
 }
 
 const {
   title = 'Texas House',
-  description = 'Building the network of ascending leaders in Texas.',
+  description = 'Where Texas meets the world. Texas House is the Texas platform at SXSW, Race Weekend, and SXSW London.',
+  chrome = true,
+  cta = true,
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <link rel="preload" href="/fonts/TAYDreamboat.otf" as="font" type="font/otf" crossorigin />
   </head>
-  <body class="min-h-screen antialiased">
+  <body class="min-h-screen antialiased" id="top">
+    {chrome && <NavBar />}
     <slot />
+    {chrome && cta && <CtaBand />}
+    {chrome && <SiteFooter />}
+    {chrome && <TextureOverlay />}
+    {chrome && <TelemetryBar />}
+    {import.meta.env.DEV && <FeedbackWidget />}
   </body>
 </html>

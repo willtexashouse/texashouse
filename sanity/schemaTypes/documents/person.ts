@@ -10,6 +10,12 @@ export const person = defineType({
     defineField({ name: 'name', title: 'Name', type: 'string', validation: (r) => r.required() }),
     defineField({ name: 'role', title: 'Role / title', type: 'string' }),
     defineField({
+      name: 'organization',
+      title: 'Organization',
+      type: 'string',
+      description: 'Shown on Board / Advisor cards (e.g. the company or institution).',
+    }),
+    defineField({
       name: 'group',
       title: 'Group',
       type: 'string',

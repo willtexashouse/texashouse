@@ -1,0 +1,1368 @@
+{
+ "404.html": {
+  "title": "Not Found",
+  "desc": "",
+  "heads": [
+   [
+    "h2",
+    "Page Not Found"
+   ]
+  ],
+  "bytes": 6468
+ },
+ "activations/new-activation.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "SXSW London 2026"
+   ],
+   [
+    "h2",
+    "Watch the RECAP"
+   ],
+   [
+    "h3",
+    "Schedule & Events Recap"
+   ],
+   [
+    "h3",
+    "Sponsors & Partnerships"
+   ],
+   [
+    "h2",
+    "Event Gallery"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 12585
+ },
+ "activations/race-weekend-2025.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Race Weekend 2025"
+   ],
+   [
+    "h2",
+    "Watch the RECAP"
+   ],
+   [
+    "h3",
+    "Schedule & Events Recap"
+   ],
+   [
+    "h3",
+    "Sponsors & Partnerships"
+   ],
+   [
+    "h2",
+    "Event Gallery"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 81087
+ },
+ "activations/sxsw-2025.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "SXSW 2025"
+   ],
+   [
+    "h2",
+    "Watch the RECAP"
+   ],
+   [
+    "h3",
+    "Schedule & Events Recap"
+   ],
+   [
+    "h3",
+    "Blazing Trails with Texan Entrepreneurs: The Torchy's Tacos Story."
+   ],
+   [
+    "h3",
+    "Texas Trailblazers: Firefly Aerospace"
+   ],
+   [
+    "h3",
+    "Tackling Tough Tech Challenges Across the Globe: The Power of Partnerships"
+   ],
+   [
+    "h3",
+    "National Defense, Academia & Supply Chain Super Connector"
+   ],
+   [
+    "h3",
+    "Funded House: Innovators Report on Ai"
+   ],
+   [
+    "h3",
+    "Blockchain & Builders Superconnector"
+   ],
+   [
+    "h3",
+    "Two Lightning Talks with Rice University"
+   ],
+   [
+    "h3",
+    "Texas-Sized Solutions for the Healthcare Crisis"
+   ],
+   [
+    "h3",
+    "The Gen Z algorithm: How AI driven consumers are reshaping investment strategies"
+   ],
+   [
+    "h3",
+    "The DUTIE Project: Defense, University, Tech & Industry Experts Mixer"
+   ],
+   [
+    "h3",
+    "Winning the AI Race: How today\u2019s SAAS companies are balancing speed and control"
+   ],
+   [
+    "h3",
+    "Texas Veterans: The Secret Weapon in our Workforce"
+   ],
+   [
+    "h3",
+    "Brain Health & The Global Brain Economy"
+   ],
+   [
+    "h3",
+    "BORN GLOBAL Presents: Bridging Talent & Capital for The Future of Global Entrepreneurship"
+   ],
+   [
+    "h3",
+    "EU HOUSE: China, National Security, and the ICTS Supply Chain"
+   ],
+   [
+    "h3",
+    "The Emergence of Scientistas"
+   ],
+   [
+    "h3",
+    "Place-Based Innovation Across Texas"
+   ],
+   [
+    "h3",
+    "Building Collaborative Life Science Centers"
+   ],
+   [
+    "h3",
+    "Texas Music Takeover"
+   ],
+   [
+    "h3",
+    "FUNDED HOUSE: Global Investors Brunch"
+   ],
+   [
+    "h3",
+    "Global Innovation Party"
+   ],
+   [
+    "h3",
+    "Prosperity & Energy Abundance"
+   ],
+   [
+    "h3",
+    "Aerospace, Defense & Dual-Use Tech: How Satellite Cities are Shaping Innovation in Texas"
+   ],
+   [
+    "h3",
+    "Advancing Global Innovation Through Technology, Education & Entrepreneurship"
+   ],
+   [
+    "h3",
+    "Sponsors & Partnerships"
+   ],
+   [
+    "h2",
+    "Event Gallery"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 29804
+ },
+ "activations/sxsw-2026.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "SXSW 2026"
+   ],
+   [
+    "h2",
+    "Watch the RECAP"
+   ],
+   [
+    "h3",
+    "Schedule & Events Recap"
+   ],
+   [
+    "h3",
+    "Sponsors & Partnerships"
+   ],
+   [
+    "h2",
+    "Event Gallery"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 21386
+ },
+ "activations/sxsw-london-2025.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "SXSW London 2025"
+   ],
+   [
+    "h2",
+    "Watch the RECAP"
+   ],
+   [
+    "h3",
+    "Schedule & Events Recap"
+   ],
+   [
+    "h3",
+    "A Big Texas Welcome: Remarks from the Founder of Texas House"
+   ],
+   [
+    "h3",
+    "Brisket, Boots, and the Big Beat - Exporting Texan Culture to the World"
+   ],
+   [
+    "h3",
+    "Deep In The Heart: A Celebration of Texas Storytelling"
+   ],
+   [
+    "h3",
+    "Come And Make It: Building Bilateral Trade with the Lone Star State"
+   ],
+   [
+    "h3",
+    "The Importance of the U.S. - UK Alliance Across Business, Capital, and Defense Innovation"
+   ],
+   [
+    "h3",
+    "Building the Future of Cloud: A Global Vision from Civo\u2019s CEO"
+   ],
+   [
+    "h3",
+    "Sponsors & Partnerships"
+   ],
+   [
+    "h2",
+    "Event Gallery"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 95053
+ },
+ "index.html": {
+  "title": "Texas House @ SXSW 2026 | March 12 / 13 / 14, 2026",
+  "desc": "",
+  "heads": [
+   [
+    "h2",
+    "Texas House 2025 RECAP"
+   ],
+   [
+    "h1",
+    "Recognizing Texcellence ."
+   ],
+   [
+    "h3",
+    "Texan Voices Leading Global Conversations"
+   ],
+   [
+    "h2",
+    "Upcoming Events"
+   ],
+   [
+    "h2",
+    "Texas House Team"
+   ],
+   [
+    "h4",
+    "Will Herrmann"
+   ],
+   [
+    "h4",
+    "Lauren Postler"
+   ],
+   [
+    "h4",
+    "Elijah May"
+   ],
+   [
+    "h4",
+    "Amanda Caldwell"
+   ],
+   [
+    "h4",
+    "Marisa Vickers"
+   ],
+   [
+    "h4",
+    "TEXAS HOUSE SXSW 2026 PRESENTING PARTNERS"
+   ],
+   [
+    "h4",
+    "TEXAS HOUSE SXSW 2026 PARTNERS"
+   ],
+   [
+    "h4",
+    "ACTIVATION PARTNERS"
+   ],
+   [
+    "h4",
+    "FOOD & BEVERAGE PARTNERS"
+   ],
+   [
+    "h1",
+    "Recognizing Texcellence ."
+   ],
+   [
+    "h3",
+    "Texan Voices Leading Global Conversations"
+   ],
+   [
+    "h4",
+    "FOOD & DRINK"
+   ],
+   [
+    "h3",
+    "TEXAS HOUSE PAST EVENTS"
+   ],
+   [
+    "h2",
+    "SXSW 2026"
+   ],
+   [
+    "h2",
+    "Race Weekend 2025"
+   ],
+   [
+    "h2",
+    "SXSW London 2025"
+   ],
+   [
+    "h2",
+    "SXSW 2025"
+   ],
+   [
+    "h3",
+    "EVENTS GALLERY"
+   ],
+   [
+    "h2",
+    "Subscribe for updates"
+   ],
+   [
+    "h4",
+    "Include your contact information to be notified of future Texas House events."
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 80909
+ },
+ "media.html": {
+  "title": "Media",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "newsroom"
+   ],
+   [
+    "h3",
+    "Texas House Goes Global: A Landmark Day at SXSW London"
+   ],
+   [
+    "h3",
+    "(KXAN) Texas House shines light on Lone Star State innovators"
+   ],
+   [
+    "h3",
+    "Come and Make It: The Global Case for Building in Texas"
+   ],
+   [
+    "h3",
+    "Texas House Brings Lone Star Grit and Global Economic Vision to SXSW London"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 25695
+ },
+ "newsroom/come-and-make-it.html": {
+  "title": "Come and Make It: The Global Case for Building in Texas | Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Come and Make It: The Global Case for Building in Texas"
+   ],
+   [
+    "h2",
+    "The Texas Advantage"
+   ],
+   [
+    "h2",
+    "What Can You Make in Texas? Anything ."
+   ],
+   [
+    "h2",
+    "Why It Works: Geography, Government, and Grit"
+   ],
+   [
+    "h3",
+    "Geography"
+   ],
+   [
+    "h3",
+    "Government"
+   ],
+   [
+    "h3",
+    "Grit"
+   ],
+   [
+    "h2",
+    "From Texas to the UK: Taking the Message Global"
+   ],
+   [
+    "h3",
+    "Want to Get Involved?"
+   ],
+   [
+    "h3",
+    "Here\u2019s how you can participate:"
+   ],
+   [
+    "h3",
+    "Come and Make It."
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 18143
+ },
+ "newsroom/sxsw-london-press-release.html": {
+  "title": "Texas House Brings Lone Star Grit and Global Economic Vision to SXSW London | Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Texas House Brings Lone Star Grit and Global Economic Vision to SXSW London"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 16185
+ },
+ "newsroom/texas-house-goes-global-a-landmark-day-at-sxsw-london.html": {
+  "title": "Texas House Goes Global: A Landmark Day at SXSW London | Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Texas House Goes Global: A Landmark Day at SXSW London"
+   ],
+   [
+    "h2",
+    "Why Texas House Went to London"
+   ],
+   [
+    "h2",
+    "A Full Texas Experience"
+   ],
+   [
+    "h2",
+    "The Panels: Where Ideas Met Action"
+   ],
+   [
+    "h3",
+    "The Importance of the U.S.\u2013UK Alliance Across Business, Capital, and Defense Innovation"
+   ],
+   [
+    "h3",
+    "Speed of Innovation: How Rice is Tackling Red Tape, Scaling Science, and Democratizing Discovery"
+   ],
+   [
+    "h3",
+    "Scaling Innovation Across Continents"
+   ],
+   [
+    "h2",
+    "Thank You to Our Sponsors"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 20778
+ },
+ "newsroom/texas-house-shines-light-on-lone-star-state-innovators.html": {
+  "title": "(KXAN) Texas House shines light on Lone Star State innovators | Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "(KXAN) Texas House shines light on Lone Star State innovators"
+   ],
+   [
+    "h2",
+    "This interview originally aired on KXAN News on May 28, 2025"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 20945
+ },
+ "old-home.html": {
+  "title": "Texas House | March 10-11, 2025",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Recognizing Texcellence ."
+   ],
+   [
+    "h3",
+    "Texan Voices Leading Global Conversations"
+   ],
+   [
+    "h2",
+    "TEXAS HOUSE race weekend 2025"
+   ],
+   [
+    "h4",
+    "TEXAS HOUSE SXSW 2026 PRESENTING PARTNERS"
+   ],
+   [
+    "h4",
+    "TEXAS HOUSE SXSW 2026 PARTNERS"
+   ],
+   [
+    "h4",
+    "ACTIVATION PARTNERS"
+   ],
+   [
+    "h4",
+    "FOOD & BEVERAGE PARTNERS"
+   ],
+   [
+    "h4",
+    "FOOD & DRINK"
+   ],
+   [
+    "h2",
+    "co-located with"
+   ],
+   [
+    "h2",
+    "Monday Schedule & Sponsors"
+   ],
+   [
+    "h2",
+    "Tuesday Schedule & Sponsors"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 48687
+ },
+ "partnership.html": {
+  "title": "Partnership",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "partner with us"
+   ],
+   [
+    "h4",
+    "Past Sponsors & Partnerships"
+   ],
+   [
+    "h4",
+    "TEXAS HOUSE SXSW 2026 PRESENTING PARTNERS"
+   ],
+   [
+    "h4",
+    "TEXAS HOUSE SXSW 2026 PARTNERS"
+   ],
+   [
+    "h4",
+    "ACTIVATION PARTNERS"
+   ],
+   [
+    "h4",
+    "FOOD & BEVERAGE PARTNERS"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 43408
+ },
+ "past-events/a-big-texas-welcome-remarks-from-the-founder-of-texas-house.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "A Big Texas Welcome: Remarks from the Founder of Texas House"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 10422
+ },
+ "past-events/aerospace-defense-dual-use-tech-how-satellite-cities-are-shaping-innovation-in-texas.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Aerospace, Defense & Dual-Use Tech: How Satellite Cities are Shaping Innovation in Texas"
+   ],
+   [
+    "h3",
+    "SESSION RECAP:"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 14059
+ },
+ "past-events/blazing-trails.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Blazing Trails with Texan Entrepreneurs: The Torchy's Tacos Story."
+   ],
+   [
+    "h3",
+    "SESSION RECAP"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 12725
+ },
+ "past-events/blockchain-builders-superconnector.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Blockchain & Builders Superconnector"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 13744
+ },
+ "past-events/brain-health-the-global-brain-economy.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Brain Health & The Global Brain Economy"
+   ],
+   [
+    "h3",
+    "SESSION RECAP"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 13932
+ },
+ "past-events/brisket-boots-and-the-big-beat---exporting-texan-culture-to-the-world.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Brisket, Boots, and the Big Beat - Exporting Texan Culture to the World"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 10811
+ },
+ "past-events/building-life-science-labs.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Building Collaborative Life Science Centers"
+   ],
+   [
+    "h3",
+    "SESSION RECAP"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 13015
+ },
+ "past-events/building-the-future-of-cloud-a-global-vision-from-civos-ceo.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Building the Future of Cloud: A Global Vision from Civo\u2019s CEO"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 10210
+ },
+ "past-events/closing-panel-to-be-annoiunced.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Texas-Sized Solutions for the Healthcare Crisis"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 10836
+ },
+ "past-events/come-make-it-building-bilateral-trade-with-the-lone-star-state.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Come And Make It: Building Bilateral Trade with the Lone Star State"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 10687
+ },
+ "past-events/deep-in-the-heart-a-celebration-of-texas-storytelling.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Deep In The Heart: A Celebration of Texas Storytelling"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 10725
+ },
+ "past-events/defense-academia-supplychain-superconnector.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "National Defense, Academia & Supply Chain Super Connector"
+   ],
+   [
+    "h3",
+    "SESSION RECAP"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 13088
+ },
+ "past-events/eu-house-china-national-security-and-the-icts-supply-chain.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "EU HOUSE: China, National Security, and the ICTS Supply Chain"
+   ],
+   [
+    "h3",
+    "SESSION RECAP"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 12493
+ },
+ "past-events/food-music-entertainment---more-details-coming-soon.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Food, Music, & Entertainment"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 10343
+ },
+ "past-events/funded-house-global-investors-brunch.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "BORN GLOBAL Presents: Bridging Talent & Capital for The Future of Global Entrepreneurship"
+   ],
+   [
+    "h3",
+    "SESSION RECAP"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 15760
+ },
+ "past-events/funded-house-innovators-report-on-ai.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Funded House: Innovators Report on Ai"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 10089
+ },
+ "past-events/funded-house-investing-in-texas-brunch.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "FUNDED HOUSE: Investing In Texas Brunch"
+   ],
+   [
+    "h3",
+    "SESSION RECAP"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 12486
+ },
+ "past-events/global-innovation-party.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Global Innovation Party"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 11969
+ },
+ "past-events/investing-in-texas-brunch.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "FUNDED HOUSE: Global Investors Brunch"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 10877
+ },
+ "past-events/place-based-innovation-across-texas.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Place-Based Innovation Across Texas"
+   ],
+   [
+    "h3",
+    "SESSION RECAP"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 12900
+ },
+ "past-events/prosperity-energy-abundance.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Prosperity & Energy Abundance"
+   ],
+   [
+    "h3",
+    "SESSION RECAP"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 12412
+ },
+ "past-events/tackling-tough-tech-challenges-across-the-globe-the-power-of-partnerships.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Tackling Tough Tech Challenges Across the Globe: The Power of Partnerships"
+   ],
+   [
+    "h3",
+    "SESSION RECAP"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 14419
+ },
+ "past-events/texas-music-takeover.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Texas Music Takeover"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 12013
+ },
+ "past-events/texas-trailblazers-firefly-aerospace.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Texas Trailblazers: Firefly Aerospace"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 12502
+ },
+ "past-events/texas-veterans-the-secret-weapon-in-our-workforce.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Texas Veterans: The Secret Weapon in our Workforce"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 10210
+ },
+ "past-events/the-dutie-project-defense-university-tech-industry-mixer.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "The DUTIE Project: Defense, University, Tech & Industry Experts Mixer"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 10844
+ },
+ "past-events/the-importance-of-the-u-s---uk-alliance-across-business-capital-and-defense-innovation.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "The Importance of the U.S. - UK Alliance Across Business, Capital, and Defense Innovation"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 10789
+ },
+ "past-events/the-z-label.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "The Gen Z algorithm: How AI driven consumers are reshaping investment strategies"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 12837
+ },
+ "past-events/two-lightning-talks-with-rice-university.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Two Lightning Talks with Rice University"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 10131
+ },
+ "past-events/welcome-to-global-partners-and-pioneers-day.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Advancing Global Innovation Through Technology, Education & Entrepreneurship"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 12485
+ },
+ "past-events/winning-the-ai-race.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Winning the AI Race: How today\u2019s SAAS companies are balancing speed and control"
+   ],
+   [
+    "h3",
+    "SESSION RECAP"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 12043
+ },
+ "past-events/women-in-stem.html": {
+  "title": "Texas House",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "The Emergence of Scientistas"
+   ],
+   [
+    "h3",
+    "SESSION RECAP"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 13386
+ },
+ "past-events.html": {
+  "title": "Past Events",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "TEXAS HOUSE PAST EVENTS"
+   ],
+   [
+    "h2",
+    "SXSW 2026"
+   ],
+   [
+    "h2",
+    "Race Weekend 2025"
+   ],
+   [
+    "h2",
+    "SXSW London 2025"
+   ],
+   [
+    "h2",
+    "SXSW 2025"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 22592
+ },
+ "privacy-policy.html": {
+  "title": "Privacy Policy",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Privacy Policy"
+   ],
+   [
+    "h3",
+    "Information Collection and Use"
+   ],
+   [
+    "h4",
+    "Types of Data Collected"
+   ],
+   [
+    "h4",
+    "Tracking & Cookies Data"
+   ],
+   [
+    "h3",
+    "Use of Data"
+   ],
+   [
+    "h3",
+    "Legal Basis for Processing Personal Data (under GDPR)"
+   ],
+   [
+    "h3",
+    "Transfer of Data"
+   ],
+   [
+    "h3",
+    "Disclosure of Data"
+   ],
+   [
+    "h3",
+    "Data Security"
+   ],
+   [
+    "h3",
+    "Service Providers"
+   ],
+   [
+    "h3",
+    "Analytics"
+   ],
+   [
+    "h3",
+    "Links to Other Sites"
+   ],
+   [
+    "h3",
+    "Children's Privacy"
+   ],
+   [
+    "h3",
+    "Your Data Protection Rights (under GDPR)"
+   ],
+   [
+    "h2",
+    "Text Messaging Terms"
+   ],
+   [
+    "h3",
+    "Message Frequency"
+   ],
+   [
+    "h3",
+    "Opting Out"
+   ],
+   [
+    "h3",
+    "Getting Help"
+   ],
+   [
+    "h3",
+    "Message & Data Rates"
+   ],
+   [
+    "h3",
+    "Participating Carriers"
+   ],
+   [
+    "h3",
+    "Data Collected"
+   ],
+   [
+    "h3",
+    "Changes to the Program"
+   ],
+   [
+    "h3",
+    "Changes to This Privacy Policy"
+   ],
+   [
+    "h3",
+    "Contact Us"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 24036
+ },
+ "schedule.html": {
+  "title": "Schedule",
+  "desc": "",
+  "heads": [
+   [
+    "h2",
+    "TEXAS HOUSE race weekend 2025"
+   ],
+   [
+    "h4",
+    "TEXAS HOUSE SXSW 2026 PRESENTING PARTNERS"
+   ],
+   [
+    "h4",
+    "TEXAS HOUSE SXSW 2026 PARTNERS"
+   ],
+   [
+    "h4",
+    "ACTIVATION PARTNERS"
+   ],
+   [
+    "h4",
+    "FOOD & BEVERAGE PARTNERS"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 35755
+ },
+ "thank-you.html": {
+  "title": "Thank You",
+  "desc": "",
+  "heads": [
+   [
+    "h1",
+    "Thank You"
+   ],
+   [
+    "h3",
+    "Texan voices leading global conversations"
+   ]
+  ],
+  "bytes": 14458
+ }
+}

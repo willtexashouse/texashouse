@@ -1,27 +1,636 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&family=Open+Sans:wght@400;600;700&display=swap');
 @import "tailwindcss";
 
-/*
-  Placeholder brand tokens.
-  These will be REPLACED with the real Texas House brand values exported from
-  Claude Design (colors, typography, spacing). Keeping neutral defaults for now
-  so the foundation builds and renders before the design lands.
-*/
-@theme {
-  --color-brand: #111111;
-  --color-brand-accent: #b3541e; /* placeholder rust/terracotta — swap later */
-  --color-ink: #1a1a1a;
-  --color-paper: #faf8f4;
+/* ============================================================================
+   TEXAS HOUSE — BRAND FOUNDATION
 
-  --font-display: ui-serif, Georgia, serif;
-  --font-sans: ui-sans-serif, system-ui, sans-serif;
+   Ported from the Texas House CRM (`~/dev/texas-house-crm/web/src/app/(app)/
+   crm-system.css`), which is the brand authority for this site. See
+   docs/component-inventory.md → THE RULE.
+
+   Semantic tokens keep the CRM's suffixes with a --txh- prefix, so porting CRM
+   CSS is a mechanical rename:  --crm-bg → --txh-bg,  --crm-fg-1 → --txh-fg-1.
+
+   The contrast comments below are MEASURED, not estimated — alpha-composited
+   over the real surface and run through WCAG 2.1 relative luminance. Do not
+   "tidy" these values.
+   ============================================================================ */
+
+/* ── Brand fonts (licensed — files copied from the CRM) ───────────────────── */
+@font-face {
+  font-family: "TAY Dreamboat";
+  src: url("/fonts/TAYDreamboat.otf") format("opentype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "TAY Dreamboat";
+  src: url("/fonts/TAYDreamboat-Thin.otf") format("opentype");
+  font-weight: 200; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Laslo";
+  src: url("/fonts/Laslo-Regular.ttf") format("truetype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "BN Bergen St";
+  src: url("/fonts/BNBergenSt.otf") format("opentype");
+  font-weight: 400; font-style: normal; font-display: swap;
 }
 
+/* ── Raw brand palette — fills, dots, borders. Not all are text-safe. ─────── */
 :root {
-  color-scheme: light;
+  --txh-gunmetal:      #181210;
+  --txh-gunmetal-deep: #0e0b09;
+  --txh-ivory:         #faf6f0;
+  --txh-ivory-dim:     #e7decd;
+  --txh-clay:          #793f34;
+  --txh-clay-deep:     #5b2d24;
+  --txh-clay-bright:   #9a4d3e;
+  --txh-rust:          #b85a3a;
+  --txh-dune:          #c7a87a;
+  --txh-sage:          #6b7a5a;
+  /* Brand sage carries ivory at only 4.28:1 and gunmetal at 3.40:1 — neither
+     ink reads on it. This lands ivory at 5.07:1 without moving the hue. */
+  --txh-sage-deep:     #606e51;
+  --txh-bluebonnet:    #3d4a76;
+
+  /* Type tracking. Display is TAY Dreamboat, all caps. */
+  --ls-dreamboat:    -0.12em;  /* hero scale only — letters nearly touching */
+  --ls-dreamboat-sm: -0.05em;  /* below ~36px, where -0.12em merges letterforms */
+  /* Was 0.18em: at eyebrow sizes that much tracking breaks caps into loose
+     letters instead of words, which is the cue a dyslexic reader leans on. */
+  --ls-eyebrow:       0.12em;
+  /* Person marks. Wherever this is set as letter-spacing, set it as text-indent
+     too: tracking emits a trailing advance AFTER the last letter, and in a
+     centred run that advance sits inside the box. */
+  --ls-initials:      0.04em;
+
+  --dur-fast: 140ms;
+  --dur-base: 240ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  --ease-in:   cubic-bezier(0.6, 0.1, 0.8, 0.3);
+  --ease-emph: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-slow:  420ms;
+
+  --z-nav:     50;
+  --z-overlay: 90;
+  --z-modal:   200;
+
+  /* ── Page gutter ────────────────────────────────────────────────────────
+     ONE value for the page's left/right edge. The nav, page content, CTA band
+     and footer all use it, so the logo always sits on the same vertical line as
+     the content beneath it. Overridden at the mobile breakpoint below. */
+  --page-gutter: var(--space-7);
+
+  /* ── Type scale (from the Texas House Design System) ───────────────────── */
+  --fs-mega:    clamp(72px, 11vw, 192px);  /* hero / cover */
+  --fs-display: clamp(48px, 6vw, 104px);   /* section titles */
+  --fs-h1:      56px;
+  --fs-h2:      40px;
+  --fs-h3:      28px;
+  --fs-h4:      22px;
+  --fs-body-lg: 20px;
+  --fs-body:    17px;
+  --fs-small:   14px;
+  --fs-micro:   12px;
+
+  --lh-tight:   0.92;
+  --lh-display: 1.02;
+  --lh-heading: 1.12;
+  --lh-body:    1.55;
+
+  /* ── Spacing scale — 4px base ──────────────────────────────────────────── */
+  --space-1:  4px;   --space-2:  8px;   --space-3:  12px;  --space-4:  16px;
+  --space-5:  24px;  --space-6:  32px;  --space-7:  48px;  --space-8:  64px;
+  --space-9:  96px;  --space-10: 128px;
+
+  /* ── Radii ─────────────────────────────────────────────────────────────
+     Texas House mostly avoids rounded corners — rectangles are sharp, like cut
+     paper. The rocker patch curve and pill buttons are the only exceptions. */
+  --radius-0: 0px;
+  --radius-1: 2px;
+  --radius-2: 6px;
+  --radius-3: 12px;
+  --radius-pill: 999px;
+
+  /* ── Shadows ───────────────────────────────────────────────────────────
+     Matte print system. NO shadows on layout elements. Use only for objects
+     that are literally sitting on top of something (postcards, QR cards). */
+  --shadow-sm:    0 1px 2px rgba(0,0,0,0.35);
+  --shadow-md:    0 8px 20px rgba(0,0,0,0.45);
+  --shadow-print: 0 12px 30px rgba(0,0,0,0.55), 0 2px 4px rgba(0,0,0,0.4);
 }
 
-body {
-  background-color: var(--color-paper);
-  color: var(--color-ink);
-  font-family: var(--font-sans);
+/* ── Token reconciliation — where the Design System and the CRM disagree ───
+   Resolved 2026-08-19 in favour of the CRM (THE RULE), because its values were
+   contrast-measured against the text tokens that land on them.
+
+     raised surface   CRM #1d1612  WINS   (Design System said #221a16, which is
+                                           actually the CRM's INPUT fill)
+     --rule-strong    CRM 0.22     WINS   (Design System used the same name for a
+                                           90% ivory bold rule — opposite intent.
+                                           That bold rule is --txh-rule-bold here.)
+     eyebrow tracking CRM 0.12em   WINS   (Design System's 0.18em is the value the
+                                           CRM deliberately corrected for dyslexic
+                                           readers. Update the Design System doc.)
+     display tracking CRM two-tier WINS   (-0.12em hero / -0.05em under ~36px. The
+                                           Design System's flat -0.1em has no
+                                           small-size exception.)
+   ──────────────────────────────────────────────────────────────────────── */
+:root {
+  /* The Design System's bold signature rule, renamed to end the collision. */
+  --txh-rule-bold: rgba(250,246,240,0.90);
 }
+
+/* ── Semantic layer — DARK (default) ──────────────────────────────────────── */
+:root {
+  color-scheme: dark;
+
+  --txh-bg:        var(--txh-gunmetal);
+  --txh-bg-raised: #1d1612;
+  --txh-bg-deep:   var(--txh-gunmetal-deep);
+  --txh-bg-input:  #221a16;
+
+  --txh-fg-1:      var(--txh-ivory);
+  --txh-fg-2:      var(--txh-ivory-dim);
+  /* 0.55 over bg -> #948f8b, 5.79:1; over raised -> #97918c, 5.74:1. */
+  --txh-fg-3:      rgba(250,246,240,0.55);
+  /* 0.50 -> #898480, 5.01:1 on bg / 4.97:1 on raised / 4.89:1 on input. */
+  --txh-fg-4:      rgba(250,246,240,0.50);
+  /* Whisper value, for marks carrying no information: disabled affordances,
+     hairline ornament, strike-through. NEVER text. 2.77:1. */
+  --txh-decor:     rgba(250,246,240,0.32);
+
+  --txh-rule:        rgba(250,246,240,0.10);
+  --txh-rule-strong: rgba(250,246,240,0.22);
+  /* Form-control boundaries need 3:1 (WCAG 1.4.11); here the border is the only
+     cue a field exists — the input fill is 1.08:1 against the page. 3.61:1. */
+  --txh-border-input: rgba(250,246,240,0.40);
+
+  --txh-accent:        var(--txh-clay);
+  --txh-accent-bright: var(--txh-clay-bright);
+  --txh-accent-deep:   var(--txh-clay-deep);
+  --txh-on-accent:     #faf6f0;
+  --txh-focus:         #d96b56;
+
+  /* Text-safe readings of the brand accents. The raw --txh-* values above stay
+     for fills, dots and borders where 3:1 is the bar. */
+  --txh-gold:        #c7a87a;  /* dune as-is:        8.22:1 / 7.92:1 */
+  --txh-blue-text:   #8fa1cf;  /* bluebonnet lifted: 7.21:1 (raw was 2.15:1) */
+  --txh-good-text:   #93a67f;  /* sage lifted:       7.06:1 (raw was 4.02:1) */
+  --txh-warn-text:   #d4805d;  /* rust lifted:       6.22:1 (raw was 4.03:1) */
+  --txh-accent-text: #d96b56;  /* clay lifted:       5.46:1 (raw was 3.09:1) */
+}
+
+/* ── Semantic layer — LIGHT: PARKED ──────────────────────────────────────
+   BRAND RULE (README.md, Texas House Design System): "Gun Metal is the ground.
+   Ivory is the figure. Clay is the punctuation mark." Decision 2026-08-19:
+   DARK EVERYWHERE, NO EXCEPTIONS. The site does not ship a light theme.
+
+   The CRM's contrast-tested light values are recorded in
+   docs/component-inventory.md if a future exception is ever approved by the
+   brand team. Do not re-enable this without that approval.
+   ──────────────────────────────────────────────────────────────────────── */
+
+/* ── Tailwind theme mapping ───────────────────────────────────────────────
+   `inline` so the utilities resolve the semantic vars at runtime and therefore
+   follow the light/dark switch. */
+@theme inline {
+  --color-ground:        var(--txh-bg);
+  --color-ground-raised: var(--txh-bg-raised);
+  --color-ground-deep:   var(--txh-bg-deep);
+  --color-ground-input:  var(--txh-bg-input);
+
+  --color-ink:    var(--txh-fg-1);
+  --color-ink-2:  var(--txh-fg-2);
+  --color-ink-3:  var(--txh-fg-3);
+  --color-ink-4:  var(--txh-fg-4);
+  --color-decor:  var(--txh-decor);
+
+  --color-rule:        var(--txh-rule);
+  --color-rule-strong: var(--txh-rule-strong);
+
+  --color-accent:        var(--txh-accent);
+  --color-accent-bright: var(--txh-accent-bright);
+  --color-accent-deep:   var(--txh-accent-deep);
+  --color-accent-text:   var(--txh-accent-text);
+  --color-on-accent:     var(--txh-on-accent);
+
+  --color-gold:      var(--txh-gold);
+  --color-bluebonnet:var(--txh-blue-text);
+  --color-sage:      var(--txh-good-text);
+  --color-rust:      var(--txh-warn-text);
+}
+
+/* Font stacks live in @theme so they generate Tailwind utilities AND define the
+   vars that ported CRM CSS references. */
+@theme {
+  --font-display:  "TAY Dreamboat", "Arial Black", system-ui, sans-serif;
+  --font-alt:      "Laslo", Georgia, serif;
+  --font-eyebrow:  "BN Bergen St", "Open Sans", sans-serif;
+  --font-body-web: "Lato", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --font-mono:     ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+body {
+  background: var(--txh-bg);
+  color: var(--txh-fg-1);
+  font-family: var(--font-body-web);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Keyboard focus (WCAG 2.4.7) — one rule, site-wide. */
+:focus-visible {
+  outline: 2px solid var(--txh-focus);
+  outline-offset: 2px;
+}
+
+/* ── Type helpers — these carry the tracking rules, so use them rather than
+      setting font-family by hand. ─────────────────────────────────────────── */
+.txh-display {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-dreamboat);
+  line-height: 0.92;
+}
+/* Below ~36px the hero tracking merges uppercase letterforms into one shape. */
+.txh-display-sm {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-dreamboat-sm);
+  line-height: 1.0;
+}
+.txh-eyebrow {
+  font-family: var(--font-eyebrow);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-eyebrow);
+  font-size: 12px;
+}
+.txh-mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+/* Bracket tag — the CRM's chip idiom: [LEAD], [OUTBOUND]. */
+.txh-chip {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--txh-accent-text);
+  border: 1px solid var(--txh-rule-strong);
+  border-radius: 2px;
+  padding: 2px 7px;
+  line-height: 1.5;
+}
+.txh-chip::before { content: "["; margin-right: 2px; opacity: 0.65; }
+.txh-chip::after  { content: "]"; margin-left: 2px; opacity: 0.65; }
+
+/* Dashed clay rule — the CRM's section separator. */
+.txh-rule-dashed {
+  border: 0;
+  border-top: 1px dashed var(--txh-accent);
+  opacity: 0.55;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   BUTTONS
+
+   New Texas House buttons. The legacy Webflow spec (clay bubble, grow-from-
+   centre hover) is retired. Mechanics are borrowed from the portfolio's
+   SpectrumButton and reassembled here — see docs/brand-specimen.md §5.4.
+
+   Everything below is pure CSS. No JS, no hydration.
+
+     Label roll   two stacked copies in an overflow-hidden column; hover slides
+                  the column -50% so the word exits the top as a fresh copy
+                  rises from the bottom.
+     Arrow roll   the arrow leaves top-right while a second enters bottom-left.
+     Glitch       hover-only scanlines + tear bursts, multiply-blended UNDER the
+                  label. Same scanline language as the site-wide overlay.
+     Ring         optional standing frame around the button, not on it.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.txh-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  isolation: isolate;
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--font-eyebrow);
+  font-size: 13px;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  padding-left: 1.5em;
+  /* Softened, not sharp — a little rounding reads friendlier without losing the
+     cut-paper discipline. `shape="pill"` and `shape="sharp"` remain available. */
+  border-radius: var(--radius-2);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Fills ─────────────────────────────────────────────────────────────── */
+.txh-btn--clay  { background: var(--txh-clay);  color: var(--txh-on-accent); }
+.txh-btn--ivory { background: var(--txh-ivory); color: var(--txh-gunmetal); }
+.txh-btn--ghost {
+  background: transparent;
+  color: var(--txh-ivory);
+  box-shadow: inset 0 0 0 1px var(--txh-ivory);
+}
+
+/* ── Shape overrides ───────────────────────────────────────────────────
+   Default is softened (radius-2). Sharp is the strict "cut paper" reading;
+   pill is the one sanctioned full-radius exception. */
+.txh-btn--sharp { border-radius: var(--radius-0); }
+.txh-btn--pill  { border-radius: var(--radius-pill); }
+
+/* ── No-arrow — symmetric padding, since the arrow box was the right edge. ── */
+.txh-btn--noarrow { padding: 0 1.5em; }
+
+/* ── Label roll ────────────────────────────────────────────────────────── */
+.txh-btn__label { display: block; overflow: hidden; height: 3.1em; position: relative; z-index: 1; }
+.txh-btn__roll  { display: flex; flex-direction: column; transition: transform .5s cubic-bezier(.76,0,.24,1); }
+.txh-btn__line  { height: 3.1em; display: flex; align-items: center; white-space: nowrap; line-height: 1; }
+.txh-btn:hover .txh-btn__roll,
+.txh-btn:focus-visible .txh-btn__roll { transform: translateY(-50%); }
+
+/* Bracket idiom — ties the primary CTA to the tag system. */
+.txh-btn--bracket .txh-btn__line::before { content: "["; margin-right: .5em; opacity: .55; }
+.txh-btn--bracket .txh-btn__line::after  { content: "]"; margin-left: .5em;  opacity: .55; }
+
+/* ── Arrow roll ────────────────────────────────────────────────────────── */
+.txh-btn__arrowbox {
+  position: relative; overflow: hidden; align-self: stretch; flex: 0 0 auto;
+  width: 3.1em; margin: 5px 5px 5px 1.2em; z-index: 1;
+  border-radius: calc(var(--radius-2) - 2px);
+}
+.txh-btn--sharp .txh-btn__arrowbox { border-radius: 0; }
+.txh-btn--pill  .txh-btn__arrowbox { border-radius: calc(var(--radius-pill) - 5px); }
+.txh-btn--clay  .txh-btn__arrowbox { background: var(--txh-gunmetal); color: var(--txh-ivory); }
+.txh-btn--ivory .txh-btn__arrowbox { background: var(--txh-gunmetal); color: var(--txh-ivory); }
+.txh-btn--ghost .txh-btn__arrowbox { background: var(--txh-ivory);    color: var(--txh-gunmetal); }
+.txh-btn__arrow {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  transition: transform .5s cubic-bezier(.76,0,.24,1);
+}
+.txh-btn__arrow--b { transform: translate(-115%, 115%); }
+.txh-btn:hover .txh-btn__arrow--a,
+.txh-btn:focus-visible .txh-btn__arrow--a { transform: translate(115%, -115%); }
+.txh-btn:hover .txh-btn__arrow--b,
+.txh-btn:focus-visible .txh-btn__arrow--b { transform: translate(0, 0); }
+
+/* ── Glitch — ALWAYS ON (Will, 2026-08-19): the static/scanline texture runs
+   at rest; hover adds nothing here. The only hover change is the label roll. ── */
+.txh-btn::before,
+.txh-btn::after {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  border-radius: inherit; mix-blend-mode: multiply; opacity: 1;
+}
+.txh-btn::after {
+  background-image: repeating-linear-gradient(0deg,
+    rgba(14,11,9,0.22) 0, rgba(14,11,9,0.22) 1px, transparent 1px, transparent 3px);
+}
+.txh-btn::before {
+  background-image: repeating-linear-gradient(0deg,
+    rgba(14,11,9,0.34) 0, rgba(14,11,9,0.34) 1.2px, transparent 1.2px, transparent 3px);
+  background-position: 0 1.5px;
+}
+/* On the ghost variant the fill is the page, so multiply has nothing to bite.
+   Screen a faint ivory instead so the glitch still reads. */
+.txh-btn--ghost::before,
+.txh-btn--ghost::after { mix-blend-mode: screen; }
+.txh-btn--ghost::after {
+  background-image: repeating-linear-gradient(0deg,
+    rgba(250,246,240,0.16) 0, rgba(250,246,240,0.16) 1px, transparent 1px, transparent 3px);
+}
+.txh-btn--ghost::before {
+  background-image: repeating-linear-gradient(0deg,
+    rgba(250,246,240,0.24) 0, rgba(250,246,240,0.24) 1.2px, transparent 1.2px, transparent 3px);
+}
+.txh-btn::after  { animation: txh-scan 2.2s linear infinite; }
+.txh-btn::before { animation: txh-tear 2.6s steps(1,end) infinite; }
+
+@keyframes txh-scan {
+  0%   { background-position: 0 0;    opacity: 1; }
+  9%   { background-position: 0 2px;  opacity: .28; }
+  11%  { background-position: 0 -3px; opacity: 1; }
+  25%  { background-position: 0 -1px; opacity: .85; }
+  27%  { background-position: 0 -6px; opacity: 1; }
+  41%  { background-position: 0 -8px; opacity: .22; }
+  43%  { background-position: 0 -8px; opacity: 1; }
+  59%  { background-position: 0 -6px; opacity: .9; }
+  61%  { background-position: 0 -11px; opacity: 1; }
+  77%  { background-position: 0 -13px; opacity: .32; }
+  79%  { background-position: 0 -13px; opacity: 1; }
+  92%  { background-position: 0 -2px;  opacity: .65; }
+  100% { background-position: 0 -15px; opacity: 1; }
+}
+@keyframes txh-tear {
+  0%,4%   { opacity: 0; transform: translateY(0); }
+  5%      { opacity: 1; clip-path: inset(8% 0 84% 0);  transform: translateY(-2.5px); }
+  8%      { opacity: 1; clip-path: inset(18% 0 74% 0); transform: translateY(1.5px); }
+  10%,22% { opacity: 0; }
+  23%     { opacity: 1; clip-path: inset(36% 0 54% 0); transform: translateY(2.5px); }
+  26%     { opacity: 1; clip-path: inset(44% 0 48% 0); transform: translateY(-1.5px); }
+  28%,44% { opacity: 0; }
+  45%     { opacity: 1; clip-path: inset(56% 0 32% 0); transform: translateY(-2.5px); }
+  48%     { opacity: 1; clip-path: inset(66% 0 24% 0); transform: translateY(2px); }
+  50%,68% { opacity: 0; }
+  69%     { opacity: 1; clip-path: inset(78% 0 12% 0); transform: translateY(2.5px); }
+  72%,86% { opacity: 0; }
+  87%     { opacity: 1; clip-path: inset(24% 0 66% 0); transform: translateY(-2px); }
+  90%,100%{ opacity: 0; transform: translateY(0); }
+}
+
+/* ── Standing ring — frames the button rather than sitting on it ─────────
+   Ivory hairline, tight to the button. The radius is the button's radius PLUS
+   the gap, which is what keeps the two curves parallel — a ring set to the same
+   raw radius would pinch at the corners. */
+.txh-btn-ring {
+  --ring-gap: 5px;
+  position: relative; display: inline-flex; padding: var(--ring-gap);
+  border: 1px solid var(--txh-ivory);
+  border-radius: calc(var(--radius-2) + var(--ring-gap));
+}
+.txh-btn-ring--sharp { border-radius: 0; }
+.txh-btn-ring--pill  { border-radius: calc(var(--radius-pill) + var(--ring-gap)); }
+/* Ghost carries the same visible ring as the solid buttons so paired buttons share one
+   outline and one height (hero feedback, 2026-09-02). The inner stroke drops to 35% so the
+   ring reads as the edge and the button does not look double-boxed. */
+.txh-btn-ring--ghost { border-color: var(--txh-ivory); }
+.txh-btn-ring--ghost .txh-btn--ghost { box-shadow: inset 0 0 0 1px rgba(250, 246, 240, .35); }
+
+@media (prefers-reduced-motion: reduce) {
+  .txh-btn__roll, .txh-btn__arrow { transition: none !important; }
+  .txh-btn:hover .txh-btn__roll,
+  .txh-btn:focus-visible .txh-btn__roll { transform: none !important; }
+  .txh-btn:hover .txh-btn__arrow--a,
+  .txh-btn:focus-visible .txh-btn__arrow--a { transform: none !important; }
+  .txh-btn__arrow--b { display: none; }
+  .txh-btn::before, .txh-btn::after { animation: none !important; }
+  .txh-btn::before { opacity: 0 !important; }   /* no tear bursts */
+  .txh-btn::after  { opacity: .6 !important; }  /* scanlines stay, frozen */
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   EDITORIAL / DISPATCH PATTERNS
+
+   Ported from the deployed shoplift.media research page and its home preview
+   (the only two things taken from that site — see docs/component-inventory.md
+   §3), re-skinned onto Texas House tokens.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Section head — numbered eyebrow, display title, link out ───────────── */
+.txh-sechead {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: var(--space-5); flex-wrap: wrap;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--txh-rule);
+}
+.txh-sechead__num {
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--txh-fg-4);
+}
+.txh-sechead__num em { font-style: normal; color: var(--txh-accent-text); margin-left: .6em; }
+.txh-sechead__title { font-size: clamp(38px, 6vw, 80px); margin-top: var(--space-3); }
+.txh-sechead__link {
+  font-family: var(--font-eyebrow); font-size: 12px; letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase; color: var(--txh-fg-3); text-decoration: none;
+  border-bottom: 1px solid var(--txh-rule-strong); padding-bottom: 2px;
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.txh-sechead__link:hover { color: var(--txh-fg-1); border-bottom-color: var(--txh-clay); }
+
+/* ── Corner framing ticks ───────────────────────────────────────────────── */
+.txh-tick { position: absolute; width: 9px; height: 9px; pointer-events: none; }
+.txh-tick--tl { top: -1px; left: -1px; border-top: 1px solid var(--txh-clay); border-left: 1px solid var(--txh-clay); }
+.txh-tick--br { bottom: -1px; right: -1px; border-bottom: 1px solid var(--txh-clay); border-right: 1px solid var(--txh-clay); }
+
+/* ── Featured dispatch ──────────────────────────────────────────────────── */
+.txh-feature {
+  position: relative; display: grid; gap: var(--space-6);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  padding: var(--space-6); margin-top: var(--space-6);
+  border: 1px solid var(--txh-rule);
+}
+.txh-feature__thumb {
+  position: relative; display: block; overflow: hidden;
+  aspect-ratio: 16 / 10; background: var(--txh-bg-raised);
+  border-radius: var(--radius-0);
+}
+.txh-feature__thumb img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.txh-feature:hover .txh-feature__thumb img { transform: scale(1.03); }
+.txh-feature__badge {
+  position: absolute; top: var(--space-3); left: var(--space-3);
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--txh-ivory);
+  background: color-mix(in srgb, var(--txh-gunmetal) 80%, transparent);
+  padding: 4px 8px;
+}
+.txh-feature__text { display: flex; flex-direction: column; justify-content: center; }
+.txh-feature__meta {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--txh-fg-4);
+  display: flex; gap: .6em; flex-wrap: wrap; align-items: center;
+}
+.txh-feature__meta strong { color: var(--txh-fg-2); font-weight: 400; }
+.txh-feature__title {
+  font-family: var(--font-body-web); font-weight: 700;
+  font-size: clamp(24px, 2.6vw, 34px); line-height: 1.2;
+  margin-top: var(--space-3); color: var(--txh-fg-1);
+}
+.txh-feature__excerpt {
+  font-size: var(--fs-body); line-height: var(--lh-body);
+  color: var(--txh-fg-3); margin-top: var(--space-3);
+}
+.txh-feature__read {
+  font-family: var(--font-eyebrow); font-size: 12px; letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase; color: var(--txh-accent-text);
+  margin-top: var(--space-5); align-self: flex-start;
+  border-bottom: 1px solid currentColor; padding-bottom: 2px;
+}
+
+/* ── Archive grid ───────────────────────────────────────────────────────── */
+.txh-grid {
+  display: grid; gap: var(--space-6);
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  margin-top: var(--space-6);
+}
+.txh-item {
+  position: relative; display: flex; flex-direction: column;
+  padding-top: var(--space-4); border-top: 1px solid var(--txh-rule);
+  text-decoration: none; color: inherit;
+  transition: border-color var(--dur-base) var(--ease-out);
+}
+.txh-item:hover { border-top-color: var(--txh-clay); }
+.txh-item__meta {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--txh-fg-4);
+  display: flex; gap: .5em; align-items: center;
+}
+.txh-item__meta strong { color: var(--txh-fg-2); font-weight: 400; }
+.txh-item__tag { align-self: flex-start; margin-top: var(--space-3); }
+.txh-item__title {
+  font-family: var(--font-body-web); font-weight: 700;
+  font-size: var(--fs-h4); line-height: 1.25;
+  margin-top: var(--space-3); color: var(--txh-fg-1);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.txh-item:hover .txh-item__title { color: var(--txh-accent-text); }
+.txh-item__excerpt {
+  font-size: var(--fs-small); line-height: var(--lh-body);
+  color: var(--txh-fg-3); margin-top: var(--space-3);
+}
+.txh-item__read {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--txh-fg-4); margin-top: var(--space-4);
+}
+
+/* ── Year divider ───────────────────────────────────────────────────────── */
+.txh-year {
+  display: flex; align-items: center; gap: var(--space-4);
+  margin-top: var(--space-8); color: var(--txh-fg-4);
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: .12em;
+}
+.txh-year::after { content: ""; flex: 1; height: 1px; background: var(--txh-rule); }
+
+/* ── Topic filter ───────────────────────────────────────────────────────── */
+.txh-filter { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-6); }
+.txh-filter button {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--txh-fg-3);
+  background: transparent; border: 1px solid var(--txh-rule-strong);
+  border-radius: var(--radius-1); padding: 5px 10px; cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out);
+}
+.txh-filter button:hover { color: var(--txh-fg-1); border-color: var(--txh-clay); }
+.txh-filter button[aria-pressed="true"] {
+  color: var(--txh-on-accent); background: var(--txh-clay); border-color: var(--txh-clay);
+}
+
+@media (max-width: 820px) {
+  .txh-feature { grid-template-columns: 1fr; }
+}
+
+/* Decision-page only — radius comparison. */
+.txh-btn--r0  { border-radius: 0; }
+.txh-btn--r1  { border-radius: var(--radius-1); }
+.txh-btn--r2  { border-radius: var(--radius-2); }
+.txh-btn--r3  { border-radius: var(--radius-3); }
+.txh-btn--r4  { border-radius: 20px; }
+
+/* Below 860px everything pulls in together — see --page-gutter above. */
+@media (max-width: 860px) { :root { --page-gutter: var(--space-5); } }
