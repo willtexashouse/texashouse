@@ -10,3 +10,8 @@ Assemble in this order: `block-1-style` + `block-2-texture` + one
 only blocks 1, 4, and 5.
 
 `hero-globe.txt` is the one description used everywhere the globe appears.
+
+`block-3-emblem.txt` is the tier for symbols and elements (locked
+2026-09-04). It replaces Blocks 1 and 2 for that work. Every emblem prompt is
+`brand-lock.txt` + `block-3-emblem.txt` + the subject, with the approved hero
+globe attached as the reference.

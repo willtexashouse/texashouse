@@ -66,7 +66,7 @@ for (let i = 0; i < rest.length; i++) {
 const block = (name) => fs.readFileSync(path.join(PROMPTS, `${name}.txt`), 'utf8').trim();
 function assemble({ tier, story, raw, shortForm }) {
   if (raw === 'true') return story;
-  if (!['landscape', 'scene', 'crowd'].includes(tier)) throw new Error('--tier must be landscape, scene, or crowd');
+  if (!['landscape', 'scene', 'crowd', 'emblem'].includes(tier)) throw new Error('--tier must be landscape, scene, crowd, or emblem');
   const parts = shortForm
     ? [block('block-1-style'), story]
     : [block('block-1-style'), block('block-2-texture'), block(`block-3-${tier}`), story];

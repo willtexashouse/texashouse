@@ -98,6 +98,23 @@ simplified and abstracted into confident silhouettes, subtle motion suggested,
 no individual identity. Bold graphic shapes punctuate the scene. Architecture
 towers above. Strong negative space in the upper frame.
 
+**Emblem tier, symbols and elements (locked 2026-09-04):** One subject on a
+flat gun metal ground, crest scale, centered, generous even margin. No sky,
+no horizon, no ground plane, no environment. Flat two-tone shapes with one
+even ivory ink outline on every form, no interior detail, no gradients, no
+cast light. Halftone dot pattern and paper grain over the flat fills. Bold
+silhouette that reads at any size, vintage crest restraint.
+
+The emblem tier is the style direction for every symbol and element from
+here on, per Will. It does not use Blocks 1 and 2: those describe scenes.
+Instead every emblem render attaches the approved hero globe
+(`public/brand/emblem-brand-hero-globe-1x1-v1.png`) as the reference and
+opens with the Brand Lock (`brand/prompts/brand-lock.txt`): tokens only,
+ivory line, gun metal ground, bluebonnet, sage, one clay accent. Never derive
+an element from scratch; every one consumes the same lock and the same
+reference and changes only its subject. The bluebonnet footer went wrong the
+first time because it was built with the landscape blocks instead of this.
+
 ### Block 4. Story (variable)
 
 Write it fresh each time. Order: subject, then wardrobe or form, then posture
@@ -188,10 +205,17 @@ plus paper: cobalt ocean, cream land, amber hat. Vintage crest proportions,
 symmetrical, bold silhouette that reads at any size. Late-80s editorial
 finish: flat airbrushed gradients, halftone, paper grain.
 
+Approved reference (2026-09-04): `public/brand/emblem-brand-hero-globe-1x1-v1.png`.
+Clay felt Stetson, ivory single-weight outline, bluebonnet-blue ocean, ivory
+continents, Texas filled clay at true scale meeting the Gulf directly,
+halftone and grain, on gun metal. The chain that produced it is in
+`brand/renders.md`. Note for the vector step: the hat began as a trace of the
+Texas Rangers' 1972 hat-on-baseball mark, so the redraw must move the crown,
+crease, and brim line enough to be our own hat before the mark ships.
+
 Production:
 
-1. Midjourney concept sheet. Four angles, same prompt, pick one. This is the
-   reference for everything below.
+1. Concept sheet: done, above. Made in Higgsfield, not Midjourney.
 2. Vectorize the pick or redraw it clean. This becomes the flat mark for
    favicon, social, footer.
 3. Build the 3D version in React Three Fiber: low-poly sphere, painted flat
@@ -333,13 +357,13 @@ through `seq-eras-0240.webp`.
 
 Prove the system holds across tiers and registers before production.
 
-1. Landscape, Land: Hill Country bluebonnets (footer candidate)
+1. Landscape, Land: Hill Country bluebonnets (footer candidate) — rendered 2026-09-04, filed; superseded for the footer by the emblem tier
 2. Landscape, Land: Big Bend canyon with roadrunner
 3. Scene, Institution: trader at the Dallas window
 4. Scene, Orbit: robot pouring coffee on the station
 5. Scene, Land: cowboy rider on open range (scroll chapter 1)
 6. Crowd, Institution: exchange floor at the bell
-7. Emblem: hero globe concept sheet
+7. Emblem: hero globe concept sheet — approved 2026-09-04, filed
 8. Scene, Orbit: figure at the glass with Texas below (scroll chapter 5)
 
 Lay all eight side by side. If they read as one publication, the language is
