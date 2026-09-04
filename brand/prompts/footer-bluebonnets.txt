@@ -1,60 +1,57 @@
-FOOTER BLUEBONNETS — prompt set (2026-09-04)
+FOOTER BLUEBONNETS — Midjourney prompt set (2026-09-04, v2)
 
-Direction from Will: a distant view with volume. Many stalks, rows receding,
-built to be extended sideways, because the footer band is roughly five to one
-on large screens and no generator renders that wide in one pass.
+The band's real shape
+  Desktop 1440 × 360 → 4:1.  1920 × 360 → 5.3:1.  2560 × 360 → 7.1:1.
+  Render at 6:1 and let CSS crop the top on narrower screens and the sides on
+  the widest. 6:1 covers 2560 × 427 without stretching; the band clamps to
+  360–440px tall so nothing gets scaled up.
 
-Reference to attach every time: public/brand/emblem-brand-hero-globe-1x1-v1.png
-(the approved hero globe). Midjourney: upload it and use it as --sref, or as an
-image prompt if --sref is unavailable. Higgsfield: attach as image_references.
+Midjourney parameters
+  --ar 6:1 --style raw --s 120 --sref <uploaded approved globe> --sw 150
+  Approved globe: public/brand/emblem-brand-hero-globe-1x1-v1.png (upload it;
+  the site is not deployed so there is no public URL yet).
+  If 6:1 misbehaves, use --ar 4:1 and Pan left + Pan right once each.
+  Upscale the pick 2× before download. Target ≥ 2600px wide.
 
-Parameters. Midjourney: --ar 21:9 --style raw --stylize 120 (spec: 100 to 250).
-Higgsfield: nano_banana_pro, 2k, 21:9. Use the widest ratio the tool allows.
+The whole frame is the band now. No empty top half: the ridge line sits
+about three-quarters of the way up, gun metal shows only above it.
 
 ────────────────────────────────────────────────────────────────────────────
 OPENING (paste in front of every prompt)
 
-Draw in exactly the reference emblem's language and nothing else: flat two-tone shapes, one even ivory #faf6f0 ink outline on every form, no interior detail, no gradients, no cast light, halftone dot pattern and paper grain over flat fills. Do not include the globe or the hat. Palette is tokens only: ivory #faf6f0, gun metal #181210, bluebonnet #3d4a76, sage #6b7a5a, clay #793f34 as the single warm accent.
-
-This is a website footer band. The whole composition sits in the bottom 45 percent of the frame and runs edge to edge; the top 55 percent is flat empty gun metal with nothing in it. No sky, no clouds, no sun, no horizon glow. The scene continues past both side edges: no object is cut by the frame and nothing is centered, so the image can be extended left and right without a seam.
+Drawn in exactly the reference emblem's language: flat two-tone shapes, one even ivory #faf6f0 ink outline on every form, no interior detail, no gradients, no cast light, halftone dot pattern and paper grain over flat fills, on a gun metal #181210 ground. Palette is tokens only: ivory #faf6f0, bluebonnet #3d4a76, sage #6b7a5a, clay #793f34 as the single warm accent. A very wide website footer band: the field fills the frame from the bottom edge up to a single ridge line about three-quarters of the way up; above the ridge, flat gun metal only, no sky, no clouds, no glow. The scene continues past both side edges with nothing centered and no object cut by the frame.
 
 ────────────────────────────────────────────────────────────────────────────
-PROMPT A — the distant meadow (run this first)
+PROMPT 1 — volume, the full field
 
-A Texas Hill Country bluebonnet meadow seen from a distance, drawn as a printed crest landscape. Hundreds of bluebonnet stalks in loose receding rows fill the field from edge to edge: the nearest row about a tenth of the frame height, each stalk a clean flat shape, bluebonnet-blue body, cream tip, sage leaves, ivory outline; the rows behind smaller and closer together, their outline dropping to ivory-dim #e7decd and their blue darker, until the farthest row is a texture of dots against a low ridge line drawn once in ivory-dim. Three or four flat live oak silhouettes in dark sage stand along the ridge at uneven spacing. One clay accent only: a scattering of five or six Indian paintbrush stalks among the near rows. Open gun metal shows between the near stalks and above the ridge. No text, no logos, no photorealism, no soft shading, no cartoon.
-
-────────────────────────────────────────────────────────────────────────────
-PROMPT B — the distant meadow with the two-track
-
-The same distant bluebonnet meadow, drawn as a printed crest landscape, with a clay dirt two-track cutting across the field on a long diagonal from the lower left toward the right, low in the frame, that exits the frame on both sides. Hundreds of bluebonnet stalks in loose receding rows on both sides of the track: nearest row about a tenth of the frame height, bluebonnet-blue bodies, cream tips, sage leaves, ivory outline; rows behind smaller, closer, ivory-dim outline, darker blue, ending in a texture of dots against a single ridge line in ivory-dim with a few flat live oak silhouettes in dark sage. The track is the only clay in the picture. Open gun metal between the near stalks and above the ridge. No text, no logos, no photorealism, no soft shading, no cartoon.
+A Texas Hill Country bluebonnet meadow at full bloom seen from a distance, drawn as a printed crest landscape. Thousands of bluebonnet stalks pack the field edge to edge with almost no open ground: the nearest row about a fifth of the frame tall, each stalk a clean flat shape, bluebonnet-blue body, cream tip, sage leaves, one ivory outline; every row behind smaller and denser, outlines dropping to ivory-dim #e7decd and blue darkening, until the far field is a solid texture of blue dots with cream tips against the ridge. Four flat live oaks in dark sage along the ridge at uneven spacing. One clay accent: a loose scatter of Indian paintbrush stalks through the near rows. No text, no logos, no photorealism, no cartoon.
 
 ────────────────────────────────────────────────────────────────────────────
-EXTENDING TO FOOTER WIDTH (the edit step)
+PROMPT 2 — volume with the two-track
 
-Target: about 5:1, with the scene never cut at a screen edge.
-
-Midjourney: Pan left and Pan right on the chosen render, once each, same
-prompt. Pan keeps the drawing and adds a frame's width per side. Zoom Out
-does not help here: it shrinks the field and adds sky.
-
-Higgsfield: outpaint_image on the chosen render, extending left and right,
-same opening text and the render attached. One pass.
-
-Either way, then crop to the bottom 45 percent and file with
-  npm run hf -- intake <file> --tier emblem --register land --subject footer-bluebonnets --ar 5:1
+The same packed bluebonnet meadow at full bloom, drawn as a printed crest landscape, with a clay dirt two-track crossing the field on a long shallow diagonal that exits the frame on both sides. Thousands of bluebonnet stalks on both sides of the track with almost no open ground: nearest row a fifth of the frame tall, bluebonnet-blue bodies, cream tips, sage leaves, ivory outline; rows behind smaller and denser, ivory-dim #e7decd outlines, darker blue, ending in a solid texture of dots against the ridge. Three flat live oaks in dark sage on the ridge. The track is the only clay in the picture. No text, no logos, no photorealism, no cartoon.
 
 ────────────────────────────────────────────────────────────────────────────
-LAYER SEPARATION (after the master is approved)
+PROMPT 3 — volume, elevated
 
-Each run attaches the previous result as the reference and opens with:
-"Reproduce the reference exactly, same drawing, same grain, with one change
-only."
+A bluebonnet meadow at full bloom seen from a low rise looking down across it, drawn as a printed crest landscape, so the field reads as one deep blue texture from the bottom edge to the ridge: tens of thousands of small bluebonnet stalks, the nearest a sixth of the frame tall with bluebonnet-blue bodies, cream tips, sage leaves and ivory outlines, compressing within a few rows into a dense pattern of blue dots with ivory-dim #e7decd tips, broken only by two faint cattle trails in ivory-dim that curve out of the frame on either side. A single ridge line, two flat live oaks. One clay accent: a scatter of paintbrush among the near rows. No text, no logos, no photorealism, no cartoon.
 
-1. "Remove every stalk in the nearest two rows, filling the space with flat
-   gun metal. Everything else identical."           → mid+far plate
-2. On that result: "Remove all remaining flowers, leaving only the ridge
-   line, the oaks, and the track."                    → far plate
+────────────────────────────────────────────────────────────────────────────
+PROMPT 4 — volume, rolling ground
 
-Layers are cut as the difference between versions (master minus mid+far =
-near; mid+far minus far = mid), so every layer is the same drawing. The
-BluebonnetField component takes them as far / mid / front.
+A packed bluebonnet meadow at full bloom drawn as a printed crest landscape, the ground rising and falling in long gentle swells across the width, the rows of stalks following each contour. Thousands of bluebonnet stalks with almost no open ground: nearest row a fifth of the frame tall, bluebonnet-blue bodies, cream tips, sage leaves, ivory outline; rows behind smaller and denser, ivory-dim #e7decd outlines, darker blue, the far swells a solid texture of dots. A single ridge line behind the last swell with three flat live oaks in dark sage. One clay accent: a loose scatter of Indian paintbrush stalks on the nearest swell. No text, no logos, no photorealism, no cartoon.
+
+────────────────────────────────────────────────────────────────────────────
+AFTER THE PICK
+
+1. Upscale 2×, download, drop the file in brand/inbox/ or send it here.
+2. Layer separation, each run with the previous result as the image prompt
+   and "Same drawing, same grain, one change only:" in front:
+     a. "Remove the nearest two rows of stalks, filling the space with flat
+         gun metal."                                   → mid + far plate
+     b. On that: "Remove all remaining flowers, leaving only the ridge, the
+         oaks, and the track."                         → far plate
+   Layers are cut as the difference between versions.
+3. Band CSS: aspect 6:1 image, height clamp(360px, 20vw, 440px), anchored to
+   the bottom, centered horizontally, so the crop is sky on narrow screens
+   and edges on the widest.
