@@ -410,3 +410,24 @@ Laslo          loaded   display-sm        -2.00px @ 40px     = -0.05em ✓
   ring as solid buttons, with the inner stroke dimmed to 35%. Paired buttons
   (hero, About, CTA band) share one outline and one height. Previously the
   ghost ring was transparent, which made the secondary button look smaller.
+
+## Imagery
+
+The image system is a separate standard: `brand/VISUAL_LANGUAGE.md` (v1,
+September 2026), with the fixed prompt blocks in `brand/prompts/` and
+approved renders in `public/brand/`. Read it before generating or placing any
+imagery. Three points where it meets this document, to be settled before the
+first site asset ships:
+
+1. **Paper vs. dark.** The imagery lives on warm off-white paper with grain and
+   halftone. The site is dark everywhere with scanlines, and paper grain was
+   retired as a page texture. Paper inside an image is fine; the frame rule for
+   cards ("thin aged paper edge, warm off-white") is a page-level texture and
+   needs a decision: aged edge on the image only, or drop it on the site.
+2. **Framework.** The standard says interactive objects live in React Three
+   Fiber and Next.js. This site is Astro with React islands. React Three Fiber
+   runs unchanged inside an island; nothing needs Next.
+3. **Colour tokens.** The standard says code follows imagery: sample hex values
+   from approved renders. The site's locked tokens stay the page palette;
+   sampled values become an imagery sub-palette (`--txh-img-*`) rather than
+   replacing the brand tokens.

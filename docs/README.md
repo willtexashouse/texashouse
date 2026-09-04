@@ -23,6 +23,7 @@ Planning materials driving the Texas House website rebuild.
 - **`board-brief.md`** — Will's board-of-directors brief (confidential). Answers
   positioning Decision One: for-profit Texas C-corp.
 - **`brand-specimen.md`** — the locked brand foundation: every token, rule, and
+- `../brand/VISUAL_LANGUAGE.md` — imagery standard (1987 magazine world, five prompt blocks, asset briefs); prompt blocks in `../brand/prompts/`, renders in `../public/brand/`
   rationale. Live version renders at `/brand`.
 - **`events-model.md`** — how events retire into past events (date-derived
   status). Includes the build-time caveat and the daily-rebuild requirement.
