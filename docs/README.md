@@ -76,7 +76,11 @@ sign-off is marked `draft copy — confirm with Will` in partnerships.astro.
 
 - ~~Light or dark ground~~ — **RESOLVED: dark everywhere, no exceptions.**
 - **Button radius** — 6px shipped; compare 0/2/6/12/20px at `/proto`.
-- **Footer assets** — Texas House twin-globe image + horizon drape.
+- **Footer assets** — both slots now carry the portfolio's pieces as interims:
+  the Apollo twin globes (`public/micrographics/`) and the animated dither in
+  the horizon band (`HorizonShader.jsx` over `DitheringShader.jsx`). The Texas
+  House versions are the hero globe at two rotations (`VISUAL_LANGUAGE.md`
+  §5.2) and our own horizon artwork.
 - **SXSW 2026 dates** — homepage says March 12/13/14, Design System schedule says
   Fri 13 + Sat 14. Blocks `endDate` backfill.
 - CMS export from the existing site (to reconcile against `content-model.md`).

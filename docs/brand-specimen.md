@@ -338,7 +338,10 @@ parameter, so porting is configuration rather than a rewrite.
   System README. It says the mission in the space the portfolio uses for a
   location.
 - **The twin globes were made for this.** On the portfolio they illustrate reach;
-  here they *are* the mission. Keep the device; needs a Texas House-toned asset.
+  here they *are* the mission. Keep the device. **Ported 2026-09-04:** the
+  portfolio's `twin-globes-earth.png` now sits in the footer slot, masked in the
+  ivory token. The Texas House-toned replacement (hero globe at two rotations)
+  comes later.
 - **The Texas mark and the Austin clock carry over unchanged** — `localMark` is
   already a Texas icon and `timeZone` is already `America/Chicago`. Like the
   telemetry bar (§5.2), this was always a Texas idea.
@@ -360,6 +363,11 @@ in the layout and build against it.** A placeholder drape is fine in the
 meantime; the band is part of the footer's composition, not a decoration to be
 added later. The brand rule "highlights toward Ivory, shadows toward Gun Metal"
 already describes the treatment we want.
+
+**Ported 2026-09-04:** the portfolio's animated dither (`DitheringShader`, raw
+WebGL2, two layers: supersampled wave + crisp glitch overlay) now runs in the
+band as a `client:visible` island, Ivory Dim wave on Gun Metal. The CSS drape
+stays underneath as the pre-hydration and no-WebGL fallback.
 
 ---
 

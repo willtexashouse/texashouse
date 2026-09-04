@@ -6,6 +6,8 @@
   The place block carries the mission rather than a location, which is the
   whole idea: "Bringing Texas to the world, and the world to Texas."
 */
+import HorizonShader from './HorizonShader.jsx';
+
 interface Props { nextEvent?: string | null }
 const { nextEvent = null } = Astro.props;
 
@@ -82,10 +84,14 @@ const DRAPE_GRAIN =
       </div>
     </div>
 
-    {/* TODO: twin-globe micrograph — Americas + Europe/Africa. Placeholder slot. */}
-    <div class="txh-footer__globes" aria-hidden="true" title="twin globes — asset pending">
-      <span class="txh-footer__globe"></span>
-      <span class="txh-footer__globe"></span>
+    {/* Twin globes — Americas + Europe/Africa, the Apollo-plaque pair ported
+        from the portfolio footer (assets/micrographics/twin-globes-earth.png).
+        Interim: the brand plan (VISUAL_LANGUAGE.md §5.2) replaces this with the
+        hero globe at two rotations once that object exists. The PNG is white on
+        transparent, so it is used as a mask over the ivory token rather than
+        drawn as an <img> — that way it takes the brand colour exactly. */}
+    <div class="txh-footer__globes" aria-hidden="true">
+      <span class="txh-footer__globes-mark"></span>
     </div>
   </div>
 
@@ -108,11 +114,13 @@ const DRAPE_GRAIN =
     </div>
   </div>
 
-  {/* Horizon band. The drape is ours to design — this is the placeholder, but
-      the slot is part of the composition and stays. */}
+  {/* Horizon band. The animated dither is the portfolio's footer artwork,
+      ported (HorizonShader.jsx). The CSS drape underneath is what shows before
+      the island hydrates and wherever WebGL2 is unavailable. */}
   <div class="txh-footer__horizon">
     <div class="txh-footer__drape"></div>
     <div class="txh-footer__drapegrain" style={`background-image:url("${DRAPE_GRAIN}")`}></div>
+    <HorizonShader client:visible />
     <img src="/logos/txh-monogram.png" alt="Texas House" class="txh-footer__wordmark" />
   </div>
 </footer>
@@ -163,13 +171,15 @@ const DRAPE_GRAIN =
   }
   .txh-footer__social svg { display: block; }
 
-  .txh-footer__globes { display: flex; gap: var(--space-3); }
-  .txh-footer__globe {
-    width: 62px; height: 62px; border-radius: 50%;
-    border: 1px solid var(--txh-rule-strong);
-    background:
-      repeating-linear-gradient(0deg, transparent 0, transparent 2px, rgba(250,246,240,.10) 2px, rgba(250,246,240,.10) 3px),
-      radial-gradient(circle at 38% 32%, rgba(250,246,240,.18), transparent 62%);
+  .txh-footer__globes { display: flex; align-items: flex-start; }
+  /* Same 104px height the portfolio gives it; width follows the 538×262 source. */
+  .txh-footer__globes-mark {
+    display: block;
+    height: 104px; aspect-ratio: 538 / 262;
+    background: var(--txh-fg-1);
+    opacity: .92;
+    -webkit-mask: url('/micrographics/twin-globes-earth.png') center / contain no-repeat;
+            mask: url('/micrographics/twin-globes-earth.png') center / contain no-repeat;
   }
 
   .txh-footer__meta {
@@ -190,7 +200,8 @@ const DRAPE_GRAIN =
   }
   .txh-footer__legallink:hover { color: var(--txh-fg-2); border-bottom-color: var(--txh-clay); }
 
-  /* Horizon band — placeholder drape. Slot stays; art to come. */
+  /* Horizon band. The shader canvases are absolutely positioned over the
+     drape (z 0); the wordmark sits above them (z 1). */
   .txh-footer__horizon { position: relative; height: 210px; overflow: hidden; isolation: isolate; }
   .txh-footer__drape {
     position: absolute; inset: 0;
@@ -215,6 +226,7 @@ const DRAPE_GRAIN =
   @media (max-width: 980px) {
     .txh-footer__top { grid-template-columns: 1fr; }
     .txh-footer__globes { justify-content: flex-start; }
+    .txh-footer__globes-mark { height: 80px; }
   }
   @media (max-width: 680px) {
     .txh-footer__meta { grid-template-columns: 1fr; }
