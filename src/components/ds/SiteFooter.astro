@@ -7,6 +7,7 @@
   whole idea: "Bringing Texas to the world, and the world to Texas."
 */
 import BluebonnetField from './BluebonnetField.astro';
+import GlobeSpin from './GlobeSpin.astro';
 
 interface Props { nextEvent?: string | null }
 const { nextEvent = null } = Astro.props;
@@ -85,15 +86,13 @@ const DRAPE_GRAIN =
     </div>
 
     {/* Twin globes — the hero globe at two rotations, Americas and
-        Europe/Africa, no hat (VISUAL_LANGUAGE.md §5.2). Generated in Higgsfield
-        from the approved hero globe as the reference; source render and log in
-        brand/renders.md. Full colour, so it is an <img>, not the ivory mask the
-        ported portfolio pair used. */}
+        Europe/Africa, no hat (VISUAL_LANGUAGE.md §5.2), generated in Higgsfield
+        from the approved hero globe. As the footer scrolls into view the pair
+        spins half a turn and trades places (GlobeSpin.astro, a scroll-scrubbed
+        frame sequence from a Higgsfield image-to-video render of the same pair).
+        Source renders and prompts in brand/renders.md. */}
     <div class="txh-footer__globes" aria-hidden="true">
-      <picture>
-        <source srcset="/brand/footer-globes.webp" type="image/webp" />
-        <img src="/brand/footer-globes.png" alt="" width="1100" height="533" class="txh-footer__globes-mark" loading="lazy" decoding="async" />
-      </picture>
+      <GlobeSpin frames={36} width={720} height={333} />
     </div>
   </div>
 
@@ -176,8 +175,7 @@ const DRAPE_GRAIN =
   .txh-footer__social svg { display: block; }
 
   .txh-footer__globes { display: flex; align-items: flex-start; }
-  /* Same 104px height the portfolio gave its pair; width follows the source. */
-  .txh-footer__globes-mark { display: block; height: 104px; width: auto; }
+  /* Same 104px height the portfolio gave its pair; GlobeSpin sizes itself. */
 
   .txh-footer__meta {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5);
@@ -225,7 +223,7 @@ const DRAPE_GRAIN =
   @media (max-width: 980px) {
     .txh-footer__top { grid-template-columns: 1fr; }
     .txh-footer__globes { justify-content: flex-start; }
-    .txh-footer__globes-mark { height: 80px; }
+    .txh-footer__globes .txh-spin { --spin-h: 80px; }
   }
   @media (max-width: 680px) {
     .txh-footer__meta { grid-template-columns: 1fr; }
