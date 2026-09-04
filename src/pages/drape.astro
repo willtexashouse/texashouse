@@ -1,0 +1,153 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import DitherDrape from '../components/ds/DitherDrape.astro';
+
+/*
+  Footer drape decision page. Reference only, like /proto.
+
+  The three bluebonnet renders in public/brand/preview/, each in the footer's
+  horizon slot: first on their own, then through the animated dither wave in
+  its three compositing modes, then at the shipped band height. Every band is
+  live — the wave and the glitch bursts run exactly as they would in the footer.
+
+  The band markup (grain, wordmark) mirrors SiteFooter's horizon on purpose so
+  the read is honest; keep the two in step if the footer changes.
+*/
+const renders = [
+  { key: 'a', src: '/brand/preview/footer-bluebonnet-a.jpg', note: 'Cool blue field, paintbrush at the far right' },
+  { key: 'b', src: '/brand/preview/footer-bluebonnet-b.jpg', note: 'Paintbrush band along the ridge, warmer' },
+  { key: 'c', src: '/brand/preview/footer-bluebonnet-c.jpg', note: 'Taller crop, sky and oaks, paintbrush right' },
+];
+const modes = [
+  { key: 'reveal', label: 'Reveal', note: 'The field comes up through the dithered wave. The page ground shows above the crest.' },
+  { key: 'over',   label: 'Over',   note: 'The portfolio look: the cream wave dithered on top of the field.' },
+  { key: 'tone',   label: 'Tone',   note: 'The field resolved into an ordered dither, the wave as its light.' },
+] as const;
+
+// Same stretched grain as SiteFooter's horizon band.
+const DRAPE_GRAIN =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='120'%3E" +
+  "%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.08' numOctaves='3' stitchTiles='stitch'/%3E" +
+  "%3CfeColorMatrix type='saturate' values='0'/%3E" +
+  "%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='1.6' intercept='-0.2'/%3E%3C/feComponentTransfer%3E" +
+  "%3C/filter%3E%3Crect width='220' height='120' filter='url(%23f)'/%3E%3C/svg%3E";
+---
+
+<BaseLayout title="Footer drape — Texas House" chrome={false}>
+  <main class="d">
+    <header class="d__head">
+      <div class="txh-eyebrow" style="color: var(--txh-accent-text)">Decision page</div>
+      <h1 class="txh-display" style="font-size: clamp(34px, 5vw, 64px); margin-top: var(--space-4)">
+        The footer drape
+      </h1>
+      <p class="d__lede">
+        Three bluebonnet renders in the horizon slot. First on their own, then through
+        the dither wave in three blends. Every band below is live: the wave moves and
+        the signal bursts fire, as they would in the footer. The animation itself is
+        still an open question; this page is for the background.
+      </p>
+    </header>
+
+    <section class="d__row">
+      <div class="d__rowhead">
+        <span class="txh-eyebrow" style="color: var(--txh-fg-2)">The renders alone</span>
+        <span class="d__note">No shader. Top faded into the page ground, as the slot always is. 320px tall.</span>
+      </div>
+      {renders.map((r) => (
+        <figure class="d__fig">
+          <figcaption class="d__label">{r.key} · plain <span class="d__sub">{r.note}</span></figcaption>
+          <div class="d__band d__band--tall">
+            <DitherDrape src={r.src} mode="plain" />
+            <div class="d__grain" style={`background-image:url("${DRAPE_GRAIN}")`}></div>
+            <img src="/logos/txh-monogram.png" alt="" class="d__wordmark" />
+          </div>
+        </figure>
+      ))}
+    </section>
+
+    {modes.map((m) => (
+      <section class="d__row">
+        <div class="d__rowhead">
+          <span class="txh-eyebrow" style="color: var(--txh-fg-2)">{m.label}</span>
+          <span class="d__note">{m.note}</span>
+        </div>
+        {renders.map((r) => (
+          <figure class="d__fig">
+            <figcaption class="d__label">{r.key} · {m.key}</figcaption>
+            <div class="d__band d__band--tall">
+              <DitherDrape src={r.src} mode={m.key} overlay={false} />
+              <div class="d__grain" style={`background-image:url("${DRAPE_GRAIN}")`}></div>
+              <img src="/logos/txh-monogram.png" alt="" class="d__wordmark" />
+            </div>
+          </figure>
+        ))}
+      </section>
+    ))}
+
+    <section class="d__row">
+      <div class="d__rowhead">
+        <span class="txh-eyebrow" style="color: var(--txh-fg-2)">At the shipped height</span>
+        <span class="d__note">Reveal, 210px — what the footer band measures today.</span>
+      </div>
+      {renders.map((r) => (
+        <figure class="d__fig">
+          <figcaption class="d__label">{r.key} · reveal · 210px</figcaption>
+          <div class="d__band">
+            <DitherDrape src={r.src} mode="reveal" overlay={false} />
+            <div class="d__grain" style={`background-image:url("${DRAPE_GRAIN}")`}></div>
+            <img src="/logos/txh-monogram.png" alt="" class="d__wordmark" />
+          </div>
+        </figure>
+      ))}
+    </section>
+
+    <section class="d__row">
+      <div class="d__rowhead">
+        <span class="txh-eyebrow" style="color: var(--txh-fg-2)">The wave alone</span>
+        <span class="d__note">The shader with no render behind it, for reference.</span>
+      </div>
+      <figure class="d__fig">
+        <figcaption class="d__label">wave · no image</figcaption>
+        <div class="d__band d__band--tall">
+          <DitherDrape wave />
+          <div class="d__grain" style={`background-image:url("${DRAPE_GRAIN}")`}></div>
+          <img src="/logos/txh-monogram.png" alt="" class="d__wordmark" />
+        </div>
+      </figure>
+    </section>
+
+    <p class="d__foot">
+      In the real footer: <code>/?drape=a|b|c|wave&amp;mode=reveal|over|tone|plain&amp;h=320&amp;fade=0&amp;focus=0.7</code>
+    </p>
+  </main>
+</BaseLayout>
+
+<style>
+  .d { padding: var(--space-8) 0 var(--space-10); }
+  .d__head, .d__rowhead, .d__label, .d__foot { padding-left: var(--page-gutter); padding-right: var(--page-gutter); }
+  .d__lede { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--txh-fg-3); margin-top: var(--space-4); max-width: 62ch; }
+  .d__row { margin-top: var(--space-8); padding-top: var(--space-5); border-top: 1px solid var(--txh-rule); }
+  .d__rowhead { display: flex; align-items: baseline; gap: var(--space-4); flex-wrap: wrap; }
+  .d__note { font-family: var(--font-mono); font-size: 11px; letter-spacing: .05em; color: var(--txh-fg-4); }
+  .d__fig { margin: var(--space-5) 0 0; }
+  .d__label {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--txh-fg-4); margin-bottom: var(--space-3);
+  }
+  .d__sub { color: var(--txh-decor); text-transform: none; letter-spacing: .05em; margin-left: var(--space-3); }
+
+  /* Mirrors .txh-footer__horizon */
+  .d__band { position: relative; height: 210px; overflow: hidden; isolation: isolate; background: var(--txh-bg); }
+  .d__band--tall { height: 320px; }
+  .d__grain {
+    position: absolute; inset: 0; z-index: 1;
+    background-repeat: repeat; background-size: 220px 120px;
+    mix-blend-mode: overlay; opacity: .22; pointer-events: none;
+  }
+  .d__wordmark {
+    position: absolute; left: var(--page-gutter); bottom: var(--space-6);
+    height: clamp(64px, 8vw, 104px); width: auto; z-index: 2;
+  }
+  .d__foot { margin-top: var(--space-8); font-family: var(--font-mono); font-size: 11px; color: var(--txh-fg-4); }
+  .d__foot code { color: var(--txh-fg-3); }
+</style>

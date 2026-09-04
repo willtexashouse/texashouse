@@ -6,6 +6,8 @@
   The place block carries the mission rather than a location, which is the
   whole idea: "Bringing Texas to the world, and the world to Texas."
 */
+import DitherDrape from './DitherDrape.astro';
+
 interface Props { nextEvent?: string | null }
 const { nextEvent = null } = Astro.props;
 
@@ -112,6 +114,10 @@ const DRAPE_GRAIN =
       the slot is part of the composition and stays. */}
   <div class="txh-footer__horizon">
     <div class="txh-footer__drape"></div>
+    {/* The animated dither wave, with the bluebonnet render behind it. Ships
+        nothing until given a src (or wave) — in dev, ?drape=a|b|c|wave and
+        &mode=reveal|over|tone|plain switch it on for comparison. */}
+    <DitherDrape />
     <div class="txh-footer__drapegrain" style={`background-image:url("${DRAPE_GRAIN}")`}></div>
     <img src="/logos/txh-monogram.png" alt="Texas House" class="txh-footer__wordmark" />
   </div>
@@ -204,6 +210,10 @@ const DRAPE_GRAIN =
     background-repeat: repeat; background-size: 220px 120px;
     mix-blend-mode: overlay; opacity: .22; pointer-events: none;
   }
+  /* When the WebGL drape is live the CSS placeholder steps aside; the
+     stretched grain stays on top of it, as it does over the placeholder. */
+  .txh-footer__horizon--drape .txh-footer__drape { display: none; }
+  .txh-footer__horizon--drape .txh-footer__drapegrain { z-index: 1; }
   .txh-footer__wordmark {
     position: absolute; left: var(--page-gutter); bottom: var(--space-6);
     height: clamp(64px, 8vw, 104px); width: auto; z-index: 1;

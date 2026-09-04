@@ -4,8 +4,17 @@
     {
       "name": "texashouse",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "/Users/cobramanmustang/texashouse", "run", "dev"],
+      "runtimeArgs": [
+        "--prefix",
+        "/Users/cobramanmustang/texashouse",
+        "run",
+        "dev"
+      ],
       "port": 4321
+    },
+    {
+      "name": "texashouse-attach",
+      "url": "http://localhost:4321"
     }
   ]
 }

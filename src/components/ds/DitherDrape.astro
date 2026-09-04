@@ -1,0 +1,544 @@
+---
+/*
+  Footer horizon drape — the animated dither wave, ported from the portfolio's
+  DitheringShader (WebGL2, no dependency) to a plain Astro script. Two layers,
+  exactly like the donor: a supersampled base wave, and a crisp 1x overlay that
+  is transparent except during glitch bursts.
+
+  What is new here: the base layer can take a brand render as a texture and
+  composite it three ways (see `mode`). That is the whole point of the port —
+  the bluebonnet field has to live in the same slot as the wave without the
+  wave being ripped out.
+
+  Props set the shipped defaults. In dev, URL params override them so the
+  variants can be compared without touching code:
+    ?drape=a|b|c|wave   image from /brand/preview/, or the bare wave
+    &mode=reveal|over|tone|plain
+    &fade=0             drop the top fade into the page ground
+    &h=320              band height in px
+    &focus=0.7          vertical crop focus, 0 = top, 1 = bottom
+
+  With no src and no params the component renders nothing, so the CSS
+  placeholder in SiteFooter stays the default until the drape is decided.
+
+  Freezes on prefers-reduced-motion; the <img> is the no-WebGL fallback.
+*/
+interface Props {
+  /** Image URL, or null for the bare wave. */
+  src?: string | null;
+  /** reveal: image emerges through the dithered wave. over: cream wave on top
+      of the image. tone: image resolved into a two-tone ordered dither, lit by
+      the wave. plain: image only, no shader. */
+  mode?: 'reveal' | 'over' | 'tone' | 'plain';
+  /** Fade the top of the band into the page ground. */
+  fade?: boolean;
+  /** Vertical crop focus, 0 = top, 1 = bottom. */
+  focus?: number;
+  /** Render the shader even without a src (bare wave). */
+  wave?: boolean;
+  /** The crisp 1x glitch layer on top. Off saves a WebGL context — the
+      decision page stacks many bands and browsers cap contexts around 16. */
+  overlay?: boolean;
+}
+const {
+  src = null, mode = 'reveal', fade = true, focus = 0.7, wave = false, overlay = true,
+} = Astro.props;
+---
+
+<div
+  class="txh-drape"
+  data-drape
+  data-src={src ?? ''}
+  data-mode={mode}
+  data-fade={fade ? '1' : '0'}
+  data-focus={String(focus)}
+  data-wave={wave ? '1' : '0'}
+  data-overlay={overlay ? '1' : '0'}
+  hidden
+>
+  <img class="txh-drape__img" data-drape-img alt="" decoding="async" />
+  <canvas class="txh-drape__gl" data-drape-base></canvas>
+  <canvas class="txh-drape__gl" data-drape-overlay></canvas>
+  <div class="txh-drape__fade" data-drape-fade hidden></div>
+</div>
+
+<style>
+  .txh-drape { position: absolute; inset: 0; }
+  .txh-drape__img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .txh-drape__gl {
+    position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+  }
+  .txh-drape__fade {
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(to bottom, var(--txh-bg) 0%, transparent 55%);
+  }
+</style>
+
+<script>
+  // ── shader source ─────────────────────────────────────────────────────────
+  // Verbatim from the donor apart from the u_image / u_mode block in main().
+  const VERT = `#version 300 es
+precision mediump float;
+layout(location = 0) in vec4 a_position;
+void main() { gl_Position = a_position; }
+`;
+
+  const FRAG = `#version 300 es
+precision mediump float;
+
+uniform float u_time;
+uniform vec2 u_resolution;
+uniform vec4 u_colorBack;
+uniform vec4 u_colorFront;
+uniform float u_shape;
+uniform float u_pxSize;
+uniform float u_glitch;
+uniform float u_scale;   // framebuffer px per CSS px — keeps glitch lines CSS-sized at any supersample
+uniform float u_overlay; // 1.0 = crisp glitch overlay: transparent except during bursts
+
+// image compositing
+uniform sampler2D u_image;
+uniform float u_hasImage;
+uniform vec2 u_imageSize;
+uniform float u_focusY;  // CSS object-position y, 0 = top, 1 = bottom
+uniform float u_mode;    // 0 wave · 1 reveal · 2 over · 3 tone
+
+out vec4 fragColor;
+
+#define TWO_PI 6.28318530718
+#define PI 3.14159265358979323846
+
+float hash11(float p) {
+  p = fract(p * 0.3183099) + 0.1;
+  p *= p + 19.19;
+  return fract(p * p);
+}
+float hash21(vec2 p) {
+  p = fract(p * vec2(0.3183099, 0.3678794)) + 0.1;
+  p += dot(p, p + 19.19);
+  return fract(p.x * p.y);
+}
+
+vec3 permute(vec3 x) { return mod(((x * 34.0) + 1.0) * x, 289.0); }
+float snoise(vec2 v) {
+  const vec4 C = vec4(0.211324865405187, 0.366025403784439,
+    -0.577350269189626, 0.024390243902439);
+  vec2 i = floor(v + dot(v, C.yy));
+  vec2 x0 = v - i + dot(i, C.xx);
+  vec2 i1;
+  i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+  vec4 x12 = x0.xyxy + C.xxzz;
+  x12.xy -= i1;
+  i = mod(i, 289.0);
+  vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0))
+    + i.x + vec3(0.0, i1.x, 1.0));
+  vec3 m = max(0.5 - vec3(dot(x0, x0), dot(x12.xy, x12.xy),
+      dot(x12.zw, x12.zw)), 0.0);
+  m = m * m;
+  m = m * m;
+  vec3 x = 2.0 * fract(p * C.www) - 1.0;
+  vec3 h = abs(x) - 0.5;
+  vec3 ox = floor(x + 0.5);
+  vec3 a0 = x - ox;
+  m *= 1.79284291400159 - 0.85373472095314 * (a0 * a0 + h * h);
+  vec3 g;
+  g.x = a0.x * x0.x + h.x * x0.y;
+  g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+  return 130.0 * dot(m, g);
+}
+
+float getSimplexNoise(vec2 uv, float t) {
+  float noise = .5 * snoise(uv - vec2(0., .3 * t));
+  noise += .5 * snoise(2. * uv + vec2(0., .32 * t));
+  return noise;
+}
+
+const int bayer8x8[64] = int[64](
+   0, 32,  8, 40,  2, 34, 10, 42,
+  48, 16, 56, 24, 50, 18, 58, 26,
+  12, 44,  4, 36, 14, 46,  6, 38,
+  60, 28, 52, 20, 62, 30, 54, 22,
+   3, 35, 11, 43,  1, 33,  9, 41,
+  51, 19, 59, 27, 49, 17, 57, 25,
+  15, 47,  7, 39, 13, 45,  5, 37,
+  63, 31, 55, 23, 61, 29, 53, 21
+);
+float bayer8(vec2 cell) {
+  ivec2 pos = ivec2(mod(cell, 8.0));
+  return float(bayer8x8[pos.y * 8 + pos.x]) / 64.0;
+}
+
+// the raw 0..1 shape field for the active u_shape, sampled at shape_uv
+float shapeFor(vec2 shape_uv, float t) {
+  float shape = 0.;
+  if (u_shape < 1.5) {
+    shape_uv *= .001;
+    shape = 0.5 + 0.5 * getSimplexNoise(shape_uv, t);
+    shape = smoothstep(0.3, 0.9, shape);
+  } else if (u_shape < 4.5) {
+    shape_uv *= 4.;
+    float wave = cos(.5 * shape_uv.x - 2. * t) * sin(1.5 * shape_uv.x + t) * (.75 + .25 * cos(3. * t));
+    shape = 1. - smoothstep(-1., 1., shape_uv.y + wave);
+  } else {
+    float dist = length(shape_uv);
+    float waves = sin(pow(dist, 1.7) * 7. - 3. * t) * .5 + .5;
+    shape = waves;
+  }
+  return clamp(shape, 0.0, 1.0);
+}
+
+// cover-fit sample of the image, honouring the vertical focus
+vec3 sampleImage(vec2 frag) {
+  float s = max(u_resolution.x / u_imageSize.x, u_resolution.y / u_imageSize.y);
+  vec2 disp = u_imageSize * s;
+  vec2 off = vec2(0.5 * (u_resolution.x - disp.x), (1.0 - u_focusY) * (u_resolution.y - disp.y));
+  vec2 iuv = (frag - off) / disp;
+  return texture(u_image, clamp(iuv, 0.0, 1.0)).rgb;
+}
+
+void main() {
+  float t = .5 * u_time;
+  vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+  uv -= .5;
+
+  float pxSize = u_pxSize;
+  vec2 pxSizeUv = gl_FragCoord.xy;
+  pxSizeUv -= .5 * u_resolution;
+  pxSizeUv /= pxSize;
+  vec2 pixelizedUv = floor(pxSizeUv) * pxSize / u_resolution.xy;
+
+  vec2 ditheringNoise_uv = uv * u_resolution;
+
+  // ── GLITCH ── intermittent broken-signal bursts, gated off by u_glitch
+  float gt = u_time;
+  float winOn = step(0.5, hash11(floor(gt / 0.7)));
+  float lt = fract(gt / 0.7);
+  float env = winOn * smoothstep(0.0, 0.03, lt) * (1.0 - smoothstep(0.10, 0.45, lt));
+  float strobe = step(0.4, hash11(floor(gt * 32.0)));
+  float g = clamp(env * (0.6 + 0.6 * strobe), 0.0, 1.0) * u_glitch;
+
+  // 1 CSS px vertical scanline tear, per-column jitter
+  float bandRand = hash11(floor(gl_FragCoord.x / u_scale) + floor(gt * 30.0) * 7.0);
+  float tear = (bandRand - 0.5) * 2.0 * g * 0.035;
+  vec2 base_uv = pixelizedUv + vec2(0.0, tear);
+
+  // RGB chromatic split, vertical — fringes the wave's horizontal contour
+  float split = g * 0.06;
+  float sR = shapeFor(base_uv - vec2(0.0, split), t);
+  float sG = shapeFor(base_uv, t);
+  float sB = shapeFor(base_uv + vec2(0.0, split), t);
+
+  float lineMask = step(fract(gl_FragCoord.x / (3.0 * u_scale)), 0.34);
+  float drop = mix(1.0, 0.40, g * 0.7 * lineMask);
+  float grain = hash21(ditheringNoise_uv) - 0.5;
+  float flick = 1.0 + g * (hash11(floor(gt * 44.0)) - 0.4) * 1.4;
+  float resR = clamp((sR * 0.80 + grain * 0.12) * flick * drop, 0.0, 1.0);
+  float resG = clamp((sG * 0.80 + grain * 0.12) * flick * drop, 0.0, 1.0);
+  float resB = clamp((sB * 0.80 + grain * 0.12) * flick * drop, 0.0, 1.0);
+  vec3 res3 = vec3(resR, resG, resB);
+  float cover = clamp(max(resR, max(resG, resB)), 0.0, 1.0);
+
+  vec3 fg = u_colorFront.rgb;
+  vec3 bg = u_colorBack.rgb;
+  float bgA = u_colorBack.a;
+
+  vec3 color;
+  float opacity;
+
+  if (u_mode < 0.5 || u_hasImage < 0.5) {
+    // donor behaviour: cream wave over its own ground
+    color = fg * res3;
+    opacity = u_colorFront.a * cover;
+    color += bg * bgA * (1.0 - opacity) * (1.0 - u_overlay);
+    opacity += bgA * (1.0 - opacity) * (1.0 - u_overlay);
+  } else {
+    // the image rides the same tear as the wave, so bursts break it too
+    vec3 img = sampleImage(gl_FragCoord.xy + vec2(0.0, tear * u_resolution.y));
+    if (u_mode < 1.5) {
+      // reveal — the field emerges through the dithered wave; ground shows above
+      color = img * res3;
+      opacity = cover;
+    } else if (u_mode < 2.5) {
+      // over — the cream wave dithered on top of the field
+      color = mix(img, fg, res3);
+      opacity = 1.0;
+    } else {
+      // tone — the field resolved into an ordered dither, the wave as its light
+      float L = dot(img, vec3(0.299, 0.587, 0.114));
+      float lit = clamp(L * (0.35 + 0.95 * sG) + grain * 0.06, 0.0, 1.0);
+      float cell = 2.0 * u_scale;
+      float on = step(bayer8(floor(gl_FragCoord.xy / cell)), lit * flick * drop);
+      color = mix(bg, img * 1.12, on);
+      opacity = 1.0;
+    }
+  }
+
+  // overlay is visible only during a burst — premultiplied, so no halo
+  float gate = mix(1.0, clamp(g * 4.0, 0.0, 1.0), u_overlay);
+  color *= gate;
+  opacity *= gate;
+
+  fragColor = vec4(color, opacity);
+}
+`;
+
+  const MODES: Record<string, number> = { wave: 0, reveal: 1, over: 2, tone: 3 };
+
+  // ── helpers ───────────────────────────────────────────────────────────────
+  function cssRgba(name: string, alpha = 1): [number, number, number, number] {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(v);
+    if (!m) return [0, 0, 0, alpha];
+    return [parseInt(m[1], 16) / 255, parseInt(m[2], 16) / 255, parseInt(m[3], 16) / 255, alpha];
+  }
+
+  function compile(gl: WebGL2RenderingContext, type: number, src: string) {
+    const sh = gl.createShader(type);
+    if (!sh) return null;
+    gl.shaderSource(sh, src);
+    gl.compileShader(sh);
+    if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+      console.error('DitherDrape shader: ' + gl.getShaderInfoLog(sh));
+      gl.deleteShader(sh);
+      return null;
+    }
+    return sh;
+  }
+
+  function program(gl: WebGL2RenderingContext) {
+    const vs = compile(gl, gl.VERTEX_SHADER, VERT);
+    const fs = compile(gl, gl.FRAGMENT_SHADER, FRAG);
+    if (!vs || !fs) return null;
+    const p = gl.createProgram();
+    if (!p) return null;
+    gl.attachShader(p, vs);
+    gl.attachShader(p, fs);
+    gl.linkProgram(p);
+    if (!gl.getProgramParameter(p, gl.LINK_STATUS)) {
+      console.error('DitherDrape link: ' + gl.getProgramInfoLog(p));
+      gl.deleteProgram(p);
+      return null;
+    }
+    return p;
+  }
+
+  interface LayerOpts {
+    mount: HTMLElement;
+    canvas: HTMLCanvasElement;
+    image: HTMLImageElement | null;
+    mode: number;
+    focusY: number;
+    superSample: number;
+    glitch: boolean;
+    overlay: boolean;
+    speed: number;
+    pxSize: number;
+    front: [number, number, number, number];
+    back: [number, number, number, number];
+    reduce: boolean;
+    onLost?: () => void;
+  }
+
+  function mountLayer(o: LayerOpts) {
+    const gl = o.canvas.getContext('webgl2', { premultipliedAlpha: true, antialias: false });
+    if (!gl) return false;
+    const prog = program(gl);
+    if (!prog) return false;
+
+    const u = (n: string) => gl.getUniformLocation(prog, n);
+    const U = {
+      time: u('u_time'), res: u('u_resolution'), cb: u('u_colorBack'), cf: u('u_colorFront'),
+      shape: u('u_shape'), px: u('u_pxSize'), glitch: u('u_glitch'), scale: u('u_scale'),
+      overlay: u('u_overlay'), image: u('u_image'), hasImage: u('u_hasImage'),
+      imageSize: u('u_imageSize'), focusY: u('u_focusY'), mode: u('u_mode'),
+    };
+
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(prog, 'a_position');
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+    // the render as a texture — only the base layer carries it
+    let hasImage = 0;
+    let imgW = 1, imgH = 1;
+    if (o.image && o.mode > 0) {
+      const tex = gl.createTexture();
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, tex);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, o.image);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      hasImage = 1;
+      imgW = o.image.naturalWidth;
+      imgH = o.image.naturalHeight;
+    }
+
+    const scale = Math.max(1, o.superSample);
+    const start = performance.now();
+    let W = 1, H = 1;
+
+    const render = () => {
+      const now = performance.now();
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.useProgram(prog);
+      gl.uniform1f(U.time, (now - start) * 0.001 * o.speed);
+      gl.uniform2f(U.res, W, H);
+      gl.uniform4fv(U.cb, o.back);
+      gl.uniform4fv(U.cf, o.front);
+      gl.uniform1f(U.shape, 4); // wave
+      gl.uniform1f(U.px, o.pxSize);
+      gl.uniform1f(U.glitch, o.reduce || !o.glitch ? 0 : 1);
+      gl.uniform1f(U.scale, scale);
+      gl.uniform1f(U.overlay, o.overlay ? 1 : 0);
+      gl.uniform1i(U.image, 0);
+      gl.uniform1f(U.hasImage, hasImage);
+      gl.uniform2f(U.imageSize, imgW, imgH);
+      gl.uniform1f(U.focusY, o.focusY);
+      gl.uniform1f(U.mode, o.mode);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+    };
+
+    // Assigning canvas.width clears the bitmap, so only touch it on a real
+    // change and redraw straight away — otherwise a paused layer goes blank.
+    const resize = () => {
+      const w = Math.max(1, Math.floor(o.mount.clientWidth * scale));
+      const h = Math.max(1, Math.floor(o.mount.clientHeight * scale));
+      if (w === W && h === H && o.canvas.width === w && o.canvas.height === h) return;
+      W = w; H = h;
+      o.canvas.width = W;
+      o.canvas.height = H;
+      gl.viewport(0, 0, W, H);
+      render();
+    };
+    resize();
+    new ResizeObserver(resize).observe(o.mount);
+
+    const frameMs = 1000 / 40; // the slow wave does not need 60fps
+    let last = 0;
+    let raf = 0;
+    let visible = true;
+
+    const draw = () => {
+      const now = performance.now();
+      if (now - last >= frameMs) { last = now; render(); }
+      raf = !o.reduce && visible ? requestAnimationFrame(draw) : 0;
+    };
+    draw();
+
+    // GPU took the context away (too many canvases, tab backgrounded): stop
+    // the loop and let the <img> fallback show.
+    o.canvas.addEventListener('webglcontextlost', (e) => {
+      e.preventDefault();
+      visible = false;
+      if (raf) cancelAnimationFrame(raf);
+      o.canvas.hidden = true;
+      o.onLost?.();
+    });
+
+    // only render while the band is on screen — supersampling is GPU-heavy
+    new IntersectionObserver((e) => {
+      visible = e[0].isIntersecting;
+      if (visible && !o.reduce && !raf) raf = requestAnimationFrame(draw);
+    }, { threshold: 0 }).observe(o.mount);
+
+    return true;
+  }
+
+  // ── wiring ────────────────────────────────────────────────────────────────
+  function loadImage(src: string): Promise<HTMLImageElement | null> {
+    return new Promise((resolve) => {
+      const im = new Image();
+      im.onload = () => resolve(im);
+      im.onerror = () => resolve(null);
+      im.src = src;
+    });
+  }
+
+  async function boot(root: HTMLElement) {
+    const q = new URLSearchParams(location.search);
+    const dev = import.meta.env.DEV;
+
+    let src = root.dataset.src || '';
+    let mode = root.dataset.mode || 'reveal';
+    let fade = root.dataset.fade === '1';
+    let focus = Number(root.dataset.focus ?? 0.7);
+    let wave = root.dataset.wave === '1';
+    const withOverlay = root.dataset.overlay !== '0';
+
+    if (dev) {
+      const d = q.get('drape');
+      if (d && /^[abc]$/.test(d)) src = `/brand/preview/footer-bluebonnet-${d}.jpg`;
+      if (d === 'wave') { src = ''; wave = true; }
+      const m = q.get('mode');
+      if (m && (m in MODES || m === 'plain')) mode = m;
+      if (q.get('fade') === '0') fade = false;
+      if (q.get('fade') === '1') fade = true;
+      const f = q.get('focus');
+      if (f !== null && !Number.isNaN(Number(f))) focus = Math.min(1, Math.max(0, Number(f)));
+      const h = q.get('h');
+      const band = root.closest<HTMLElement>('.txh-footer__horizon');
+      if (h && band && /^\d{2,4}$/.test(h)) band.style.height = `${h}px`;
+    }
+
+    if (!src && !wave) return; // nothing asked for — the CSS placeholder stays
+
+    root.hidden = false;
+    root.closest('.txh-footer__horizon')?.classList.add('txh-footer__horizon--drape');
+
+    const img = root.querySelector<HTMLImageElement>('[data-drape-img]')!;
+    const base = root.querySelector<HTMLCanvasElement>('[data-drape-base]')!;
+    const overlay = root.querySelector<HTMLCanvasElement>('[data-drape-overlay]')!;
+    const fadeEl = root.querySelector<HTMLElement>('[data-drape-fade]')!;
+
+    fadeEl.hidden = !fade;
+    img.style.objectPosition = `center ${Math.round(focus * 100)}%`;
+
+    let image: HTMLImageElement | null = null;
+    if (src) {
+      image = await loadImage(src);
+      if (image) { img.src = src; img.hidden = false; } else { img.hidden = true; }
+    } else {
+      img.hidden = true;
+    }
+
+    // plain — the render alone, as a reference for what the shader adds
+    if (mode === 'plain' || !('WebGL2RenderingContext' in window)) {
+      base.hidden = true;
+      overlay.hidden = true;
+      return;
+    }
+
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const front = cssRgba('--txh-ivory-dim');
+    const back = cssRgba('--txh-bg');
+    const modeN = src ? MODES[mode] ?? 1 : 0;
+
+    const okBase = mountLayer({
+      mount: root, canvas: base, image, mode: modeN, focusY: focus,
+      superSample: 2, glitch: false, overlay: false, speed: 0.6, pxSize: 0.5,
+      front, back, reduce,
+      onLost: () => { if (image) img.hidden = false; overlay.hidden = true; },
+    });
+    if (!okBase) { base.hidden = true; overlay.hidden = true; return; }
+    // once the shader has the image, the <img> is only a fallback
+    if (image) img.hidden = true;
+
+    if (!withOverlay) { overlay.hidden = true; return; }
+    const okOverlay = mountLayer({
+      mount: root, canvas: overlay, image: null, mode: 0, focusY: focus,
+      superSample: 1, glitch: true, overlay: true, speed: 0.6, pxSize: 0.5,
+      front, back, reduce,
+    });
+    if (!okOverlay) overlay.hidden = true;
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-drape]').forEach(boot);
+</script>
