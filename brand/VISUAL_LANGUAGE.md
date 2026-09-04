@@ -300,28 +300,30 @@ Option 1 alone is enough for launch.
 4. Sample color. Once the first six to eight renders are approved, pull hex
    values from them for the token file. Code follows imagery, not the reverse.
 
-Claude Code and Higgsfield, settled 3 September 2026. Images are made and
-refined in Higgsfield by hand: that is where the taste lives, and no step of
-generation is automated. Claude Code starts after the final is approved. The
-loop:
+Claude Code and Higgsfield, settled 4 September 2026. We generate together
+through the **Higgsfield MCP connector in Claude Code**, which exposes
+`models_explore`, `generate_image`, `generate_image_batch`, `upscale_image`,
+`generate_video`, `jobs_wait`, `media_upload`, `media_import_url`,
+`show_generations`, `show_medias`, `show_reference_elements`, and workspace
+selection. Nothing is auto-uploaded to the website. The loop:
 
-1. Generate and refine in Higgsfield (reference image first, shortened prompt
-   from blocks 1, 4 and 5) until the render is right.
-2. Hand the final to Claude Code as a file dropped in `brand/inbox/` or as
-   the render URL.
-3. `npm run hf -- intake --tier … --register … --subject … --ar …` renames it
-   to the convention, files it in `public/brand/`, and logs the source and
+1. Claude Code assembles the five blocks (fixed blocks from
+   `brand/prompts/`, block 4 written per asset) and calls `generate_image`
+   with the approved reference attached; batches for variants; `upscale_image`
+   for finals; `generate_video` for the sequence and loops.
+2. We refine together in the conversation until the render is right.
+3. Claude Code pulls the approved output and files it with
+   `npm run hf -- intake <url> --tier … --register … --subject … --ar …`,
+   which renames to the convention, saves to `public/brand/`, and logs the
    prompt in `brand/renders.md`.
 4. Claude Code places it on the site: optimization, responsive sizes, the
    parallax layers, the scroll sequence, the globe.
 
-`scripts/higgsfield.mjs` also carries `estimate`, `generate`, `video` and
-`upload` commands that talk to the Higgsfield API directly (key id and secret
-in `.env`, created at https://cloud.higgsfield.ai). Those are optional, for
-batch variants or the frame sequence once a look is locked; they never replace
-the by-hand step. Note that the Higgsfield connector inside Claude Code is a
-website builder plus the Marketing Studio widget, not a prompt-to-image tool,
-so generation happens in Higgsfield itself.
+Note: the connector's tool set is registered per session. A session where the
+connector reconnected can show only its website-builder tools; start a fresh
+session or reconnect the connector before generating. `scripts/higgsfield.mjs`
+also carries direct API commands (`estimate`, `generate`, `video`, `upload`,
+key in `.env`) as a fallback for batch runs.
 
 Naming: `tier-register-subject-aspect-v#.ext`. Example:
 `scene-orbit-robot-coffee-21x9-v2.png`. Sequences: `seq-eras-0001.webp`
