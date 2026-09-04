@@ -7,8 +7,11 @@ import DitherDrape from '../components/ds/DitherDrape.astro';
 
   The three bluebonnet renders in public/brand/preview/, each in the footer's
   horizon slot: first on their own, then through the animated dither wave in
-  its three compositing modes, then at the shipped band height. Every band is
-  live — the wave and the glitch bursts run exactly as they would in the footer.
+  its three compositing modes, then at the shipped band height. Every shader
+  band is live, but only the bare wave at the bottom carries the glitch-burst
+  layer: browsers cap WebGL contexts around 16 and this page already holds 14.
+  Bands here also render at half the footer's supersample for the same reason.
+  See the bursts over a render in the real footer via ?drape=a&mode=reveal.
 
   The band markup (grain, wordmark) mirrors SiteFooter's horizon on purpose so
   the read is honest; keep the two in step if the footer changes.
@@ -42,9 +45,10 @@ const DRAPE_GRAIN =
       </h1>
       <p class="d__lede">
         Three bluebonnet renders in the horizon slot. First on their own, then through
-        the dither wave in three blends. Every band below is live: the wave moves and
-        the signal bursts fire, as they would in the footer. The animation itself is
-        still an open question; this page is for the background.
+        the dither wave in three blends. Every band below is live and the wave moves;
+        the signal bursts only run on the bare wave at the bottom, and over a render in
+        the real footer. The animation itself is still an open question; this page is
+        for the background.
       </p>
     </header>
 
@@ -75,7 +79,7 @@ const DRAPE_GRAIN =
           <figure class="d__fig">
             <figcaption class="d__label">{r.key} · {m.key}</figcaption>
             <div class="d__band d__band--tall">
-              <DitherDrape src={r.src} mode={m.key} overlay={false} />
+              <DitherDrape src={r.src} mode={m.key} overlay={false} superSample={2} />
               <div class="d__grain" style={`background-image:url("${DRAPE_GRAIN}")`}></div>
               <img src="/logos/txh-monogram.png" alt="" class="d__wordmark" />
             </div>
@@ -93,7 +97,7 @@ const DRAPE_GRAIN =
         <figure class="d__fig">
           <figcaption class="d__label">{r.key} · reveal · 210px</figcaption>
           <div class="d__band">
-            <DitherDrape src={r.src} mode="reveal" overlay={false} />
+            <DitherDrape src={r.src} mode="reveal" overlay={false} superSample={2} />
             <div class="d__grain" style={`background-image:url("${DRAPE_GRAIN}")`}></div>
             <img src="/logos/txh-monogram.png" alt="" class="d__wordmark" />
           </div>
@@ -109,7 +113,7 @@ const DRAPE_GRAIN =
       <figure class="d__fig">
         <figcaption class="d__label">wave · no image</figcaption>
         <div class="d__band d__band--tall">
-          <DitherDrape wave />
+          <DitherDrape wave superSample={2} />
           <div class="d__grain" style={`background-image:url("${DRAPE_GRAIN}")`}></div>
           <img src="/logos/txh-monogram.png" alt="" class="d__wordmark" />
         </div>
