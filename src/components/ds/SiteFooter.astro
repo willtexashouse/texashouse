@@ -84,14 +84,16 @@ const DRAPE_GRAIN =
       </div>
     </div>
 
-    {/* Twin globes — Americas + Europe/Africa, the Apollo-plaque pair ported
-        from the portfolio footer (assets/micrographics/twin-globes-earth.png).
-        Interim: the brand plan (VISUAL_LANGUAGE.md §5.2) replaces this with the
-        hero globe at two rotations once that object exists. The PNG is white on
-        transparent, so it is used as a mask over the ivory token rather than
-        drawn as an <img> — that way it takes the brand colour exactly. */}
+    {/* Twin globes — the hero globe at two rotations, Americas and
+        Europe/Africa, no hat (VISUAL_LANGUAGE.md §5.2). Generated in Higgsfield
+        from the approved hero globe as the reference; source render and log in
+        brand/renders.md. Full colour, so it is an <img>, not the ivory mask the
+        ported portfolio pair used. */}
     <div class="txh-footer__globes" aria-hidden="true">
-      <span class="txh-footer__globes-mark"></span>
+      <picture>
+        <source srcset="/brand/footer-globes.webp" type="image/webp" />
+        <img src="/brand/footer-globes.png" alt="" width="1100" height="533" class="txh-footer__globes-mark" loading="lazy" decoding="async" />
+      </picture>
     </div>
   </div>
 
@@ -174,15 +176,8 @@ const DRAPE_GRAIN =
   .txh-footer__social svg { display: block; }
 
   .txh-footer__globes { display: flex; align-items: flex-start; }
-  /* Same 104px height the portfolio gives it; width follows the 538×262 source. */
-  .txh-footer__globes-mark {
-    display: block;
-    height: 104px; aspect-ratio: 538 / 262;
-    background: var(--txh-fg-1);
-    opacity: .92;
-    -webkit-mask: url('/micrographics/twin-globes-earth.png') center / contain no-repeat;
-            mask: url('/micrographics/twin-globes-earth.png') center / contain no-repeat;
-  }
+  /* Same 104px height the portfolio gave its pair; width follows the source. */
+  .txh-footer__globes-mark { display: block; height: 104px; width: auto; }
 
   .txh-footer__meta {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5);

@@ -29,3 +29,9 @@ One entry per approved file in `public/brand/`: filename, tier, register, the Bl
 - Chain: Texas Rangers 1972 hat-on-baseball mark supplied by Will as the hat-shape reference → Higgsfield (nano_banana_pro 2k, 1:1) redraw with lettering removed and the baseball replaced by the globe → single-ink pick (r2) → brand-palette pass with the globe on gun metal (b1: clay hat, bluebonnet ocean) → Gulf correction so the clay meets the water with no ivory sliver → Texas rescaled to true proportion (t1). Every step used the previous approved render as the attached reference.
 - Trademark note: the hat is still a near-trace of the Rangers' 1972 mark. Before this ships on anything public, the vector redraw should move the crown, crease, and brim line enough to be our own hat. Tracked in VISUAL_LANGUAGE.md §5.1.
 - Style lock: this render is the reference attached to every future symbol or element render. See VISUAL_LANGUAGE.md §3, Block 3 "Emblem tier", and brand/prompts/brand-lock.txt.
+
+## public/brand/emblem-brand-footer-globes-16x9-v1.png
+- Date: 2026-09-04 · Made in Higgsfield, taken in by hand · Aspect: 16:9
+- Tier: emblem · Register: brand
+- Source: /tmp/claude-0/-home-user-texashouse/139d78b4-300c-50b6-a3e7-723a483f2eaa/scratchpad/twin/g2.png
+- Prompt: APPROVED 2026-09-04 (Will): footer globe pair. Two globes side by side drawn exactly like the approved hero globe (attached as the reference) with no hat and no clay accent: bluebonnet-blue ocean, flat ivory continents, single ivory outline, halftone and grain, on gun metal. Left: the Americas, North America forward. Right: Europe, Africa, western Asia. Served on the site as public/brand/footer-globes.webp/png, cut to alpha from this render.
