@@ -364,6 +364,11 @@ meantime; the band is part of the footer's composition, not a decoration to be
 added later. The brand rule "highlights toward Ivory, shadows toward Gun Metal"
 already describes the treatment we want.
 
+**Ported 2026-09-04:** the portfolio's animated dither (`DitheringShader`, raw
+WebGL2, two layers: supersampled wave + crisp glitch overlay) now runs in the
+band as a `client:visible` island, Ivory Dim wave on Gun Metal. The CSS drape
+stays underneath as the pre-hydration and no-WebGL fallback.
+
 ---
 
 ## 6. Not in the system

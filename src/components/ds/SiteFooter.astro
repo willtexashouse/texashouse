@@ -6,6 +6,8 @@
   The place block carries the mission rather than a location, which is the
   whole idea: "Bringing Texas to the world, and the world to Texas."
 */
+import HorizonShader from './HorizonShader.jsx';
+
 interface Props { nextEvent?: string | null }
 const { nextEvent = null } = Astro.props;
 
@@ -112,11 +114,13 @@ const DRAPE_GRAIN =
     </div>
   </div>
 
-  {/* Horizon band. The drape is ours to design — this is the placeholder, but
-      the slot is part of the composition and stays. */}
+  {/* Horizon band. The animated dither is the portfolio's footer artwork,
+      ported (HorizonShader.jsx). The CSS drape underneath is what shows before
+      the island hydrates and wherever WebGL2 is unavailable. */}
   <div class="txh-footer__horizon">
     <div class="txh-footer__drape"></div>
     <div class="txh-footer__drapegrain" style={`background-image:url("${DRAPE_GRAIN}")`}></div>
+    <HorizonShader client:visible />
     <img src="/logos/txh-monogram.png" alt="Texas House" class="txh-footer__wordmark" />
   </div>
 </footer>
@@ -196,7 +200,8 @@ const DRAPE_GRAIN =
   }
   .txh-footer__legallink:hover { color: var(--txh-fg-2); border-bottom-color: var(--txh-clay); }
 
-  /* Horizon band — placeholder drape. Slot stays; art to come. */
+  /* Horizon band. The shader canvases are absolutely positioned over the
+     drape (z 0); the wordmark sits above them (z 1). */
   .txh-footer__horizon { position: relative; height: 210px; overflow: hidden; isolation: isolate; }
   .txh-footer__drape {
     position: absolute; inset: 0;
