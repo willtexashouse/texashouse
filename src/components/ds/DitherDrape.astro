@@ -13,10 +13,20 @@
   Props set the shipped defaults. In dev, URL params override them so the
   variants can be compared without touching code:
     ?drape=a|b|c|wave   image from /brand/preview/, or the bare wave
-    &mode=reveal|over|tone|plain
+    &mode=reveal|over|tone|rgb|plain
     &fade=0             drop the top fade into the page ground
     &h=320              band height in px
     &focus=0.7          vertical crop focus, 0 = top, 1 = bottom
+    &dim=0.35           rgb only: 0 = plain brightness, 1 = reveal's darkening
+    &split=14           rgb only: channel split along the crest, CSS px
+    &reg=26             rgb only: the scroll-in split, CSS px (the car's 26)
+    &edge=2             rgb only: how tightly the split hugs the crest, 1 wide … 4 thin
+
+  rgb is the ChannelRegisterImage treatment (brand-specimen §5.3) carried
+  into the wave: the render's own R and B channels are pulled apart along the
+  moving crest, R to -x/-0.35y and B to +x/+0.35y as on the car, and the whole
+  field enters split and snaps into register as the band scrolls in, then
+  latches. At zero offset it is the untouched render.
 
   With no src and no params the component renders nothing, so the CSS
   placeholder in SiteFooter stays the default until the drape is decided.
@@ -28,8 +38,17 @@ interface Props {
   src?: string | null;
   /** reveal: image emerges through the dithered wave. over: cream wave on top
       of the image. tone: image resolved into a two-tone ordered dither, lit by
-      the wave. plain: image only, no shader. */
-  mode?: 'reveal' | 'over' | 'tone' | 'plain';
+      the wave. rgb: image at full strength, the wave as a band of R/B channel
+      misregistration riding its crest. plain: image only, no shader. */
+  mode?: 'reveal' | 'over' | 'tone' | 'rgb' | 'plain';
+  /** rgb only. 0 keeps plain brightness, 1 applies reveal's darkening. */
+  dim?: number;
+  /** rgb only. Channel split along the crest, CSS px. */
+  split?: number;
+  /** rgb only. Scroll-in split that resolves as the band enters, CSS px. */
+  register?: number;
+  /** rgb only. How tightly the split hugs the crest: 1 wide, 4 thin. */
+  edge?: number;
   /** Fade the top of the band into the page ground. */
   fade?: boolean;
   /** Vertical crop focus, 0 = top, 1 = bottom. */
@@ -45,7 +64,7 @@ interface Props {
 }
 const {
   src = null, mode = 'reveal', fade = true, focus = 0.7, wave = false, overlay = true,
-  superSample = 4,
+  superSample = 4, dim = 0.35, split = 14, register = 26, edge = 2,
 } = Astro.props;
 ---
 
@@ -59,6 +78,10 @@ const {
   data-wave={wave ? '1' : '0'}
   data-overlay={overlay ? '1' : '0'}
   data-supersample={String(superSample)}
+  data-dim={String(dim)}
+  data-split={String(split)}
+  data-register={String(register)}
+  data-edge={String(edge)}
   aria-hidden="true"
   hidden
 >
@@ -110,7 +133,11 @@ uniform sampler2D u_image;
 uniform float u_hasImage;
 uniform vec2 u_imageSize;
 uniform float u_focusY;  // CSS object-position y, 0 = top, 1 = bottom
-uniform float u_mode;    // 0 wave · 1 reveal · 2 over · 3 tone
+uniform float u_mode;    // 0 wave · 1 reveal · 2 over · 3 tone · 4 rgb
+uniform float u_dim;     // rgb: 0 plain brightness … 1 reveal's darkening
+uniform float u_split;   // rgb: channel split along the crest, CSS px
+uniform float u_reg;     // rgb: scroll-in split right now, CSS px (0 once registered)
+uniform float u_edge;    // rgb: crest tightness, 1 wide … 4 thin
 
 out vec4 fragColor;
 
@@ -271,6 +298,20 @@ void main() {
       // over — the cream wave dithered on top of the field
       color = mix(img, fg, res3);
       opacity = 1.0;
+    } else if (u_mode > 3.5) {
+      // rgb — the register treatment carried into the wave. crest is 1 on the
+      // wave's edge and 0 in its body and above it, so the split rides the
+      // moving contour; u_reg is the car's whole-image split on scroll-in.
+      float crest = pow(4.0 * sG * (1.0 - sG), u_edge);
+      float px = (u_reg + u_split * crest) * u_scale;
+      vec2 d = vec2(px, px * 0.35);
+      vec2 f = gl_FragCoord.xy + vec2(0.0, tear * u_resolution.y);
+      vec3 reg = vec3(sampleImage(f - d).r, img.g, sampleImage(f + d).b);
+      // between plain and reveal: dim 0 is the field at full strength, dim 1
+      // is reveal's own coverage (its grainy wave as the alpha)
+      float a = mix(1.0, cover, u_dim);
+      color = reg * a;
+      opacity = a;
     } else {
       // tone — the field resolved into an ordered dither, the wave as its light
       float L = dot(img, vec3(0.299, 0.587, 0.114));
@@ -291,7 +332,7 @@ void main() {
 }
 `;
 
-  const MODES: Record<string, number> = { wave: 0, reveal: 1, over: 2, tone: 3 };
+  const MODES: Record<string, number> = { wave: 0, reveal: 1, over: 2, tone: 3, rgb: 4 };
 
   // ── helpers ───────────────────────────────────────────────────────────────
   function cssRgba(name: string, alpha = 1): [number, number, number, number] {
@@ -346,6 +387,11 @@ void main() {
     back: [number, number, number, number];
     reduce: boolean;
     onLost?: () => void;
+    dim?: number;
+    split?: number;
+    edge?: number;
+    /** Read every frame: the scroll-in split in CSS px, 0 once registered. */
+    reg?: { value: number };
   }
 
   function mountLayer(o: LayerOpts) {
@@ -360,6 +406,7 @@ void main() {
       shape: u('u_shape'), px: u('u_pxSize'), glitch: u('u_glitch'), scale: u('u_scale'),
       overlay: u('u_overlay'), image: u('u_image'), hasImage: u('u_hasImage'),
       imageSize: u('u_imageSize'), focusY: u('u_focusY'), mode: u('u_mode'),
+      dim: u('u_dim'), split: u('u_split'), reg: u('u_reg'), edge: u('u_edge'),
     };
 
     const buf = gl.createBuffer();
@@ -409,6 +456,10 @@ void main() {
       gl.uniform2f(U.imageSize, imgW, imgH);
       gl.uniform1f(U.focusY, o.focusY);
       gl.uniform1f(U.mode, o.mode);
+      gl.uniform1f(U.dim, o.dim ?? 0);
+      gl.uniform1f(U.split, o.split ?? 0);
+      gl.uniform1f(U.reg, o.reg?.value ?? 0);
+      gl.uniform1f(U.edge, o.edge ?? 2);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
     };
 
@@ -480,6 +531,10 @@ void main() {
     let focus = Number(root.dataset.focus ?? 0.7);
     let wave = root.dataset.wave === '1';
     const withOverlay = root.dataset.overlay !== '0';
+    let dim = Number(root.dataset.dim ?? 0.35);
+    let split = Number(root.dataset.split ?? 14);
+    let maxReg = Number(root.dataset.register ?? 26);
+    let edge = Number(root.dataset.edge ?? 2);
 
     if (dev) {
       const d = q.get('drape');
@@ -491,6 +546,14 @@ void main() {
       if (q.get('fade') === '1') fade = true;
       const f = q.get('focus');
       if (f !== null && !Number.isNaN(Number(f))) focus = Math.min(1, Math.max(0, Number(f)));
+      const num = (k: string, lo: number, hi: number, cur: number) => {
+        const v = q.get(k);
+        return v !== null && !Number.isNaN(Number(v)) ? Math.min(hi, Math.max(lo, Number(v))) : cur;
+      };
+      dim = num('dim', 0, 1, dim);
+      split = num('split', 0, 60, split);
+      maxReg = num('reg', 0, 60, maxReg);
+      edge = num('edge', 1, 4, edge);
       const h = q.get('h');
       if (h && band && /^\d{2,4}$/.test(h)) band.style.height = `${h}px`;
     }
@@ -539,13 +602,46 @@ void main() {
     const back = cssRgba('--txh-bg');
     const modeN = src ? MODES[mode] ?? 1 : 0;
 
+    // rgb: the car's scroll-in registration. Split is full while the band is
+    // still below the fold, resolves as it enters, registers 15% early and
+    // then latches for good. Reduced motion registers immediately.
+    const reg = { value: 0 };
+    if (modeN === 4 && !reduce && maxReg > 0) {
+      const slot = band ?? root.parentElement ?? root;
+      let raf = 0;
+      let locked = false;
+      const apply = () => {
+        raf = 0;
+        if (locked) return;
+        const r = slot.getBoundingClientRect();
+        const vh = window.innerHeight || 1;
+        let p = (r.bottom - vh) / Math.max(1, r.height);
+        p = p < 0 ? 0 : p > 1 ? 1 : p;
+        const focusLead = 0.15;
+        p = p <= focusLead ? 0 : (p - focusLead) / (1 - focusLead);
+        reg.value = p * maxReg;
+        if (p <= 0.02) {
+          locked = true;
+          reg.value = 0;
+          window.removeEventListener('scroll', onScroll, { capture: true });
+          window.removeEventListener('resize', onScroll);
+        }
+      };
+      const onScroll = () => { if (!raf && !locked) raf = requestAnimationFrame(apply); };
+      apply();
+      if (!locked) {
+        window.addEventListener('scroll', onScroll, { passive: true, capture: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+      }
+    }
+
     // The layer sizes itself from the mount, so the root has to be visible
     // before mounting; if the mount fails we put the placeholder back.
     show();
     const okBase = mountLayer({
       mount: root, canvas: base, image, mode: modeN, focusY: focus,
       superSample, glitch: false, overlay: false, speed: 0.6, pxSize: 0.5,
-      front, back, reduce,
+      front, back, reduce, dim, split, edge, reg,
       onLost: () => {
         overlay.hidden = true;
         if (image) img.hidden = false; else restorePlaceholder();

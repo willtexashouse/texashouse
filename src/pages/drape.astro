@@ -10,6 +10,8 @@ import DitherDrape from '../components/ds/DitherDrape.astro';
   its three compositing modes, then at the shipped band height. Every shader
   band is live, but only the bare wave at the bottom carries the glitch-burst
   layer: browsers cap WebGL contexts around 16 and this page already holds 14.
+  The over blend was dropped from the page once it was ruled out, to make room
+  for the register wave.
   Bands here also render at half the footer's supersample for the same reason.
   See the bursts over a render in the real footer via ?drape=a&mode=reveal.
 
@@ -23,9 +25,11 @@ const renders = [
 ];
 const modes = [
   { key: 'reveal', label: 'Reveal', note: 'The field comes up through the dithered wave. The page ground shows above the crest.' },
-  { key: 'over',   label: 'Over',   note: 'The portfolio look: the cream wave dithered on top of the field.' },
   { key: 'tone',   label: 'Tone',   note: 'The field resolved into an ordered dither, the wave as its light.' },
 ] as const;
+// The register wave, on the chosen render, at three points between plain and reveal.
+const chosen = renders[2];
+const dims = [0, 0.35, 0.7];
 
 // Same stretched grain as SiteFooter's horizon band.
 const DRAPE_GRAIN =
@@ -62,6 +66,23 @@ const DRAPE_GRAIN =
           <figcaption class="d__label">{r.key} · plain <span class="d__sub">{r.note}</span></figcaption>
           <div class="d__band d__band--tall">
             <DitherDrape src={r.src} mode="plain" />
+            <div class="d__grain" style={`background-image:url("${DRAPE_GRAIN}")`}></div>
+            <img src="/logos/txh-monogram.png" alt="" class="d__wordmark" />
+          </div>
+        </figure>
+      ))}
+    </section>
+
+    <section class="d__row">
+      <div class="d__rowhead">
+        <span class="txh-eyebrow" style="color: var(--txh-fg-2)">Register wave</span>
+        <span class="d__note">The car's channel treatment carried into the wave: R and B pulled apart along the moving crest (14px), the whole field entering split (26px) and snapping into register as the band scrolls in. dim 0 keeps plain brightness, 1 is reveal's darkening.</span>
+      </div>
+      {dims.map((v) => (
+        <figure class="d__fig">
+          <figcaption class="d__label">{chosen.key} · rgb · dim {v}</figcaption>
+          <div class="d__band d__band--tall">
+            <DitherDrape src={chosen.src} mode="rgb" dim={v} overlay={false} superSample={2} />
             <div class="d__grain" style={`background-image:url("${DRAPE_GRAIN}")`}></div>
             <img src="/logos/txh-monogram.png" alt="" class="d__wordmark" />
           </div>
@@ -121,7 +142,7 @@ const DRAPE_GRAIN =
     </section>
 
     <p class="d__foot">
-      In the real footer: <code>/?drape=a|b|c|wave&amp;mode=reveal|over|tone|plain&amp;h=320&amp;fade=0&amp;focus=0.7</code>
+      In the real footer: <code>/?drape=a|b|c|wave&amp;mode=reveal|rgb|tone|over|plain&amp;h=320&amp;fade=0&amp;focus=0.7&amp;dim=0.35&amp;split=14&amp;reg=26</code>
     </p>
   </main>
 </BaseLayout>
