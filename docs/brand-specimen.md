@@ -338,7 +338,10 @@ parameter, so porting is configuration rather than a rewrite.
   System README. It says the mission in the space the portfolio uses for a
   location.
 - **The twin globes were made for this.** On the portfolio they illustrate reach;
-  here they *are* the mission. Keep the device; needs a Texas House-toned asset.
+  here they *are* the mission. Keep the device. **Ported 2026-09-04:** the
+  portfolio's `twin-globes-earth.png` now sits in the footer slot, masked in the
+  ivory token. The Texas House-toned replacement (hero globe at two rotations)
+  comes later.
 - **The Texas mark and the Austin clock carry over unchanged** — `localMark` is
   already a Texas icon and `timeZone` is already `America/Chicago`. Like the
   telemetry bar (§5.2), this was always a Texas idea.
