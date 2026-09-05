@@ -77,10 +77,14 @@ sign-off is marked `draft copy — confirm with Will` in partnerships.astro.
 - ~~Light or dark ground~~ — **RESOLVED: dark everywhere, no exceptions.**
 - **Button radius** — 6px shipped; compare 0/2/6/12/20px at `/proto`.
 - **Footer assets** — Texas House twin-globe image + horizon drape. The drape
-  now has a live decision page at `/drape` (2026-09-04): three bluebonnet
+  has a live decision page at `/drape` (2026-09-04): three bluebonnet
   renders from `public/brand/preview/` in the slot, through the ported
-  WebGL dither wave (`DitherDrape.astro`) in three blends. Pick a render and
-  a blend; the animation itself is still open.
+  WebGL dither wave (`DitherDrape.astro`). Will's direction so far: render
+  **C** (clouds over the oaks), somewhere between plain and reveal, with the
+  wave carried as the car's RGB register treatment (`mode="rgb"`, see
+  brand-specimen §5.3). Still to settle: `dim` (0 plain … 1 reveal), the
+  crest split, the band height (320px reads better than the shipped 210),
+  and whether the footer carries the monogram or the Cursive wordmark.
 - **SXSW 2026 dates** — homepage says March 12/13/14, Design System schedule says
   Fri 13 + Sat 14. Blocks `endDate` backfill.
 - CMS export from the existing site (to reconcile against `content-model.md`).

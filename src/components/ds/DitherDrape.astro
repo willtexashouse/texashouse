@@ -23,10 +23,13 @@
     &edge=2             rgb only: how tightly the split hugs the crest, 1 wide … 4 thin
 
   rgb is the ChannelRegisterImage treatment (brand-specimen §5.3) carried
-  into the wave: the render's own R and B channels are pulled apart along the
-  moving crest, R to -x/-0.35y and B to +x/+0.35y as on the car, and the whole
-  field enters split and snaps into register as the band scrolls in, then
-  latches. At zero offset it is the untouched render.
+  into the wave. Two splits: on scroll-in the whole field enters with R and B
+  pulled apart (R to -x/-0.35y, B to +x/+0.35y as on the car) and snaps into
+  register as the band arrives, then latches; and a standing split that rides
+  the wave's crest as a thin line. The standing one moves R alone, so what
+  never resolves stays a warm-edged double image rather than blue and green
+  fringes. At zero offset it is the untouched render. Reduced motion drops the
+  standing split too, so the still frame is the plain render.
 
   With no src and no params the component renders nothing, so the CSS
   placeholder in SiteFooter stays the default until the drape is decided.
@@ -43,7 +46,7 @@ interface Props {
   mode?: 'reveal' | 'over' | 'tone' | 'rgb' | 'plain';
   /** rgb only. 0 keeps plain brightness, 1 applies reveal's darkening. */
   dim?: number;
-  /** rgb only. Channel split along the crest, CSS px. */
+  /** rgb only. Standing split along the crest (R channel), CSS px. */
   split?: number;
   /** rgb only. Scroll-in split that resolves as the band enters, CSS px. */
   register?: number;
@@ -137,7 +140,7 @@ uniform float u_mode;    // 0 wave · 1 reveal · 2 over · 3 tone · 4 rgb
 uniform float u_dim;     // rgb: 0 plain brightness … 1 reveal's darkening
 uniform float u_split;   // rgb: channel split along the crest, CSS px
 uniform float u_reg;     // rgb: scroll-in split right now, CSS px (0 once registered)
-uniform float u_edge;    // rgb: crest tightness, 1 wide … 4 thin
+uniform float u_edge;    // rgb: crest tightness, 1 wide … 4 thin (window = .16 / edge of the transition)
 
 out vec4 fragColor;
 
@@ -299,14 +302,22 @@ void main() {
       color = mix(img, fg, res3);
       opacity = 1.0;
     } else if (u_mode > 3.5) {
-      // rgb — the register treatment carried into the wave. crest is 1 on the
-      // wave's edge and 0 in its body and above it, so the split rides the
-      // moving contour; u_reg is the car's whole-image split on scroll-in.
-      float crest = pow(4.0 * sG * (1.0 - sG), u_edge);
-      float px = (u_reg + u_split * crest) * u_scale;
-      vec2 d = vec2(px, px * 0.35);
+      // rgb — the register treatment carried into the wave. crest is a thin
+      // window on the wave's edge (sG = .5), 0 in its body and above it, so
+      // the split rides the moving contour as a line, not a wash. The standing
+      // split moves R only: a warm-edged double image with no cold blue or
+      // green, since it never resolves. The scroll-in split (u_reg) is the
+      // car's full R/B pull-apart, which does resolve and latch.
+      // Direction per §5.3: R to -x/-0.35y, B to +x/+0.35y (screen up = +y
+      // here, so the sample offsets are f + dir and f - dir).
+      float crest = 1.0 - smoothstep(0.0, 0.16 / u_edge, abs(sG - 0.5));
+      vec2 dir = vec2(1.0, -0.35) * u_scale;
       vec2 f = gl_FragCoord.xy + vec2(0.0, tear * u_resolution.y);
-      vec3 reg = vec3(sampleImage(f - d).r, img.g, sampleImage(f + d).b);
+      vec3 reg = vec3(
+        sampleImage(f + dir * (u_reg + u_split * crest)).r,
+        img.g,
+        sampleImage(f - dir * u_reg).b
+      );
       // between plain and reveal: dim 0 is the field at full strength, dim 1
       // is reveal's own coverage (its grainy wave as the alpha)
       float a = mix(1.0, cover, u_dim);
@@ -641,7 +652,7 @@ void main() {
     const okBase = mountLayer({
       mount: root, canvas: base, image, mode: modeN, focusY: focus,
       superSample, glitch: false, overlay: false, speed: 0.6, pxSize: 0.5,
-      front, back, reduce, dim, split, edge, reg,
+      front, back, reduce, dim, split: reduce ? 0 : split, edge, reg,
       onLost: () => {
         overlay.hidden = true;
         if (image) img.hidden = false; else restorePlaceholder();

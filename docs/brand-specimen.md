@@ -361,6 +361,19 @@ meantime; the band is part of the footer's composition, not a decoration to be
 added later. The brand rule "highlights toward Ivory, shadows toward Gun Metal"
 already describes the treatment we want.
 
+**Drape direction (Will, 2026-09-04).** The portfolio's `DitheringShader` is
+ported as `DitherDrape.astro` (WebGL2, no dependency) and takes a render as a
+texture. Of the three bluebonnet renders on `/drape`, Will picked **C** (clouds
+over the oaks). The blend he wants sits between *plain* and *reveal*, with the
+wave expressed as the §5.3 register treatment: the render's own R and B
+channels pulled apart along the moving crest (R `-x/-0.35y`, B `+x/+0.35y`),
+the field entering split at 26px and snapping into register as the band scrolls
+in, then latching — the car, carried into the wave. `mode="rgb"`; `dim` sets
+where between plain (0) and reveal (1) it sits. Not yet locked: `dim`, the
+crest split, the band height (320px on desktop reads better than 210), and the
+mark over the band (the spec above says the Cursive wordmark; the footer has
+shipped the monogram).
+
 ---
 
 ## 6. Not in the system
