@@ -42,9 +42,13 @@ constant. The last chapter lifts off the land and looks back at it.
 
 Two spines run under the story.
 
-- **Horizontal to vertical.** Riders cross the frame in chapter 1. A rocket
-  leaves the top of the frame in chapter 5. Every chapter tilts the energy a
-  few degrees upward. The page scrolls the state into the sky.
+- **Horizontal to vertical, always left to right.** Riders cross the frame
+  in chapter 1. A rocket leaves the top of the frame in chapter 5. Every
+  chapter tilts the energy a few degrees upward. The page scrolls the state
+  into the sky. All lateral motion in every chapter runs left to right, like
+  turning the pages of a book (Will, 2026-09-05). Horses run right, oil and
+  dust stream right, cranes swing right, the camera drifts right. Nothing
+  moves against the read.
 - **Three eruptions from the ground.** Hoof-torn dust, the gusher column, the
   launch cloud. Chapter 3 and 4 are the held breath between the second and
   third eruption.
@@ -61,11 +65,13 @@ words, order: subject, wardrobe or form, posture, setting, one or two Texas
 details, color note.
 
 ### 1. The Open Range (c. 1885) · Land, warmest
-- Where: West Texas caliche flats, low mesquite and creosote, a shallow ridge,
-  enormous clear sky. Sun low, screen-left.
+- Where: West Texas caliche flats, low mesquite and creosote, a mesa ridge
+  with a single live oak, towering cumulus, enormous sky. Sun low at the
+  right horizon so the riders drive into it.
 - Who: five riders on quarter horses, small in frame, staggered in depth, not
   in a row. Felt hats, dusters, chaps. No cattle.
-- What: full gallop toward the low sun, dust torn up and streaming.
+- What: full gallop left to right toward the low sun, dust torn up and
+  streaming behind.
 - Color: amber light, terracotta and dusty rose earth, sage scrub, cobalt sky
   band, muted purple shadow. Warm dominant.
 - Out-beat: the riders pass close, their dust whites the frame to cream paper.
@@ -148,6 +154,19 @@ invisible.
 Two techniques hold the seams: first-frame chaining (each clip opens on a
 frame pulled from the previous clip's out-beat) and constant paper stock
 (identical grain and halftone in every chapter).
+
+## Texture and reference discipline
+
+Will's note on the first chapter-1 batch (2026-09-05): the print should be
+rougher and the scene more picturesque. Heavier paper grain, coarse visible
+halftone, uneven ink, gouache brush edges, slight plate misregistration,
+sun-faded color. Grand sky, layered depth, clouds catching the light.
+
+Every illustration on the site, this sequence included, must sit tight
+against the Midjourney originals that established the editorial style. The
+approved Midjourney pieces are the reference attached to every Higgsfield
+still once they are on disk in `brand/inbox/`. Until then, each pass attaches
+the previous approved render.
 
 ## Motion discipline
 
