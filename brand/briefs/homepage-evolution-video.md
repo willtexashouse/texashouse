@@ -57,6 +57,12 @@ The horizon line sits at the same height in every chapter until the last,
 where it becomes the curve of the Earth. The light is late afternoon in every
 chapter until the last, where the sun becomes Earth glow.
 
+## Shot list
+
+The Midjourney prompts for every keyframe and seam plate live in
+`midjourney-shot-list.md` beside this file. Will generates them in
+Midjourney; Claude Code animates from the approved stills.
+
 ## Chapter boards
 
 All chapters: Scene tier (block 3 scene), 21:9, one small figure or figure
@@ -89,7 +95,9 @@ details, color note.
 
 ### 3. The Raising (1950s) · Land moving toward Institution
 - Where: the same flats, now a graded lot at the edge of a young town. A
-  timber house frame going up against the sky. Morning light.
+  timber house frame going up against the sky. Late afternoon like every
+  chapter, sun at the right horizon (the original brief said morning; one
+  light across the piece wins).
 - Who: a carpenter (the lineage silhouette) and two framers walking a wall
   section from horizontal to vertical. A woman and child at the slab's edge.
 - What: the wall tilts up in one push. Rafters swing into place.
