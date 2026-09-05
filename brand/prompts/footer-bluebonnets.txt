@@ -1,0 +1,57 @@
+FOOTER BLUEBONNETS — Midjourney prompt set (2026-09-04, v2)
+
+The band's real shape
+  Desktop 1440 × 360 → 4:1.  1920 × 360 → 5.3:1.  2560 × 360 → 7.1:1.
+  Render at 6:1 and let CSS crop the top on narrower screens and the sides on
+  the widest. 6:1 covers 2560 × 427 without stretching; the band clamps to
+  360–440px tall so nothing gets scaled up.
+
+Midjourney parameters
+  --ar 6:1 --style raw --s 120 --sref <uploaded approved globe> --sw 150
+  Approved globe: public/brand/emblem-brand-hero-globe-1x1-v1.png (upload it;
+  the site is not deployed so there is no public URL yet).
+  If 6:1 misbehaves, use --ar 4:1 and Pan left + Pan right once each.
+  Upscale the pick 2× before download. Target ≥ 2600px wide.
+
+The whole frame is the band now. No empty top half: the ridge line sits
+about three-quarters of the way up, gun metal shows only above it.
+
+────────────────────────────────────────────────────────────────────────────
+OPENING (paste in front of every prompt)
+
+Drawn in exactly the reference emblem's language: flat two-tone shapes, one even ivory #faf6f0 ink outline on every form, no interior detail, no gradients, no cast light, halftone dot pattern and paper grain over flat fills, on a gun metal #181210 ground. Palette is tokens only: ivory #faf6f0, bluebonnet #3d4a76, sage #6b7a5a, clay #793f34 as the single warm accent. A very wide website footer band: the field fills the frame from the bottom edge up to a single ridge line about three-quarters of the way up; above the ridge, flat gun metal only, no sky, no clouds, no glow. The scene continues past both side edges with nothing centered and no object cut by the frame.
+
+────────────────────────────────────────────────────────────────────────────
+PROMPT 1 — volume, the full field
+
+A Texas Hill Country bluebonnet meadow at full bloom seen from a distance, drawn as a printed crest landscape. Thousands of bluebonnet stalks pack the field edge to edge with almost no open ground: the nearest row about a fifth of the frame tall, each stalk a clean flat shape, bluebonnet-blue body, cream tip, sage leaves, one ivory outline; every row behind smaller and denser, outlines dropping to ivory-dim #e7decd and blue darkening, until the far field is a solid texture of blue dots with cream tips against the ridge. Four flat live oaks in dark sage along the ridge at uneven spacing. One clay accent: a loose scatter of Indian paintbrush stalks through the near rows. No text, no logos, no photorealism, no cartoon.
+
+────────────────────────────────────────────────────────────────────────────
+PROMPT 2 — volume with the two-track
+
+The same packed bluebonnet meadow at full bloom, drawn as a printed crest landscape, with a clay dirt two-track crossing the field on a long shallow diagonal that exits the frame on both sides. Thousands of bluebonnet stalks on both sides of the track with almost no open ground: nearest row a fifth of the frame tall, bluebonnet-blue bodies, cream tips, sage leaves, ivory outline; rows behind smaller and denser, ivory-dim #e7decd outlines, darker blue, ending in a solid texture of dots against the ridge. Three flat live oaks in dark sage on the ridge. The track is the only clay in the picture. No text, no logos, no photorealism, no cartoon.
+
+────────────────────────────────────────────────────────────────────────────
+PROMPT 3 — volume, elevated
+
+A bluebonnet meadow at full bloom seen from a low rise looking down across it, drawn as a printed crest landscape, so the field reads as one deep blue texture from the bottom edge to the ridge: tens of thousands of small bluebonnet stalks, the nearest a sixth of the frame tall with bluebonnet-blue bodies, cream tips, sage leaves and ivory outlines, compressing within a few rows into a dense pattern of blue dots with ivory-dim #e7decd tips, broken only by two faint cattle trails in ivory-dim that curve out of the frame on either side. A single ridge line, two flat live oaks. One clay accent: a scatter of paintbrush among the near rows. No text, no logos, no photorealism, no cartoon.
+
+────────────────────────────────────────────────────────────────────────────
+PROMPT 4 — volume, rolling ground
+
+A packed bluebonnet meadow at full bloom drawn as a printed crest landscape, the ground rising and falling in long gentle swells across the width, the rows of stalks following each contour. Thousands of bluebonnet stalks with almost no open ground: nearest row a fifth of the frame tall, bluebonnet-blue bodies, cream tips, sage leaves, ivory outline; rows behind smaller and denser, ivory-dim #e7decd outlines, darker blue, the far swells a solid texture of dots. A single ridge line behind the last swell with three flat live oaks in dark sage. One clay accent: a loose scatter of Indian paintbrush stalks on the nearest swell. No text, no logos, no photorealism, no cartoon.
+
+────────────────────────────────────────────────────────────────────────────
+AFTER THE PICK
+
+1. Upscale 2×, download, drop the file in brand/inbox/ or send it here.
+2. Layer separation, each run with the previous result as the image prompt
+   and "Same drawing, same grain, one change only:" in front:
+     a. "Remove the nearest two rows of stalks, filling the space with flat
+         gun metal."                                   → mid + far plate
+     b. On that: "Remove all remaining flowers, leaving only the ridge, the
+         oaks, and the track."                         → far plate
+   Layers are cut as the difference between versions.
+3. Band CSS: aspect 6:1 image, height clamp(360px, 20vw, 440px), anchored to
+   the bottom, centered horizontally, so the crop is sky on narrow screens
+   and edges on the widest.

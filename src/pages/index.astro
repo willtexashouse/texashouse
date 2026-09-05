@@ -17,10 +17,13 @@ import { urlFor } from '../lib/sanity/image';
   from the shoplift.media research page — see docs/component-inventory.md §3),
   so the home page reads as the same publication as /newsroom and /events.
 
-  HERO OBJECT DEFERRED. The cowboy-hat-on-rotating-globe treatment is still open
-  (brand-specimen.md §8.3 — DitheringShader vs LiquidWordmark). The hero is
-  typographic for now, but the media slot stays in the composition rather than
-  being added back later: the two-column balance is the design, not a fallback.
+  HERO OBJECT, static pass (2026-09-04). The approved hero globe
+  (public/brand/emblem-brand-hero-globe-1x1-v1.png, see brand/renders.md) sits
+  in the media slot as a flat image, knocked out to alpha and served as WebP
+  with a PNG fallback. Will asked for it 20 to 30% larger than the first
+  preview; the sizing note on .hero__globe explains the number. The rotating 3D version
+  (brand/VISUAL_LANGUAGE.md §5.1) replaces this image in the same slot later;
+  this is also its reduced-motion and no-WebGL fallback.
 */
 
 const marqueeSponsors = await safeFetch<any[]>(MARQUEE_SPONSORS_QUERY, {}, []);
@@ -77,11 +80,21 @@ const num = (i: number) => String(i).padStart(2, '0');
         </div>
       </div>
 
-      {/* Reserved media slot — the hero object is deferred, the slot is not. */}
+      {/* Hero object — the approved globe, static for now (see the note at the top). */}
       <div class="hero__slot" aria-hidden="true">
-        <span class="txh-tick txh-tick--tl"></span>
-        <span class="txh-tick txh-tick--br"></span>
-        <span class="txh-mono hero__slot-label">reserved — hero object</span>
+        <picture>
+          <source srcset="/brand/hero-globe.webp" type="image/webp" />
+          <img
+            src="/brand/hero-globe.png"
+            alt=""
+            width="1400"
+            height="1583"
+            class="hero__globe"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </picture>
       </div>
     </section>
 
@@ -293,13 +306,16 @@ const num = (i: number) => String(i).padStart(2, '0');
     gap: var(--space-4); margin-top: var(--space-7);
   }
 
-  .hero__slot {
-    position: relative;
-    display: flex; align-items: center; justify-content: center;
-    aspect-ratio: 4 / 5;
-    border: 1px solid var(--txh-rule);
+  /* No frame: hero and full-bleed imagery carry no edge (VISUAL_LANGUAGE.md §6). */
+  .hero__slot { position: relative; }
+  /* Sizing note: the file is trimmed to the globe's edges, so 92% of the column
+     shows the mark about 30% larger than the earlier untrimmed 1:1 preview
+     did at 100%. Will's ask was 20 to 30% larger than that preview. */
+  .hero__globe {
+    display: block;
+    width: 92%; height: auto;
+    margin: 0 auto;
   }
-  .hero__slot-label { color: var(--txh-decor); }
 
   /* ── Partner marquee ─────────────────────────────────────────────────── */
   .marquee {
@@ -365,6 +381,7 @@ const num = (i: number) => String(i).padStart(2, '0');
   @media (max-width: 860px) {
     .hero { grid-template-columns: 1fr; min-height: 0; gap: var(--space-7); }
     .hero__slot { max-width: 420px; }
+    .hero__globe { width: 100%; }
     .about { grid-template-columns: 1fr; gap: var(--space-6); }
     .what { grid-template-columns: 1fr; }
   }

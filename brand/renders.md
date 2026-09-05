@@ -1,3 +1,45 @@
 # Render log
 
 One entry per approved file in `public/brand/`: filename, tier, register, the Block 4 story used, tool, sref, date.
+
+## public/brand/landscape-land-bluebonnets-21x9-v1.png
+- Date: 2026-09-04 · Made in Higgsfield, taken in by hand · Aspect: 21:9
+- Tier: landscape · Register: land
+- Source: /tmp/claude-0/-home-user-texashouse/139d78b4-300c-50b6-a3e7-723a483f2eaa/scratchpad/bb/concept-paper.png
+- Prompt: Rolling Texas Hill Country, dense bluebonnets in the foreground running in loose rows toward a dirt two-track, live oaks on the ridge, small town and water tower in far distance under haze. Towering cumulus clouds catching pink and amber. Land register: amber light, cobalt flowers, sage oaks, cream clouds, muted purple shadow. [Higgsfield MCP, nano_banana_pro 2k, test render 1 of 8]
+
+## public/brand/landscape-land-bluebonnets-dusk-21x9-v1.png
+- Date: 2026-09-04 · Made in Higgsfield, taken in by hand · Aspect: 21:9
+- Tier: landscape · Register: land
+- Source: /tmp/claude-0/-home-user-texashouse/139d78b4-300c-50b6-a3e7-723a483f2eaa/scratchpad/bb/concept-dusk.png
+- Prompt: Footer base concept. Rolling Texas Hill Country just after sundown on a flat gun metal #181210 ground: dense bluebonnets in loose rows, a ridge of live oak silhouettes behind, distant hills fading into the dark. Bluebonnet blue #3d4a76 to cobalt silhouettes with cream tips, last amber rim light from the left. [Higgsfield MCP, nano_banana_pro 2k; reference for the four footer parallax plates]
+
+## public/brand/bluebonnets/{far,mid,near,front}.png — footer parallax plates
+- Date: 2026-09-04 · Made in Higgsfield (nano_banana_pro 2k, 21:9), cut by hand · Aspect: bottom 55% of 21:9, 1600×373 PNG-8 with alpha
+- Tier: landscape · Register: land (dusk) · Reference: landscape-land-bluebonnets-dusk-21x9-v1.png attached to every plate
+- Prompts (block 4 only; blocks 1, 2, 5 as in the reference): far = "only the far ridge: rolling hills, live oak silhouettes in dark sage and charcoal, thin dusty blue haze, faint amber rim light from the left, bottom 35%" · mid = "only a band of small distant bluebonnets in loose rows, #3d4a76 with cream tips, bottom 30%" · near = "only medium bluebonnet clusters, #4b5a8f with cream tips and amber rim, bottom 40%, open gaps" · front = "only about eleven large stalks of varied height and lean, uneven spacing, #5a6ba3 with cream tips, blooms in the bottom third". Every plate: everything else flat #181210.
+- Processing: knocked out with the scratch flood-fill tool (edge-connected #181210 to alpha, components under 300 px dropped), cropped to the bottom 55%, resized with sharp. The ground is the page's gun metal, so any residual dark is invisible on the site.
+- Placement: SiteFooter horizon band (360px), BluebonnetField.astro, scroll-driven parallax and wind sway (VISUAL_LANGUAGE.md §5.4 option 1). Three plates ship: far, mid, front. near.png is cut and kept but not mounted; with it in, the stack was a wall of flowers and the ridge disappeared. The far plate was cut at a tighter ground tolerance (9) so the charcoal oak bodies survived the knockout.
+
+## public/brand/emblem-brand-hero-globe-1x1-v1.png
+- Date: 2026-09-04 · Made in Higgsfield, taken in by hand · Aspect: 1:1
+- Tier: emblem · Register: brand
+- Source: /tmp/claude-0/-home-user-texashouse/139d78b4-300c-50b6-a3e7-723a483f2eaa/scratchpad/globe6/t1.png
+- Prompt: APPROVED 2026-09-04 (Will): the hero globe and the style direction for every symbol and element from here on. Clay #793f34 felt Stetson, ivory #faf6f0 single-weight outline, bluebonnet-blue ocean, ivory continents, Texas filled clay at true scale meeting the Gulf directly, halftone and paper grain, on gun metal #181210.
+- Chain: Texas Rangers 1972 hat-on-baseball mark supplied by Will as the hat-shape reference → Higgsfield (nano_banana_pro 2k, 1:1) redraw with lettering removed and the baseball replaced by the globe → single-ink pick (r2) → brand-palette pass with the globe on gun metal (b1: clay hat, bluebonnet ocean) → Gulf correction so the clay meets the water with no ivory sliver → Texas rescaled to true proportion (t1). Every step used the previous approved render as the attached reference.
+- Trademark note: the hat is still a near-trace of the Rangers' 1972 mark. Before this ships on anything public, the vector redraw should move the crown, crease, and brim line enough to be our own hat. Tracked in VISUAL_LANGUAGE.md §5.1.
+- Style lock: this render is the reference attached to every future symbol or element render. See VISUAL_LANGUAGE.md §3, Block 3 "Emblem tier", and brand/prompts/brand-lock.txt.
+
+## public/brand/emblem-brand-footer-globes-16x9-v1.png
+- Date: 2026-09-04 · Made in Higgsfield, taken in by hand · Aspect: 16:9
+- Tier: emblem · Register: brand
+- Source: /tmp/claude-0/-home-user-texashouse/139d78b4-300c-50b6-a3e7-723a483f2eaa/scratchpad/twin/g2.png
+- Prompt: APPROVED 2026-09-04 (Will): footer globe pair. Two globes side by side drawn exactly like the approved hero globe (attached as the reference) with no hat and no clay accent: bluebonnet-blue ocean, flat ivory continents, single ivory outline, halftone and grain, on gun metal. Left: the Americas, North America forward. Right: Europe, Africa, western Asia. Served on the site as public/brand/footer-globes.webp/png, cut to alpha from this render.
+
+## public/brand/footer-globes-spin/000–035.webp — footer globe spin (scroll-scrubbed)
+- Date: 2026-09-04 · Made in Higgsfield: image-to-video, FLUX 3 Video, 5 s, 1080p, 2:1, no audio · 36 frames at 720×333, WebP with alpha, ~1.5 MB total
+- Start frame: the approved footer pair (emblem-brand-footer-globes-16x9-v1.png). End frame: the same render with the two globes' positions swapped, built by cutting the render in half and exchanging the halves, uploaded as the end image.
+- Prompt: "Two flat illustrated globes side by side each rotate exactly one half turn about their own vertical axis, both turning the same direction, west to east, at one steady speed, so the left globe ends showing Europe and Africa and the right globe ends showing the Americas. Static camera, no zoom, no pan, no drift; the globes stay the same size in the same positions. The drawing stays exactly a flat print: one even ivory outline, flat ivory continents, flat bluebonnet-blue ocean, halftone dots and paper grain, on a flat dark charcoal ground. No lighting change, no shading, no shadows, no motion blur, no added objects, no text."
+- Also tried: MiniMax H3 Max, same inputs. It turned the globes but panned the pair sideways through the shot; rejected.
+- Processing: frames sampled evenly from the clip, ground keyed to alpha by colour distance, then each globe located per frame, scaled to one fixed diameter, and pinned to a fixed centre, because the FLUX clip let the pair drift outward. Frame 000 is also the static poster (footer-globes.webp/png).
+- Placement: GlobeSpin.astro in the footer. Scroll position drives the frame index; reduced motion shows the poster. The hero globe gets the same treatment next.

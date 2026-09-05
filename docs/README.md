@@ -85,6 +85,10 @@ sign-off is marked `draft copy — confirm with Will` in partnerships.astro.
   brand-specimen §5.3). Still to settle: `dim` (0 plain … 1 reveal), the
   crest split, the band height (320px reads better than the shipped 210),
   and whether the footer carries the monogram or the Cursive wordmark.
+- **Footer globes (2026-09-05)** — the portfolio's twin-globe mask is replaced
+  by the hero globe at two rotations, generated in Higgsfield from the approved
+  mark, and it spins on scroll (`GlobeSpin.astro`, a scroll-scrubbed frame
+  sequence from a Higgsfield image-to-video render). See `brand/renders.md`.
 - **SXSW 2026 dates** — homepage says March 12/13/14, Design System schedule says
   Fri 13 + Sat 14. Blocks `endDate` backfill.
 - CMS export from the existing site (to reconcile against `content-model.md`).

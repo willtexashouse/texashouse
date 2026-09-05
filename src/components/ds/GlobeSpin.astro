@@ -1,0 +1,165 @@
+---
+/*
+  Scroll-scrubbed spin for the footer globe pair (VISUAL_LANGUAGE.md §5.2,
+  motion note from Will, 2026-09-04): as the footer scrolls into view the two
+  globes each turn half a revolution the same direction, so the Americas
+  globe becomes the Europe/Africa globe and vice versa. Scroll back up and
+  they turn back. Nothing plays on its own; scroll position is the timeline.
+
+  The frames come from a Higgsfield image-to-video render of the approved
+  pair (start frame = the pair, end frame = the pair with positions swapped),
+  cut to alpha and exported as a WebP sequence in public/brand/footer-globes-spin/.
+  The static <picture> under the canvas is frame 0 and is what shows before
+  the sequence loads, under reduced motion, and wherever canvas is unavailable.
+
+  Same mechanism the brief prescribes for the scroll video (§5.3 step 5):
+  frame index = scroll progress, frames preloaded in one batch, poster for
+  reduced motion. The hero globe gets the same treatment later.
+*/
+interface Props {
+  /** Directory of the frame sequence, no trailing slash. */
+  base?: string;
+  /** Number of frames, named 000.webp … NNN.webp. */
+  frames?: number;
+  /** Intrinsic size of one frame. */
+  width?: number;
+  height?: number;
+  /** Poster (frame 0) as WebP + PNG. */
+  poster?: string;
+  posterFallback?: string;
+  /** Rendered height in px (the footer gives the pair 104px). */
+  size?: number;
+}
+const {
+  base = '/brand/footer-globes-spin',
+  frames = 36,
+  width = 720,
+  height = 333,
+  poster = '/brand/footer-globes.webp',
+  posterFallback = '/brand/footer-globes.png',
+  size = 104,
+} = Astro.props;
+---
+
+<div
+  class="txh-spin"
+  data-spin
+  data-base={base}
+  data-frames={frames}
+  data-w={width}
+  data-h={height}
+  style={`--spin-h:${size}px; --spin-ar:${width} / ${height};`}
+  aria-hidden="true"
+>
+  <picture class="txh-spin__poster">
+    <source srcset={poster} type="image/webp" />
+    <img src={posterFallback} alt="" width={width} height={height} loading="lazy" decoding="async" />
+  </picture>
+  <canvas class="txh-spin__canvas" width={width} height={height}></canvas>
+</div>
+
+<style>
+  /* Width is written out rather than left to aspect-ratio: as a grid item in
+     an auto column the ratio-derived width was not counted during track
+     sizing and the right globe clipped at the gutter. */
+  .txh-spin {
+    position: relative;
+    height: var(--spin-h);
+    width: calc(var(--spin-h) * var(--spin-ar));
+    flex: 0 0 auto;
+  }
+  .txh-spin__poster img,
+  .txh-spin__canvas {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    display: block;
+  }
+  /* The canvas only shows once it has drawn a frame; until then the poster is
+     the whole picture, so there is never a blank or a double image. */
+  .txh-spin__canvas { opacity: 0; }
+  .txh-spin[data-ready] .txh-spin__canvas { opacity: 1; }
+  .txh-spin[data-ready] .txh-spin__poster { visibility: hidden; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .txh-spin__canvas { display: none; }
+    .txh-spin__poster { visibility: visible !important; }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.querySelector<HTMLElement>('[data-spin]');
+    if (!root) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const canvas = root.querySelector<HTMLCanvasElement>('.txh-spin__canvas');
+    const ctx = canvas?.getContext('2d');
+    if (!canvas || !ctx) return;
+
+    const base = root.dataset.base || '';
+    const count = Number(root.dataset.frames) || 0;
+    if (!count) return;
+
+    // The footer is the scroll timeline: 0 when its top reaches the bottom of
+    // the viewport, 1 when it has risen its own height or the page bottoms out,
+    // whichever comes first. Page-bottom matters because a short footer never
+    // travels a full viewport.
+    const footer = root.closest<HTMLElement>('footer') ?? root;
+    const clamp01 = (n: number) => (n < 0 ? 0 : n > 1 ? 1 : n);
+    const progress = () => {
+      const r = footer.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const travel = Math.min(r.height, vh * 0.9);
+      const byPosition = (vh - r.top) / travel;
+      const doc = document.documentElement;
+      const maxScroll = doc.scrollHeight - vh;
+      const byPage = maxScroll > 0 ? (window.scrollY - (maxScroll - travel)) / travel : 1;
+      return clamp01(Math.max(byPosition, byPage));
+    };
+
+    const frames: HTMLImageElement[] = [];
+    let loaded = 0;
+    let armed = false;
+    let raf = 0;
+    let lastIndex = -1;
+
+    const draw = () => {
+      raf = 0;
+      const i = Math.round(progress() * (count - 1));
+      if (i === lastIndex) return;
+      const img = frames[i];
+      if (!img || !img.complete || !img.naturalWidth) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      lastIndex = i;
+      if (!root.hasAttribute('data-ready')) root.setAttribute('data-ready', '');
+    };
+    const schedule = () => { if (!raf) raf = requestAnimationFrame(draw); };
+
+    const load = () => {
+      if (armed) return;
+      armed = true;
+      for (let i = 0; i < count; i += 1) {
+        const img = new Image();
+        img.decoding = 'async';
+        img.src = `${base}/${String(i).padStart(3, '0')}.webp`;
+        img.onload = () => { loaded += 1; if (loaded === count) schedule(); };
+        img.onerror = () => { /* a missing frame just keeps the last drawn one */ };
+        frames.push(img);
+      }
+      window.addEventListener('scroll', schedule, { passive: true });
+      window.addEventListener('resize', schedule);
+    };
+
+    // Preload when the footer is within a viewport of the bottom, not at page load.
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => { if (entries.some((e) => e.isIntersecting)) { load(); io.disconnect(); } },
+        { rootMargin: '100% 0px' },
+      );
+      io.observe(footer);
+    } else {
+      load();
+    }
+  })();
+</script>
