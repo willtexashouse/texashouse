@@ -819,6 +819,26 @@ master: `dancehall-rotation-xfade.mp4`, 7.9s. The pilot works: end-frame
 pinning gives control of where a clip lands, and stitching at a drafted
 midpoint gives a full rotation the model would not do on its own.
 
+### Dance Hall parent frame, second generation (Will, 2026-09-06 late)
+
+Will flagged a leftover shape between the right-of-centre couple, carried
+from the Midjourney original through every "recreate exactly" pass, and
+asked for the band to be a country-western five-piece: fiddle, steel
+guitar, lead guitar, drums, singer. Naming the shape precisely ("a
+yellow-and-blue lump like a bag at waist height where their arms meet")
+removed it in all six takes; the generic "nothing between them" had never
+worked. Band: two takes that asked for both changes at once turned the
+couple by the stage into the singer. A separate band pass from the clean
+frame `cb807386`, with every couple locked and "nobody steps off the
+stage": `21494282` (A4-3) has pedal steel, fiddle, singer with guitar at
+the mic, and drums, all on stage, couples intact; `755030db` (A4-2) has
+fiddle, singer, drums. Lead guitar missing from both. A4-3 proposed as the
+new parent A; B and C to be redrawn from it before the two clips rerun.
+
+Lesson for the runsheet: to remove an inherited defect, describe the
+defect itself in the prompt (what it looks like, where it is), not just
+the desired absence.
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
