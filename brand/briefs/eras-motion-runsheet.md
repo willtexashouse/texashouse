@@ -781,6 +781,27 @@ between them. Recommend C.
 
 Nothing animated from either until Will confirms, per his instruction.
 
+## Storyboard process (Will, 2026-09-06 evening)
+
+Agreed after the About round: for clips whose failure is the end state
+(wall plumb, rocket high, pan endpoint, gusher at full height), draft the
+end frame and a midpoint in Nano Banana as "change only" edits of the
+approved still, review them, then run Seedance with `start_image` and
+`end_image` and the midpoint plus the original as references. Every frame
+comes from the same parent still so the finish does not drift. Motion
+quality between frames (gallop, dancers, crew) is still a Seedance prompt
+and reference matter.
+
+### Dance Hall board · pilot
+
+Parent A = `e598ed1c`. Half-turn frame B, three takes (`4ae2df5e` B1,
+`1c0f6e30` B2, `b09cb851` B3): B1 turns most couples but recolours the
+front-left woman's dress; B2 turns the front-left and right-centre couples
+and keeps the clothes; B3 barely moved. Full-turn frame C, three takes
+(`c1a0dc14`, `e923024c`, `c15e0d2e`): all three return to A's orientation
+as intended, C2 cleanest. Plan: two 4-second clips, A to B and B to C,
+stitched into one rotation. Waiting on Will's pick of B.
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
