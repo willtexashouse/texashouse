@@ -810,6 +810,15 @@ the most couples with identities held and is used. Two 4-second clips
 submitted, `start_image` + `end_image` + the original as style reference:
 A to B6, then B6 to C2 (`e923024c`).
 
+Result: part one `2c7b6793` (A to B6, 4s, stepping 0.09) and part two
+`5b2cecbf` (B6 to C2, 4s, stepping 0.09). Both filmed cadence, both land
+on their end frames, dancers hold identity. The hard cut at the join shows
+a small pose pop because each clip's last and first frames only
+approximate B6; a 0.3-second crossfade at the seam hides it. Stitched
+master: `dancehall-rotation-xfade.mp4`, 7.9s. The pilot works: end-frame
+pinning gives control of where a clip lands, and stitching at a drafted
+midpoint gives a full rotation the model would not do on its own.
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
