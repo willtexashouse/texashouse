@@ -14,30 +14,37 @@ eras frames brought to life, ending on the House.
 
 - **Tool:** Seedance 2.5 (Higgsfield). **Image-to-video, every time — never
   text-to-video.**
-- **Per clip:** attach the era's frame as the **start image** AND as the
-  style reference. No end image. The clip must return to (or near) its
-  opening composition — transitions on the site are crossfades on matched
-  horizons, and the About page scrubs these same clips with scroll.
+- **Per clip:** attach the era's frame as the **start image only**
+  (`start_image`). Take 1 also passed it as a style reference and the model
+  restaged the figures; the start image alone is the strict-first-frame test
+  on take 2. No end image.
 - **Settings as tool parameters, never in the prompt:** `aspect_ratio`
   21:9, `resolution` 1080p, `bitrate_mode` high (no extra cost; protects the
-  halftone from compression smear), `generate_audio` true, `duration` per
-  clip below. Cost check (`get_cost`) before each run: 9 credits per second
-  at 1080p as of 2026-09-06, so 63 for a 7s clip and 72 for the 8s House.
-- **Camera locked off on every clip.** No drift, no push, no pan. The site
-  crossfades on matched horizons and every clip must return to its opening
-  composition; a moving camera cannot do either. Direction words in the
-  prompts are screen-relative (screen-right means toward the right edge of
-  the frame).
-- **One clip at a time.** Judge clip 1 (Range) against the checklist before
-  running the rest; carry any fix into the other five.
-- **Negatives grow only from defects actually seen.** The block in each
-  prompt is the standing brand negative; add to it only what a generation
+  halftone from compression smear), `generate_audio` true, `duration` 8.
+  Cost check (`get_cost`) before each run: 9 credits per second at 1080p as
+  of 2026-09-06, so 72 per clip, 432 for a clean set of six.
+- **One camera move per clip, then a hold.** Every clip carries one slow
+  motorized move (a push, or one lateral truck) that eases to a complete
+  stop for the final 1.5 seconds. The move supplies parallax and continuous
+  motion, which the model renders well; the hold is the handle the site
+  dissolves on. Never a tilt, never a pan, never handheld: the horizon must
+  not move, because the transitions match on it.
+- **Filmed, not drawn.** Take 1 came back animated on twos with no motion
+  blur. Every prompt now carries the film-cadence line after the medium
+  lock, and figure motion is written as physics (a horse's four-beat gallop,
+  weight landing) rather than as a picture that moves.
+- **Direction words are screen-relative.** Screen-right means toward the
+  right edge of the frame.
+- **One clip at a time.** Judge Range against the checklist before running
+  the rest; carry any fix into the other five.
+- **Negatives grow only from defects actually seen.** Block 5 is the
+  standing brand negative; the scar line after it lists what a take
   actually got wrong.
-- **Expect some grain swim.** A fixed grain field is the hardest ask a video
-  model gets; the generator and the codec both resynthesize grain per frame.
-  If a clip passes every other check but the grain boils, the fallback is a
-  light soften plus one static halftone overlay in post, decided with Will
-  per clip.
+- **Expect some grain swim.** Measured 4.8 mean luma difference between
+  consecutive frames in static sky on take 1 (a fixed field would read near
+  1). If a clip passes every other check but the grain boils, the fallback
+  is a light soften plus one static halftone overlay in post, decided once
+  for all six.
 
 ## The frames (on disk 2026-09-06)
 
@@ -56,210 +63,241 @@ the About handoff names; if those arrive, they replace these.
 
 ## The medium lock (verbatim in every prompt — never reworded)
 
-> The attached frame's own medium in motion: a scanned late-80s magazine
-> illustration, gouache and airbrush, flat graphic shapes with clean
-> silhouettes, heavy analog paper grain and coarse visible halftone over
-> every area, sun-faded color, minor ink imperfections. The print itself is
-> alive — the grain field stays fixed like a printed page while the scene
-> moves beneath it. NOT photoreal, NOT a photograph, NOT live action, NOT a
-> 3D render, NOT a different illustration style than the attached frame.
+> The attached frame's own medium in motion: a scanned late-80s magazine illustration, gouache and airbrush, flat graphic shapes with clean silhouettes, heavy analog paper grain and coarse visible halftone over every area, sun-faded color, minor ink imperfections. The print itself is alive — the grain field stays fixed like a printed page while the scene moves beneath it. NOT photoreal, NOT a photograph, NOT live action, NOT a 3D render, NOT a different illustration style than the attached frame.
 
-Followed in every prompt by the cadence line, also verbatim:
+Followed in every prompt by the film-cadence line, also verbatim:
 
-> Technical: real-time 24fps, smooth continuous motion, every frame drawn in
-> the same hand as the last. No frame interpolation, no frame blending, no
-> ghosting, no double-imaging, no warping.
+> Technical: filmed motion, not drawn motion — the scene moves like live-action footage of real people, animals and weather seen through this print. Real-time 24fps live-action cadence, true 180-degree shutter, genuine motion blur on everything that moves, every frame a distinct moment blending smoothly into the next. Never animated on twos, no held frames, no duplicated frames, no hand-drawn or cel-animation cadence, no frame interpolation, no ghosting, no warping.
+
+## Transitions — how era becomes era
+
+Done in the browser on section change, not generated. The clips give the
+editor two things: a strict opening frame that is the still, and a settled
+1.5-second hold at the end.
+
+- **Default cut:** a 0.6-second dissolve under a halftone dither that wipes
+  screen-left to screen-right — the page turning. Not a soft video fade.
+  Horizons align because no clip tilts or pans.
+- **The three eruptions get shape matches:** Range ends pushing into the
+  riders' dust and Gusher opens on the oil column; Launch's steam bank
+  dissolves into the House sky on a longer, slower dissolve. Raising and
+  Boom, the held breath, take the default cut.
+- **Nothing ever moves right to left**, the wipe included.
+- **Playback:** two video elements per section, the next one preloaded so
+  the cut lands on a frame that is already there. Range through Launch loop
+  on their own clip (the dissolve hides the loop seam under the section
+  change). House plays once and holds on its final frame, which is the
+  poster the About page and the homepage both rest on.
 
 ## Review checklist — every clip, before approving
 
-- Grain and halftone stable like a printed page (no swimming, boiling, or
-  re-rendering per frame)
-- Horizon has not moved; camera has not moved; nothing has entered the
-  sky's upper half
+- Frame one is the still: same framing, same figure positions
+- Motion is filmed, not stepped: consecutive-frame difference does not
+  alternate small/large; horses and dust carry motion blur
+- Grain and halftone stable enough (measure; note the number)
+- Horizon has not moved; one camera move only, ending in a real hold;
+  nothing has entered the sky's upper half
 - No drift toward photorealism or 3D smoothness anywhere in the clip
 - Palette identical to the frame start to finish
-- Final second sits on (or near) the opening composition
-- All lateral motion runs left to right (exception: the Launch steam bank,
-  painted streaming left — leave it)
+- All lateral motion runs screen-left to screen-right (exception: the
+  Launch steam bank, painted streaming left — leave it)
 - No text, no logos anywhere
 
 ---
 
-## Clip 1 · Range · `eras-01-open-range` · 7s
+## Clip 1 · Range · `eras-01-open-range` · 8s
 
 ```
-1 continuous shot. Total 7 seconds, no cuts, no transitions. Real-time throughout, no slow motion, no speed change.
+1 continuous shot. Total 8 seconds, no cuts, no transitions. Real-time throughout, no slow motion, no speed ramp, no speed change.
 
 Late-1980s corporate editorial magazine illustration. Flat graphic shapes, simplified environmental forms, clean silhouettes, minimal internal detail, soft airbrushed gradients, bold negative space. High contrast, restrained saturation. Heavy analog paper grain, matte print texture, subtle halftone dot pattern, slight color fading, minor ink imperfections. Looks like a scanned late-80s magazine illustration printed on porous matte stock.
 
 The attached frame's own medium in motion: a scanned late-80s magazine illustration, gouache and airbrush, flat graphic shapes with clean silhouettes, heavy analog paper grain and coarse visible halftone over every area, sun-faded color, minor ink imperfections. The print itself is alive — the grain field stays fixed like a printed page while the scene moves beneath it. NOT photoreal, NOT a photograph, NOT live action, NOT a 3D render, NOT a different illustration style than the attached frame.
 
-Technical: real-time 24fps, smooth continuous motion, every frame drawn in the same hand as the last. No frame interpolation, no frame blending, no ghosting, no double-imaging, no warping.
+Technical: filmed motion, not drawn motion — the scene moves like live-action footage of real people, animals and weather seen through this print. Real-time 24fps live-action cadence, true 180-degree shutter, genuine motion blur on everything that moves, every frame a distinct moment blending smoothly into the next. Never animated on twos, no held frames, no duplicated frames, no hand-drawn or cel-animation cadence, no frame interpolation, no ghosting, no warping.
 
 NO ON-SCREEN TEXT — CRITICAL: no on-screen text of any kind anywhere in frame at any point. No captions, no subtitles, no titles, no watermarks, no logos, no UI overlays. The frame is clean of all overlay graphics from first frame to last.
 
-THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. The horizon stays at its height for the entire duration, the sky's upper half stays open with nothing entering it, and the red mesa, the single live oak, the great cream cumulus bank and all four riders keep their places in the frame. The camera is locked off on a tripod for the entire duration; it never pans, never tilts, never pushes, never reframes.
+THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. The horizon stays at its height for the entire duration, the sky's upper half stays open with nothing entering it, and the red mesa, the single live oak, the great cream cumulus bank and all four riders keep their places on the land. The riders stay small figures; the landscape dominates the frame even at the end of the camera move.
 
-FIRST FRAME: exactly the composition of the attached still, already alive — the riders mid-gallop, dust already streaming.
+FIRST FRAME: open on the attached still exactly, pixel for pixel, at frame one — same framing, same rider positions, same dust — already alive, the riders mid-gallop.
+
+CAMERA: one slow motorized dolly push toward the riders along their line of travel, ending about 15% closer, easing to a complete stop for the final 1.5 seconds. Level throughout: no tilt, no pan, no handheld, no shake, no zoom breathing. The near grass and bushes slide past faster than the mesa and the cloud bank; the horizon does not move.
 
 ACTION TIMING:
-0.0–7.0s: the four riders hold full gallop moving screen-right toward the low sun, legs and dust cycling, hat brims pressed back in the wind of their own speed; torn-up dust streams behind each horse as flat shapes; the dark grass foreground lays over in one steady wind moving screen-right; the cumulus bank crawls almost imperceptibly; by the final second the riders sit back near their painted positions so the clip returns to the composition it opened on. Sound: massed hoofbeats on dry hardpan, wind over open grass, leather creak.
+0.0–6.5s: the four riders hold a full four-beat gallop moving screen-right toward the low sun — every horse's body rises and drops with each stride, hooves strike the hardpan and throw dust, the riders' bodies absorb each landing in the saddle, hat brims pressed back in the wind of their own speed; dust streams behind each horse as flat shapes, lagging the motion; the dark grass foreground lays over in one steady wind moving screen-right; the cumulus bank holds its shape. Sound: massed hoofbeats on dry hardpan, wind over open grass, leather creak.
+6.5–8.0s: the camera settles and holds; the riders keep the same gallop across the held frame, dust still streaming. Sound continues unchanged.
 
-PHYSICS: real weight scaled to the illustration — dust obeys one wind direction with lag, hems and manes trail the motion, contact reads in the gallop cycle. Nothing floats, nothing slides, nothing teleports.
+PHYSICS: real weight scaled to the illustration — each horse about 500 kilograms, hooves striking and the ground giving up dust on every strike, bodies rising and falling through the gallop, riders' weight sinking into the saddle on every landing, dust obeying one wind direction with lag, manes and hems trailing the motion. Nothing floats, nothing slides, nothing teleports.
 
 AUDIO: fully diegetic, quiet, continuous — hoofbeats, wind, leather. No music, no score, no swell, no drone, no rising tone, no added foley beyond what is physically in frame, no voices.
 
-LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. Camera locked off. Horizon height constant. All motion screen-left to screen-right. Final second returns to the opening composition. No flicker, no boiling lines, no grain swimming, no morphing.
+LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. One camera move, ending in a hold. All motion screen-left to screen-right. Horizon height constant. Motion filmed, never stepped. No flicker, no boiling lines, no morphing.
 
-Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands.
+Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on take 1, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames.
 ```
 
-## Clip 2 · Gusher · `eras-02-gusher` · 7s
+## Clip 2 · Gusher · `eras-02-gusher` · 8s
 
 ```
-1 continuous shot. Total 7 seconds, no cuts, no transitions. Real-time throughout, no slow motion, no speed change.
+1 continuous shot. Total 8 seconds, no cuts, no transitions. Real-time throughout, no slow motion, no speed ramp, no speed change.
 
 Late-1980s corporate editorial magazine illustration. Flat graphic shapes, simplified environmental forms, clean silhouettes, minimal internal detail, soft airbrushed gradients, bold negative space. High contrast, restrained saturation. Heavy analog paper grain, matte print texture, subtle halftone dot pattern, slight color fading, minor ink imperfections. Looks like a scanned late-80s magazine illustration printed on porous matte stock.
 
 The attached frame's own medium in motion: a scanned late-80s magazine illustration, gouache and airbrush, flat graphic shapes with clean silhouettes, heavy analog paper grain and coarse visible halftone over every area, sun-faded color, minor ink imperfections. The print itself is alive — the grain field stays fixed like a printed page while the scene moves beneath it. NOT photoreal, NOT a photograph, NOT live action, NOT a 3D render, NOT a different illustration style than the attached frame.
 
-Technical: real-time 24fps, smooth continuous motion, every frame drawn in the same hand as the last. No frame interpolation, no frame blending, no ghosting, no double-imaging, no warping.
+Technical: filmed motion, not drawn motion — the scene moves like live-action footage of real people, animals and weather seen through this print. Real-time 24fps live-action cadence, true 180-degree shutter, genuine motion blur on everything that moves, every frame a distinct moment blending smoothly into the next. Never animated on twos, no held frames, no duplicated frames, no hand-drawn or cel-animation cadence, no frame interpolation, no ghosting, no warping.
 
 NO ON-SCREEN TEXT — CRITICAL: no on-screen text of any kind anywhere in frame at any point. No captions, no subtitles, no titles, no watermarks, no logos, no UI overlays. The frame is clean of all overlay graphics from first frame to last.
 
-THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. The wooden derrick stays exactly where it stands, the horizon stays at its height, the rose-to-cream dawn sky stays open, the crew, tents and wagons keep their places. The camera is locked off on a tripod for the entire duration; it never pans, never tilts, never pushes, never reframes.
+THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. The wooden derrick stays exactly where it stands, the horizon stays at its height, the rose-to-cream dawn sky stays open, the crew, tents and wagons keep their places.
 
-FIRST FRAME: exactly the composition of the attached still, already alive — the oil column already blowing.
+FIRST FRAME: open on the attached still exactly, pixel for pixel, at frame one — same framing, same derrick, same column shape — already alive, the oil already blowing.
+
+CAMERA: one slow motorized dolly push toward the derrick, ending about 12% closer, easing to a complete stop for the final 1.5 seconds. Level throughout: no tilt, no pan, no handheld, no shake, no zoom breathing. The foreground mud and timber slide past faster than the derrick and the tents; the horizon does not move.
 
 ACTION TIMING:
-0.0–7.0s: the black oil column pulses upward through the crown block and streams screen-right as one bold flat shape, its ragged edge alive; a fine dark rain of oil drifts down and screen-right over the derrick's far side; the silhouetted crewman keeps both arms raised while the others shift their weight in small movements; the foreground mud and timber stay still. By the final second the column and spray sit back near their painted shape. Sound: the deep roar of the gusher, oil spattering on mud, wind across the prairie.
+0.0–6.5s: the black oil column pulses upward through the crown block under real pressure and streams screen-right as one bold flat shape, its ragged edge alive; a fine dark rain of oil falls with gravity and drifts screen-right over the derrick's far side; the silhouetted crewman keeps both arms raised while the others shift their weight in small movements; the foreground mud and timber stay still. Sound: the deep roar of the gusher, oil spattering on mud, wind across the prairie.
+6.5–8.0s: the camera settles and holds; the column keeps pulsing and streaming across the held frame. Sound continues unchanged.
 
 PHYSICS: the column rises with real pressure and the spray falls with real gravity, drifting on one wind direction; cloth flutters with lag. Nothing floats, nothing slides, nothing teleports.
 
 AUDIO: fully diegetic, continuous — the gusher roar carrying every silence, oil spatter, wind. No music, no score, no swell, no drone, no rising tone, no added foley beyond what is physically in frame, no voices.
 
-LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. Camera locked off. Horizon height constant. The column leans screen-right, never left. Final second returns to the opening composition. No flicker, no boiling lines, no grain swimming, no morphing.
+LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. One camera move, ending in a hold. The column leans screen-right, never left. Horizon height constant. Motion filmed, never stepped. No flicker, no boiling lines, no morphing.
 
-Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands.
+Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on take 1, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames.
 ```
 
-## Clip 3 · Raising · `eras-03-raising` · 7s
+## Clip 3 · Raising · `eras-03-raising` · 8s
 
 ```
-1 continuous shot. Total 7 seconds, no cuts, no transitions. Real-time throughout, no slow motion, no speed change.
+1 continuous shot. Total 8 seconds, no cuts, no transitions. Real-time throughout, no slow motion, no speed ramp, no speed change.
 
 Late-1980s corporate editorial magazine illustration. Flat graphic shapes, simplified environmental forms, clean silhouettes, minimal internal detail, soft airbrushed gradients, bold negative space. High contrast, restrained saturation. Heavy analog paper grain, matte print texture, subtle halftone dot pattern, slight color fading, minor ink imperfections. Looks like a scanned late-80s magazine illustration printed on porous matte stock.
 
 The attached frame's own medium in motion: a scanned late-80s magazine illustration, gouache and airbrush, flat graphic shapes with clean silhouettes, heavy analog paper grain and coarse visible halftone over every area, sun-faded color, minor ink imperfections. The print itself is alive — the grain field stays fixed like a printed page while the scene moves beneath it. NOT photoreal, NOT a photograph, NOT live action, NOT a 3D render, NOT a different illustration style than the attached frame.
 
-Technical: real-time 24fps, smooth continuous motion, every frame drawn in the same hand as the last. No frame interpolation, no frame blending, no ghosting, no double-imaging, no warping.
+Technical: filmed motion, not drawn motion — the scene moves like live-action footage of real people, animals and weather seen through this print. Real-time 24fps live-action cadence, true 180-degree shutter, genuine motion blur on everything that moves, every frame a distinct moment blending smoothly into the next. Never animated on twos, no held frames, no duplicated frames, no hand-drawn or cel-animation cadence, no frame interpolation, no ghosting, no warping.
 
 NO ON-SCREEN TEXT — CRITICAL: no on-screen text of any kind anywhere in frame at any point. No captions, no subtitles, no titles, no watermarks, no logos, no UI overlays. The frame is clean of all overlay graphics from first frame to last.
 
-THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. The horizon, the water tower, the white town buildings, the slab, the truck, the woman and child all keep their places; the glowing timber wall section stays the dominant shape at the right, standing at its painted angle. The camera is locked off on a tripod for the entire duration; it never pans, never tilts, never pushes, never reframes.
+THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. The horizon, the water tower, the white town buildings, the slab, the truck, the woman and child all keep their places; the glowing timber wall section stays the dominant shape at the right, standing at its painted angle.
 
-FIRST FRAME: exactly the composition of the attached still, already alive — the three framers already braced against the standing wall.
+FIRST FRAME: open on the attached still exactly, pixel for pixel, at frame one — same framing, same wall angle, same figures — already alive, the three framers already braced against the standing wall.
+
+CAMERA: one slow motorized lateral truck moving screen-right, travelling about 6% of the frame width, easing to a complete stop for the final 1.5 seconds. Level throughout: no tilt, no pan, no handheld, no shake, no zoom. The slab and near ground slide past faster than the town and the water tower; the horizon does not move.
 
 ACTION TIMING:
-0.0–7.0s: the three framers brace the standing timber wall section from its right side, backs and arms working against its weight; it rocks a single degree under their push and settles back to its painted angle; the woman's dress and the child's hair move in a light breeze; the dry grass on the rise stirs; long shadows hold. Sound: timber creak under load, boots on earth, a light wind, one distant hammer strike.
+0.0–6.5s: the three framers brace the standing timber wall section from its right side, backs and arms working against its weight; it rocks a single degree under their push and settles back to its painted angle; the woman's dress and the child's hair move in a light breeze; the dry grass on the rise stirs; long shadows hold. Sound: timber creak under load, boots on earth, a light wind.
+6.5–8.0s: the camera settles and holds; the framers keep bracing, the breeze continues. Sound continues unchanged.
 
 PHYSICS: the wall carries real weight — it barely moves, the men lean into it, and it settles rather than snaps; cloth and grass trail the breeze with lag. Nothing floats, nothing slides, nothing teleports.
 
-AUDIO: fully diegetic, quiet, continuous — timber, boots, wind, the far hammer. No music, no score, no swell, no drone, no rising tone, no added foley beyond what is physically in frame, no voices.
+AUDIO: fully diegetic, quiet, continuous — timber, boots, wind. No music, no score, no swell, no drone, no rising tone, no added foley beyond what is physically in frame, no voices.
 
-LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. Camera locked off. Horizon height constant. The wall stays standing at its painted angle. Final second returns to the opening composition. No flicker, no boiling lines, no grain swimming, no morphing.
+LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. One camera move, ending in a hold. The wall stays standing at its painted angle. Horizon height constant. Motion filmed, never stepped. No flicker, no boiling lines, no morphing.
 
-Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands.
+Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on take 1, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames.
 ```
 
-## Clip 4 · Boom · `eras-07-boom` · 7s
+## Clip 4 · Boom · `eras-07-boom` · 8s
 
 ```
-1 continuous shot. Total 7 seconds, no cuts, no transitions. Real-time throughout, no slow motion, no speed change.
+1 continuous shot. Total 8 seconds, no cuts, no transitions. Real-time throughout, no slow motion, no speed ramp, no speed change.
 
 Late-1980s corporate editorial magazine illustration. Flat graphic shapes, simplified environmental forms, clean silhouettes, minimal internal detail, soft airbrushed gradients, bold negative space. High contrast, restrained saturation. Heavy analog paper grain, matte print texture, subtle halftone dot pattern, slight color fading, minor ink imperfections. Looks like a scanned late-80s magazine illustration printed on porous matte stock.
 
 The attached frame's own medium in motion: a scanned late-80s magazine illustration, gouache and airbrush, flat graphic shapes with clean silhouettes, heavy analog paper grain and coarse visible halftone over every area, sun-faded color, minor ink imperfections. The print itself is alive — the grain field stays fixed like a printed page while the scene moves beneath it. NOT photoreal, NOT a photograph, NOT live action, NOT a 3D render, NOT a different illustration style than the attached frame.
 
-Technical: real-time 24fps, smooth continuous motion, every frame drawn in the same hand as the last. No frame interpolation, no frame blending, no ghosting, no double-imaging, no warping.
+Technical: filmed motion, not drawn motion — the scene moves like live-action footage of real people, animals and weather seen through this print. Real-time 24fps live-action cadence, true 180-degree shutter, genuine motion blur on everything that moves, every frame a distinct moment blending smoothly into the next. Never animated on twos, no held frames, no duplicated frames, no hand-drawn or cel-animation cadence, no frame interpolation, no ghosting, no warping.
 
 NO ON-SCREEN TEXT — CRITICAL: no on-screen text of any kind anywhere in frame at any point. No captions, no subtitles, no titles, no watermarks, no logos, no UI overlays. The frame is clean of all overlay graphics from first frame to last.
 
-THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. The man in the Stetson stays at the window seen from behind at the right of frame; the skyline, the unfinished steel tower and the desk keep their places; the blueprints on the desk stay unreadable rolls; the cobalt sky stays open. The camera is locked off on a tripod for the entire duration; it never pans, never tilts, never pushes, never moves past the glass.
+THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. The man in the Stetson stays at the window seen from behind at the right of frame; the skyline, the unfinished steel tower and the desk keep their places; the blueprints on the desk stay unreadable rolls; the cobalt sky stays open.
 
-FIRST FRAME: exactly the composition of the attached still, already alive — the cranes already in slow work.
+FIRST FRAME: open on the attached still exactly, pixel for pixel, at frame one — same framing, same man, same skyline — already alive, the cranes already in slow work.
+
+CAMERA: one slow motorized dolly push past the man's shoulder toward the glass and the skyline, ending about 10% closer, easing to a complete stop for the final 1.5 seconds. Level throughout: no tilt, no pan, no handheld, no shake, no zoom breathing; the camera never passes through the glass. The desk and the man slide past faster than the towers; the horizon does not move.
 
 ACTION TIMING:
-0.0–7.0s: the two cranes over the unfinished tower slew slowly screen-right through a few degrees, their hook lines swaying with lag; the small clouds drift screen-right across the cobalt sky; the man at the window holds his stance, weight shifting once; the desk and its blueprints stay still. By the final second the cranes rest near their painted angles. Sound: the quiet of a high office — faint air handling, the city and crane work muffled far below through the glass.
+0.0–6.5s: the two cranes over the unfinished tower slew slowly screen-right through a few degrees, their hook lines swaying with lag; the small clouds drift screen-right across the cobalt sky; the man at the window holds his stance, weight shifting once; the desk and its blueprints stay still. Sound: the quiet of a high office — faint air handling, the city and crane work muffled far below through the glass.
+6.5–8.0s: the camera settles and holds; the cranes rest near their painted angles, the clouds keep drifting. Sound continues unchanged.
 
 PHYSICS: the cranes move with real mass, slow and continuous; the hook lines hang true and steady with lag. Nothing floats, nothing slides, nothing teleports.
 
 AUDIO: fully diegetic, very quiet, continuous — room tone, muffled city, distant steel. No music, no score, no swell, no drone, no rising tone, no added foley beyond what is physically in frame, no voices.
 
-LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. Camera locked off. Horizon height constant. Cranes slew screen-right, clouds drift screen-right, nothing moves left. Final second returns to the opening composition. No flicker, no boiling lines, no grain swimming, no morphing.
+LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. One camera move, ending in a hold. Cranes slew screen-right, clouds drift screen-right, nothing moves left. Horizon height constant. Motion filmed, never stepped. No flicker, no boiling lines, no morphing.
 
-Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands.
+Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on take 1, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames.
 ```
 
-## Clip 5 · Launch · `eras-11-launch` · 7s
+## Clip 5 · Launch · `eras-11-launch` · 8s
 
 ```
-1 continuous shot. Total 7 seconds, no cuts, no transitions. Real-time throughout, no slow motion, no speed change.
+1 continuous shot. Total 8 seconds, no cuts, no transitions. Real-time throughout, no slow motion, no speed ramp, no speed change.
 
 Late-1980s corporate editorial magazine illustration. Flat graphic shapes, simplified environmental forms, clean silhouettes, minimal internal detail, soft airbrushed gradients, bold negative space. High contrast, restrained saturation. Heavy analog paper grain, matte print texture, subtle halftone dot pattern, slight color fading, minor ink imperfections. Looks like a scanned late-80s magazine illustration printed on porous matte stock.
 
 The attached frame's own medium in motion: a scanned late-80s magazine illustration, gouache and airbrush, flat graphic shapes with clean silhouettes, heavy analog paper grain and coarse visible halftone over every area, sun-faded color, minor ink imperfections. The print itself is alive — the grain field stays fixed like a printed page while the scene moves beneath it. NOT photoreal, NOT a photograph, NOT live action, NOT a 3D render, NOT a different illustration style than the attached frame.
 
-Technical: real-time 24fps, smooth continuous motion, every frame drawn in the same hand as the last. No frame interpolation, no frame blending, no ghosting, no double-imaging, no warping.
+Technical: filmed motion, not drawn motion — the scene moves like live-action footage of real people, animals and weather seen through this print. Real-time 24fps live-action cadence, true 180-degree shutter, genuine motion blur on everything that moves, every frame a distinct moment blending smoothly into the next. Never animated on twos, no held frames, no duplicated frames, no hand-drawn or cel-animation cadence, no frame interpolation, no ghosting, no warping.
 
-NO ON-SCREEN TEXT — CRITICAL: no on-screen text of any kind anywhere in frame at any point. No captions, no subtitles, no titles, no watermarks, no logos, no markings on the vehicle. The frame is clean of all overlay graphics from first frame to last.
+NO ON-SCREEN TEXT — CRITICAL: no on-screen text of any kind anywhere in frame at any point. No captions, no subtitles, no titles, no watermarks, no logos, no UI overlays. The frame is clean of all overlay graphics from first frame to last.
 
-THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. The stainless vehicle and its tower stay centered where they stand, the flat horizon stays at its height, the deep cobalt sky stays open above, the watching families keep their places on the flats. The camera is locked off on a tripod for the entire duration; it never pans, never tilts, never pushes, never reframes.
+THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. The stainless vehicle and its tower stay centered where they stand, the flat horizon stays at its height, the deep cobalt sky stays open above, the watching families keep their places on the flats. The vehicle stays on the pad for the whole clip.
 
-FIRST FRAME: exactly the composition of the attached still, already alive — the engine already lit, the steam bank already rolling.
+FIRST FRAME: open on the attached still exactly, pixel for pixel, at frame one — same framing, same vehicle, same steam bank, same spectators — already alive, the engine already lit.
+
+CAMERA: one slow motorized dolly push toward the vehicle, ending about 10% closer, easing to a complete stop for the final 1.5 seconds. Level throughout: no tilt, no pan, no handheld, no shake, no zoom breathing. The spectators in the foreground slide past faster than the vehicle and the far shore; the horizon does not move.
 
 ACTION TIMING:
-0.0–7.0s: the amber engine flame flickers and breathes at the base of the vehicle; the great cream steam bank churns and billows low across the flats in its painted direction; the vehicle holds on the pad, trembling almost imperceptibly with thrust; the spectators are nearly still — a raised arm holds, hair and shirts move in the breeze; reflections tremble in the shallow water. By the final second the cloud sits back near its painted shape. Sound: a deep continuous ignition rumble rolling across the flats, wind, water lapping.
+0.0–6.5s: the amber engine flame flickers and breathes at the base of the vehicle; the great cream steam bank churns and billows low across the flats in its painted direction; the vehicle holds on the pad, trembling almost imperceptibly with thrust; the spectators are nearly still — a raised arm holds, hair and shirts move in the breeze; reflections tremble in the shallow water. Sound: a deep continuous ignition rumble rolling across the flats, wind, water lapping.
+6.5–8.0s: the camera settles and holds; the flame and the steam bank keep working across the held frame. Sound continues unchanged.
 
 PHYSICS: the steam bank billows with real volume and drifts on one wind direction; the flame's light flickers on the steam and the wet sand; the vehicle's mass reads as immovable weight. Nothing floats away, nothing slides, nothing teleports.
 
 AUDIO: fully diegetic, continuous — the rumble carrying everything, wind, water. No music, no score, no swell, no drone, no rising tone, no added foley beyond what is physically in frame, no voices, no crowd chatter.
 
-LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. Camera locked off. Horizon height constant. The steam bank keeps its painted leftward stream; every other motion is vertical or still. Final second returns to the opening composition. No flicker beyond the flame, no boiling lines, no grain swimming, no morphing.
+LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. One camera move, ending in a hold. The steam bank keeps its painted leftward stream; every other motion is vertical or still. No flicker beyond the flame. Horizon height constant. Motion filmed, never stepped. No flicker, no boiling lines, no morphing.
 
-Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands.
+Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on take 1, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames.
 ```
 
 ## Clip 6 · House · `eras-15-house` · 8s — the destination
 
 The slowest clip. The About page holds this frame four viewport heights and
-the homepage lands and loops on it; the loop seam must be invisible.
+the homepage rests on it; the clip plays once and holds on its last frame.
 
 ```
-1 continuous shot. Total 8 seconds, no cuts, no transitions. Real-time throughout, no slow motion, no speed change.
+1 continuous shot. Total 8 seconds, no cuts, no transitions. Real-time throughout, no slow motion, no speed ramp, no speed change.
 
 Late-1980s corporate editorial magazine illustration. Flat graphic shapes, simplified environmental forms, clean silhouettes, minimal internal detail, soft airbrushed gradients, bold negative space. High contrast, restrained saturation. Heavy analog paper grain, matte print texture, subtle halftone dot pattern, slight color fading, minor ink imperfections. Looks like a scanned late-80s magazine illustration printed on porous matte stock.
 
 The attached frame's own medium in motion: a scanned late-80s magazine illustration, gouache and airbrush, flat graphic shapes with clean silhouettes, heavy analog paper grain and coarse visible halftone over every area, sun-faded color, minor ink imperfections. The print itself is alive — the grain field stays fixed like a printed page while the scene moves beneath it. NOT photoreal, NOT a photograph, NOT live action, NOT a 3D render, NOT a different illustration style than the attached frame.
 
-Technical: real-time 24fps, smooth continuous motion, every frame drawn in the same hand as the last. No frame interpolation, no frame blending, no ghosting, no double-imaging, no warping.
+Technical: filmed motion, not drawn motion — the scene moves like live-action footage of real people, animals and weather seen through this print. Real-time 24fps live-action cadence, true 180-degree shutter, genuine motion blur on everything that moves, every frame a distinct moment blending smoothly into the next. Never animated on twos, no held frames, no duplicated frames, no hand-drawn or cel-animation cadence, no frame interpolation, no ghosting, no warping.
 
 NO ON-SCREEN TEXT — CRITICAL: no on-screen text of any kind anywhere in frame at any point. No captions, no subtitles, no titles, no watermarks, no logos, no UI overlays. The frame is clean of all overlay graphics from first frame to last.
 
-THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. Every person on the porch, the dog, the steps, the setting sun, the distant skyline and the contrail keep their places; the sky stays open above. The camera is locked off on a tripod for the entire duration; it never pans, never tilts, never pushes, never reframes.
+THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. Every person on the porch, the dog, the steps, the setting sun, the distant skyline and the contrail keep their places; the sky stays open above.
 
-FIRST FRAME: exactly the composition of the attached still, already alive — the breeze already in the grass.
+FIRST FRAME: open on the attached still exactly, pixel for pixel, at frame one — same framing, same figures, same light — already alive, the breeze already in the grass.
+
+CAMERA: the slowest move of the six — one motorized dolly push toward the porch, ending about 6% closer, easing to a complete stop for the final 1.5 seconds and resting there. Level throughout: no tilt, no pan, no handheld, no shake, no zoom breathing. The bluebonnets in the foreground slide past faster than the porch and the far skyline; the horizon does not move.
 
 ACTION TIMING:
-0.0–8.0s: the quietest scene of the six — the bluebonnets and dry grass sway in a light breeze; the guitarist's hand moves in a slow strum; the dog's ear flicks once; the standing figures shift their weight in small, easy movements; the thin contrail high in the sky holds; the low sun holds its glow on the porch wall. Every figure ends the clip within a breath of its painted pose so the clip loops without a seam. Sound: a faint acoustic guitar from the porch itself, cicadas, a light breeze in the grass.
+0.0–6.5s: the quietest scene of the six — the bluebonnets and dry grass sway in a light breeze; the guitarist's hand moves in a slow strum; the dog's ear flicks once; the standing figures shift their weight in small, easy movements; the thin contrail high in the sky holds; the low sun holds its glow on the porch wall. Sound: a faint acoustic guitar from the porch itself, cicadas, a light breeze in the grass.
+6.5–8.0s: the camera settles and rests; the breeze and the strum continue, every figure within a breath of its painted pose. Sound continues unchanged.
 
 PHYSICS: breeze-driven motion only, with natural lag in grass, hair and cloth; every weight settled and at rest. Nothing floats, nothing slides, nothing teleports.
 
 AUDIO: fully diegetic, soft, continuous — the porch guitar quiet and unpolished as the only melodic sound, cicadas, breeze. No score, no added music beyond the guitar physically in frame, no swell, no drone, no rising tone, no added foley, no voices, no singing.
 
-LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. Camera locked off. Horizon height constant. The clip opens and closes on the same composition so it loops seamlessly. No flicker, no boiling lines, no grain swimming, no morphing.
+LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. One camera move, ending in a hold. The camera comes to rest and the final frame is the poster the page holds on. Horizon height constant. Motion filmed, never stepped. No flicker, no boiling lines, no morphing.
 
-Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands.
+Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on take 1, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames.
 ```
 
 ---
