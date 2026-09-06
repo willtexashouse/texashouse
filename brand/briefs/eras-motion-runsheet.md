@@ -756,6 +756,13 @@ Gusher still with the crew brought forward and larger, then one more
 take. Dance Hall v2 measured on twos (frame diffs alternating 15 / 1.5);
 v3 `e2aa427f` resubmitted with the same prompt.
 
+Dance Hall v3 `e2aa427f` came back on twos again (1.27). v4 `d6b5b0d9`
+passed the original Midjourney still as a second reference
+(`image_references`) beside the repaired still as `start_image`, and the
+cadence came back filmed (0.10). Lesson for the runsheet: when a repaired,
+cleaner still animates on twos, add the grainier original as a style
+reference. Ultra balance after this round: 1,074.
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
