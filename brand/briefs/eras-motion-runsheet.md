@@ -636,6 +636,28 @@ Delivered to Will for review 2026-09-06. Frames not in the homepage cut
 House) are in `brand/inbox/` and `~/Downloads`; they belong to the About
 and program pages per the handoff and have no clips yet.
 
+### v4 retakes and About first takes · 2026-09-06 · Ultra · 774 credits
+
+| Clip | Job | Stepping | Ending | What came back |
+|---|---|---|---|---|
+| Gusher v4 | `058f0384` | 0.06 | alive | A vertical black fountain raining down in a full dome around the derrick, crew arms up from frame one, horizon held. Will's note answered. |
+| Raising v4 | `567e03fc` | 0.11 | goes still | The wall rises low to plumb again, but **no ropes** and the woman and child still face the camera. The start still overrides the prompt on both. Needs a repaired still (ropes tied to the top plate, woman and child turned to the house) before another take. |
+| Launch v4 | `7f7625ec` | 0.12 | alive | Lift-off, camera tilts from a fixed position, spectators drop out, ends on the rocket high against sky. The rocket rides near the top of frame rather than centre. |
+| House v4 | `3d225d18` | 0.04 | alive | Holds about three seconds, then a slow pan over eight seconds to the sun and skyline. Slower than v3; the hold is shorter than asked. |
+| Chip | `81341c3a` | **0.64** | freezes | On twos. Small motion, the man works at the scope. |
+| Choir | `734a6974` | **0.64** | freezes | On twos. Congregation and choir move a little. |
+| Charreada | `6b6f816a` | 0.07 | freezes last 1.5s | Riders trot screen-right in line, skirts swing, crowd moves. Good. |
+| Dance Hall | `d6a489f2` | 0.09 | freezes last 3s | Couples turn, band plays. The rest beat froze the whole floor. |
+| Swang | `99e5dd21` | **0.70** | freezes | On twos, but the red car rolls forward and right, arms out, kids wave. |
+| Mind | `403aa7f4` | 0.22 | alive | The left robot steps forward, engineers work, the man in the hat shifts. Quiet but filmed. |
+
+Two patterns: quiet scenes come back on twos (Chip, Choir, Swang), and
+the "camera comes to rest" beat freezes the whole scene in the About clips.
+Fixes to carry: drop the rest beat from the About clips (they are
+scroll-scrubbed, no hold needed) and run one continuous move; for on-twos
+results, test a motion-interpolation pass in post before spending on
+retakes.
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
