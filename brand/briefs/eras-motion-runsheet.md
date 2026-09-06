@@ -849,6 +849,11 @@ shuffled clothes and faces, rejected. Full-turn C takes `136b5cd6` C4 and
 B7 to C4, 4 seconds each, `end_image` pinned, original still as style
 reference, band described as playing throughout.
 
+Result: part one `e090dc15` (stepping 0.08) and part two `3e2677c8`
+(0.09), both filmed, both landing on their end frames. Stitched with a
+0.3-second crossfade at the half: `dancehall-rotation-v2.mp4`, 7.85s.
+This is the Dance Hall master candidate.
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
