@@ -746,6 +746,16 @@ still, to be redone from the chosen still), Gusher v6 `9b89687f`
 submitted on the v5 structure plus the human-crew block and a 30% zoom
 out, with "no zoom in" and "no thin dribble" in the scar line.
 
+Gusher v7 `4841eb7c` (6s, stepping 0.07): oil out of the crown block,
+camera pulls back, but the column arcs to one side instead of standing
+vertical and the crew stay tiny silhouettes with arms up. The crew problem
+is the still's scale: at this distance the men are a few dozen pixels and
+no prompt makes them read as celebrating humans. Best oil so far remains
+v5 `38a34467` (the vertical dome). Recommendation to Will: a repaired
+Gusher still with the crew brought forward and larger, then one more
+take. Dance Hall v2 measured on twos (frame diffs alternating 15 / 1.5);
+v3 `e2aa427f` resubmitted with the same prompt.
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
