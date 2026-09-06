@@ -205,12 +205,14 @@ const DRAPE_GRAIN =
 
   /* Horizon band. The shader canvases are absolutely positioned over the
      drape (z 0); the wordmark sits above them (z 1). */
+  /* The band takes the render's own proportion (2272×512) so the whole
+     image shows at every width — Will: "I want it completely visible". */
   .txh-footer__horizon {
-    position: relative; height: clamp(210px, 20vw, 340px);
+    position: relative; height: auto; aspect-ratio: 2272 / 512;
     overflow: hidden; isolation: isolate;
   }
-  /* The meadow render, bottom-anchored so the flowers stay in frame as the
-     band changes height; the top edge dissolves into the page ground. */
+  /* Same aspect as the band, so cover crops nothing; the top edge dissolves
+     into the page ground. */
   .txh-footer__meadow {
     position: absolute; inset: 0; width: 100%; height: 100%;
     object-fit: cover; object-position: 50% 100%;
@@ -253,7 +255,6 @@ const DRAPE_GRAIN =
     .txh-footer__meta { grid-template-columns: 1fr; }
     .txh-footer__metacol--end { text-align: left; }
     .txh-footer__legal { justify-content: flex-start; }
-    .txh-footer__horizon { height: 150px; }
   }
 </style>
 
