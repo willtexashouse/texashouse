@@ -802,6 +802,14 @@ and keeps the clothes; B3 barely moved. Full-turn frame C, three takes
 as intended, C2 cleanest. Plan: two 4-second clips, A to B and B to C,
 stitched into one rotation. Waiting on Will's pick of B.
 
+Will spotted the right-of-centre man changing across A, B and C. With
+`end_image` as a hard target, Seedance would morph him over the clip, so
+the B frame was redrawn with every couple locked by description (clothes,
+hair, hat, position): `c64d5aa2` B4, `f1adbd54` B5, `5f135e39` B6. B6 turns
+the most couples with identities held and is used. Two 4-second clips
+submitted, `start_image` + `end_image` + the original as style reference:
+A to B6, then B6 to C2 (`e923024c`).
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
