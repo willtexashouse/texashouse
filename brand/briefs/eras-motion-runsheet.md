@@ -264,6 +264,43 @@ Negative prompts: no photorealism, no shallow depth of field, no close-up, no CG
 
 ---
 
+## Take log
+
+### Range · take 1 · 2026-09-06 · job `f00235b6-38fa-4245-82c3-0820a0cd1ce0` · 63 credits
+
+Settings: seedance_2_5, omni_reference, start_image + image_references both
+the eras-01 still, 21:9, 1080p, 7s, audio on, bitrate high. Output
+2206×946, 24fps, 7.04s, AAC audio.
+
+Checklist result:
+
+- Medium holds. Flat silhouettes, gouache clouds, palette identical, no
+  photoreal or 3D drift anywhere. The strongest result of the take.
+- Camera locked. Horizon, mesa, live oak and cloud bank in place; sky's
+  upper half open throughout. Four riders throughout, no duplicates.
+- Motion all screen-left to screen-right. Dust streams behind the horses.
+- **First frame is not the still.** Seedance treated the start image as a
+  reference and restaged the riders: they open left of centre, larger, and
+  cross the whole frame, ending at the right edge. The clip passes through
+  the painted composition around 3.5 to 5s and does not return to it. Not
+  loopable as-is; the site poster cannot be the still for this clip.
+- **Grain re-renders per frame.** Mean luma difference between consecutive
+  frames in a static sky crop is 4.8 on 0 to 255 (a fixed grain field under
+  the codec would read near 1). The halftone look is right in any single
+  frame; in motion it shimmers. This is the expected failure named above.
+- Cloud bank moves more than "almost imperceptibly" but stays in shape.
+
+Carry into the next take, whichever way Will decides:
+
+1. Strict first frame: try `start_image` alone, without the duplicate
+   `image_references` slot, and open the composition block with "open on the
+   attached still exactly, pixel for pixel, at frame one".
+2. If the riders are allowed to cross (the brief's original "riders cross
+   the frame"), say so and drop the return-to-composition clause; the
+   homepage then crossfades on the horizon instead of looping the clip.
+3. Grain: accept the shimmer, or soften in post and lay one static halftone
+   overlay. Decide once, apply to all six.
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
