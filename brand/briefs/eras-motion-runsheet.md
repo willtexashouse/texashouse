@@ -713,6 +713,13 @@ pickup bed: `613f0c56` (silver pickup, kids in the bed, the second half of
 the group behind) and `7690b71b` (a cream 1960s pickup filling the right
 foreground, kids in its bed). Will picks.
 
+### Swang still, fourth pass · 2026-09-06
+
+The pickup-bed takes read as wrong in proportion. Will asked for variant A
+with the kids simply removed. Jobs `1bd41816` and `dce16e31`, A as the only
+reference, the right edge continued as tree line and ground, the crowd at
+the left kept. Will picks.
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
