@@ -126,7 +126,7 @@ CAMERA: one slow motorized dolly push toward the riders along their line of trav
 
 ACTION TIMING:
 0.0–6.5s: the four riders hold a full four-beat gallop moving screen-right toward the low sun — every horse's body rises and drops with each stride, hooves strike the hardpan and throw dust, the riders' bodies absorb each landing in the saddle, hat brims pressed back in the wind of their own speed; dust streams behind each horse as flat shapes, lagging the motion; the dark grass foreground lays over in one steady wind moving screen-right; the cumulus bank holds its shape. Sound: massed hoofbeats on dry hardpan, wind over open grass, leather creak.
-6.5–8.0s: the camera settles and holds; the riders keep the same gallop across the held frame, dust still streaming. Sound continues unchanged.
+6.5–8.0s: the camera comes to rest, and only the camera — the scene never pauses: the riders keep the same full gallop across the held frame, dust still streaming, grass still moving. No freeze-frame. Sound continues unchanged.
 
 PHYSICS: real weight scaled to the illustration — each horse about 500 kilograms, hooves striking and the ground giving up dust on every strike, bodies rising and falling through the gallop, riders' weight sinking into the saddle on every landing, dust obeying one wind direction with lag, manes and hems trailing the motion. Nothing floats, nothing slides, nothing teleports.
 
@@ -134,7 +134,7 @@ AUDIO: fully diegetic, quiet, continuous — hoofbeats, wind, leather. No music,
 
 LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. One camera move, ending in a hold. All motion screen-left to screen-right. Horizon height constant. Motion filmed, never stepped. No flicker, no boiling lines, no morphing.
 
-Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on take 1, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames.
+Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on takes 1 and 2, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames, no freeze-frame ending, no scene that stops when the camera stops.
 ```
 
 ## Clip 2 · Gusher · `eras-02-gusher` · 8s
@@ -158,7 +158,7 @@ CAMERA: one slow motorized dolly push toward the derrick, ending about 12% close
 
 ACTION TIMING:
 0.0–6.5s: the black oil column pulses upward through the crown block under real pressure and streams screen-right as one bold flat shape, its ragged edge alive; a fine dark rain of oil falls with gravity and drifts screen-right over the derrick's far side; the silhouetted crewman keeps both arms raised while the others shift their weight in small movements; the foreground mud and timber stay still. Sound: the deep roar of the gusher, oil spattering on mud, wind across the prairie.
-6.5–8.0s: the camera settles and holds; the column keeps pulsing and streaming across the held frame. Sound continues unchanged.
+6.5–8.0s: the camera comes to rest, and only the camera — the scene never pauses: the column keeps pulsing and streaming, the oil rain keeps falling, the crew keeps shifting. No freeze-frame. Sound continues unchanged.
 
 PHYSICS: the column rises with real pressure and the spray falls with real gravity, drifting on one wind direction; cloth flutters with lag. Nothing floats, nothing slides, nothing teleports.
 
@@ -166,7 +166,7 @@ AUDIO: fully diegetic, continuous — the gusher roar carrying every silence, oi
 
 LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. One camera move, ending in a hold. The column leans screen-right, never left. Horizon height constant. Motion filmed, never stepped. No flicker, no boiling lines, no morphing.
 
-Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on take 1, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames.
+Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on takes 1 and 2, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames, no freeze-frame ending, no scene that stops when the camera stops.
 ```
 
 ## Clip 3 · Raising · `eras-03-raising` · 8s
@@ -190,7 +190,7 @@ CAMERA: one slow motorized lateral truck moving screen-right, travelling about 6
 
 ACTION TIMING:
 0.0–6.5s: the three framers brace the standing timber wall section from its right side, backs and arms working against its weight; it rocks a single degree under their push and settles back to its painted angle; the woman's dress and the child's hair move in a light breeze; the dry grass on the rise stirs; long shadows hold. Sound: timber creak under load, boots on earth, a light wind.
-6.5–8.0s: the camera settles and holds; the framers keep bracing, the breeze continues. Sound continues unchanged.
+6.5–8.0s: the camera comes to rest, and only the camera — the scene never pauses: the framers keep working against the wall, the breeze keeps moving dress, hair and grass. No freeze-frame. Sound continues unchanged.
 
 PHYSICS: the wall carries real weight — it barely moves, the men lean into it, and it settles rather than snaps; cloth and grass trail the breeze with lag. Nothing floats, nothing slides, nothing teleports.
 
@@ -198,7 +198,7 @@ AUDIO: fully diegetic, quiet, continuous — timber, boots, wind. No music, no s
 
 LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. One camera move, ending in a hold. The wall stays standing at its painted angle. Horizon height constant. Motion filmed, never stepped. No flicker, no boiling lines, no morphing.
 
-Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on take 1, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames.
+Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on takes 1 and 2, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames, no freeze-frame ending, no scene that stops when the camera stops.
 ```
 
 ## Clip 4 · Boom · `eras-07-boom` · 8s
@@ -222,7 +222,7 @@ CAMERA: one slow motorized dolly push past the man's shoulder toward the glass a
 
 ACTION TIMING:
 0.0–6.5s: the two cranes over the unfinished tower slew slowly screen-right through a few degrees, their hook lines swaying with lag; the small clouds drift screen-right across the cobalt sky; the man at the window holds his stance, weight shifting once; the desk and its blueprints stay still. Sound: the quiet of a high office — faint air handling, the city and crane work muffled far below through the glass.
-6.5–8.0s: the camera settles and holds; the cranes rest near their painted angles, the clouds keep drifting. Sound continues unchanged.
+6.5–8.0s: the camera comes to rest, and only the camera — the scene never pauses: the cranes keep their slow slew, the clouds keep drifting, the man breathes. No freeze-frame. Sound continues unchanged.
 
 PHYSICS: the cranes move with real mass, slow and continuous; the hook lines hang true and steady with lag. Nothing floats, nothing slides, nothing teleports.
 
@@ -230,7 +230,7 @@ AUDIO: fully diegetic, very quiet, continuous — room tone, muffled city, dista
 
 LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. One camera move, ending in a hold. Cranes slew screen-right, clouds drift screen-right, nothing moves left. Horizon height constant. Motion filmed, never stepped. No flicker, no boiling lines, no morphing.
 
-Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on take 1, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames.
+Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on takes 1 and 2, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames, no freeze-frame ending, no scene that stops when the camera stops.
 ```
 
 ## Clip 5 · Launch · `eras-11-launch` · 8s
@@ -254,7 +254,7 @@ CAMERA: one slow motorized dolly push toward the vehicle, ending about 10% close
 
 ACTION TIMING:
 0.0–6.5s: the amber engine flame flickers and breathes at the base of the vehicle; the great cream steam bank churns and billows low across the flats in its painted direction; the vehicle holds on the pad, trembling almost imperceptibly with thrust; the spectators are nearly still — a raised arm holds, hair and shirts move in the breeze; reflections tremble in the shallow water. Sound: a deep continuous ignition rumble rolling across the flats, wind, water lapping.
-6.5–8.0s: the camera settles and holds; the flame and the steam bank keep working across the held frame. Sound continues unchanged.
+6.5–8.0s: the camera comes to rest, and only the camera — the scene never pauses: the flame keeps breathing, the steam bank keeps billowing, the water keeps trembling. No freeze-frame. Sound continues unchanged.
 
 PHYSICS: the steam bank billows with real volume and drifts on one wind direction; the flame's light flickers on the steam and the wet sand; the vehicle's mass reads as immovable weight. Nothing floats away, nothing slides, nothing teleports.
 
@@ -262,7 +262,7 @@ AUDIO: fully diegetic, continuous — the rumble carrying everything, wind, wate
 
 LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. One camera move, ending in a hold. The steam bank keeps its painted leftward stream; every other motion is vertical or still. No flicker beyond the flame. Horizon height constant. Motion filmed, never stepped. No flicker, no boiling lines, no morphing.
 
-Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on take 1, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames.
+Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on takes 1 and 2, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames, no freeze-frame ending, no scene that stops when the camera stops.
 ```
 
 ## Clip 6 · House · `eras-15-house` · 8s — the destination
@@ -289,7 +289,7 @@ CAMERA: the slowest move of the six — one motorized dolly push toward the porc
 
 ACTION TIMING:
 0.0–6.5s: the quietest scene of the six — the bluebonnets and dry grass sway in a light breeze; the guitarist's hand moves in a slow strum; the dog's ear flicks once; the standing figures shift their weight in small, easy movements; the thin contrail high in the sky holds; the low sun holds its glow on the porch wall. Sound: a faint acoustic guitar from the porch itself, cicadas, a light breeze in the grass.
-6.5–8.0s: the camera settles and rests; the breeze and the strum continue, every figure within a breath of its painted pose. Sound continues unchanged.
+6.5–8.0s: the camera comes to rest, and only the camera — the scene never pauses: the breeze and the strum continue, every figure alive and within a breath of its painted pose. No freeze-frame. Sound continues unchanged.
 
 PHYSICS: breeze-driven motion only, with natural lag in grass, hair and cloth; every weight settled and at rest. Nothing floats, nothing slides, nothing teleports.
 
@@ -297,7 +297,7 @@ AUDIO: fully diegetic, soft, continuous — the porch guitar quiet and unpolishe
 
 LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. One camera move, ending in a hold. The camera comes to rest and the final frame is the poster the page holds on. Horizon height constant. Motion filmed, never stepped. No flicker, no boiling lines, no morphing.
 
-Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on take 1, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames.
+Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on takes 1 and 2, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames, no freeze-frame ending, no scene that stops when the camera stops.
 ```
 
 ---
@@ -338,6 +338,31 @@ Carry into the next take, whichever way Will decides:
    homepage then crossfades on the horizon instead of looping the clip.
 3. Grain: accept the shimmer, or soften in post and lay one static halftone
    overlay. Decide once, apply to all six.
+
+### Range · take 2 · 2026-09-06 · job `7a3222b7-ed7a-44ae-a9ce-44a8298d3d8a` · 72 credits
+
+Settings: seedance_2_5, omni_reference, start_image only, 21:9, 1080p, 8s,
+audio on, bitrate high. Prompt: the v2 Range prompt above, before the
+freeze-frame fix.
+
+- **Cadence fixed.** Odd/even consecutive-frame ratio 1.05 (take 1 was
+  about 2.5). Motion blur on the horses and dust. Reads as film.
+- **Grain swim down** to 3.0 (take 1: 4.8).
+- **Composition holds** where it matters: horizon, mesa, oak, cloud bank
+  and riders at their painted positions; the sky's upper half stays open.
+- **The camera move came back as a tracking shot**, not a push: the camera
+  travels with the riders, the far ground barely moves, the foreground
+  bushes pass screen-left. That is the classic western follow shot and the
+  most filmic result so far; the foreground counter-motion is inherent to
+  it and reads as the riders travelling. Accepted.
+- **First frame is not the still** (full-frame difference 14.4): the sky
+  and far ground match, the foreground was regenerated to give the camera
+  something to pass. The clip's own first frame is its poster.
+- **The hold froze the scene.** Motion in the last 1.5s drops to about 1.0
+  in every band, riders included: the model read "the camera holds" as a
+  freeze-frame. Fixed in every prompt: the hold beat now says the camera
+  comes to rest and only the camera, and the scar line bans freeze-frame
+  endings.
 
 ## After generation
 
