@@ -43,3 +43,14 @@ One entry per approved file in `public/brand/`: filename, tier, register, the Bl
 - Also tried: MiniMax H3 Max, same inputs. It turned the globes but panned the pair sideways through the shot; rejected.
 - Processing: frames sampled evenly from the clip, ground keyed to alpha by colour distance, then each globe located per frame, scaled to one fixed diameter, and pinned to a fixed centre, because the FLUX clip let the pair drift outward. Frame 000 is also the static poster (footer-globes.webp/png).
 - Placement: GlobeSpin.astro in the footer. Scroll position drives the frame index; reduced motion shows the poster. The hero globe gets the same treatment next.
+
+## public/brand/landscape-land-bluebonnet-meadow-4x1-v1.png — footer horizon placeholder
+
+- Tier: landscape · Register: land · Aspect: 2272×512 (about 4.4:1)
+- Source: Will, Midjourney, 2026-09-04 (Downloads/"Footer Image.png"; the
+  prompt began "A Texas Hill Country bluebonnet meadow at full ...", the rest is
+  in Will's Midjourney history). Not from the Higgsfield pipeline.
+- Use: mounted 2026-09-06 as the footer horizon band in `SiteFooter.astro` in
+  place of the CSS placeholder and the unmounted dither drape. Served as
+  `footer-meadow.jpg` (full) and `footer-meadow-1200.jpg` (small screens).
+  Will called it a placeholder: "we're going to do something with it soon".
