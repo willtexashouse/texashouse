@@ -403,6 +403,25 @@ which drags the horizon. A lateral truck keeps the horizon (Range, Boom's
 past-the-shoulder push kept it because the man anchored the frame). Gusher
 and Launch move to a lateral truck with a pinned-horizon CRITICAL block.
 
+### v3 · all five · 2026-09-06 · Ultra account · 378 credits
+
+Jobs: Range `7e099b20`, Gusher `e161d48b`, Raising `4612f643`, Launch
+`d9e89212` (10s), House `5d92111d`. Boom stands from the Plus account
+(`cca99279`). Frames re-uploaded to Ultra as start images only.
+
+| Clip | Stepping | Hold (s7, s8) | What came back |
+|---|---|---|---|
+| Range | 0.06 | 3.3, 3.4 alive | Opens close on the riders, big and galloping like film, and pulls back to the painted wide by the end. Reverse of the brief's start, but the Western read is there. Four riders, horizon held. |
+| Gusher | 0.20 | 8.4, 7.4 alive | A huge black arc of oil leaning screen-right and raining down; crew waving arms. Horizon and foreground held. |
+| Raising | 0.27 | 2.3, 1.8 near-still | The wall starts low and is pushed up to plumb over four seconds — the raising, finally. Wind reads. Scene goes still once the wall stands; trim to 6.5s in the edit or retake with the wind carrying the end. |
+| Launch | 0.11 | climbing to the end | Lift-off with huge plumes, the rocket rising through the frame under a slow tilt, spectators kept in the bottom of frame. |
+| House | 0.03 | 12.2, 2.7 alive | Pan screen-right off the porch, ending on the sun and skyline. Conversation to be judged by eye. |
+
+Delivered to Will for review 2026-09-06. Frames not in the homepage cut
+(Chip, Choir a/b, Charreada, Dance Hall, Swang, Wafer, Mind, the second
+House) are in `brand/inbox/` and `~/Downloads`; they belong to the About
+and program pages per the handoff and have no clips yet.
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
