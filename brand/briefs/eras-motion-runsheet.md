@@ -763,6 +763,24 @@ cadence came back filmed (0.10). Lesson for the runsheet: when a repaired,
 cleaner still animates on twos, add the grainier original as a style
 reference. Ultra balance after this round: 1,074.
 
+### Swang parade and Dance Hall couples · 2026-09-06
+
+Will: the yellow car at the lower right faced the camera; a parade has
+every car going the same way. Three takes from the blades-both-sides still
+(`d20f7bfc`): `bc4f67c4` (C) turns the yellow car to follow the line behind
+the red car with swangas on every wheel, `ef3c60ed` (B) the same with the
+yellow car a little further right, `26e6f585` (A) failed (yellow car still
+angled, a second yellow car added). Recommend C.
+
+Dance Hall: three takes asking for man-and-woman couples everywhere
+(`ddb8db5c`, `b8f79c58`, `5da40ed0`) all left the stage-left pair as two
+women. A second pass from `b8f79c58` naming that pair explicitly: `1838dc49`
+and `409d755f` replaced the centre couple instead; `e598ed1c` (C) replaced
+the right one. Every couple in C is one man and one woman with nothing
+between them. Recommend C.
+
+Nothing animated from either until Will confirms, per his instruction.
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
