@@ -720,6 +720,14 @@ with the kids simply removed. Jobs `1bd41816` and `dce16e31`, A as the only
 reference, the right edge continued as tree line and ground, the crowd at
 the left kept. Will picks.
 
+### Swang still, fifth pass · 2026-09-06
+
+The no-kids takes carried a flat horizontal cut across the tree tops at
+the right, inherited from the Midjourney original's pasted strip. Fifth
+pass used the first no-kids take (`1bd41816`) as the only reference and
+asked for rounded live-oak canopies against continuous sky. Jobs
+`4b3feaf4` and `e686c277`. Will picks.
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
