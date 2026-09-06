@@ -150,11 +150,13 @@ Technical: filmed motion, not drawn motion — the scene moves like live-action 
 
 NO ON-SCREEN TEXT — CRITICAL: no on-screen text of any kind anywhere in frame at any point. No captions, no subtitles, no titles, no watermarks, no logos, no UI overlays. The frame is clean of all overlay graphics from first frame to last.
 
-THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. The wooden derrick stays exactly where it stands, the horizon stays at its height, the rose-to-cream dawn sky stays open, the crew, tents and wagons keep their places.
+THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. The wooden derrick stays exactly where it stands at its painted size, the rose-to-cream dawn sky stays open, the crew, tents and wagons keep their places.
+
+THE HORIZON IS PINNED — CRITICAL: the horizon line sits at the same height on screen in the first frame and the last, about three quarters of the way down the frame. The camera never tilts and never pushes in. The foreground mud and timber debris stay in the bottom of the frame for all 8 seconds; nothing exits the bottom edge, the derrick never grows.
 
 FIRST FRAME: open on the attached still exactly, pixel for pixel, at frame one — same framing, same derrick, same column shape — already alive, the oil already blowing.
 
-CAMERA: one slow motorized dolly push toward the derrick, ending about 12% closer, easing to a complete stop for the final 1.5 seconds. Level throughout: no tilt, no pan, no handheld, no shake, no zoom breathing. The foreground mud and timber slide past faster than the derrick and the tents; the horizon does not move.
+CAMERA: one slow motorized lateral truck moving screen-right, travelling about 5% of the frame width, easing to a complete stop for the final 1.5 seconds. Level throughout: no tilt, no pan, no push, no zoom, no handheld, no shake. The foreground mud and timber slide past faster than the derrick and the tents; the horizon does not move.
 
 ACTION TIMING:
 0.0–6.5s: the black oil column pulses upward through the crown block under real pressure and streams screen-right as one bold flat shape, its ragged edge alive; a fine dark rain of oil falls with gravity and drifts screen-right over the derrick's far side; the silhouetted crewman keeps both arms raised while the others shift their weight in small movements; the foreground mud and timber stay still. Sound: the deep roar of the gusher, oil spattering on mud, wind across the prairie.
@@ -246,11 +248,13 @@ Technical: filmed motion, not drawn motion — the scene moves like live-action 
 
 NO ON-SCREEN TEXT — CRITICAL: no on-screen text of any kind anywhere in frame at any point. No captions, no subtitles, no titles, no watermarks, no logos, no UI overlays. The frame is clean of all overlay graphics from first frame to last.
 
-THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. The stainless vehicle and its tower stay centered where they stand, the flat horizon stays at its height, the deep cobalt sky stays open above, the watching families keep their places on the flats. The vehicle stays on the pad for the whole clip.
+THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. The stainless vehicle and its tower stay centered where they stand at their painted size, the deep cobalt sky stays open above, the watching families keep their places on the flats. The vehicle stays on the pad for the whole clip.
+
+THE HORIZON IS PINNED — CRITICAL: the flat horizon sits at the same height on screen in the first frame and the last, about two thirds of the way down the frame. The camera never tilts and never pushes in. The spectators stay in the bottom of the frame for all 8 seconds; nothing exits the bottom edge, the vehicle never grows.
 
 FIRST FRAME: open on the attached still exactly, pixel for pixel, at frame one — same framing, same vehicle, same steam bank, same spectators — already alive, the engine already lit.
 
-CAMERA: one slow motorized dolly push toward the vehicle, ending about 10% closer, easing to a complete stop for the final 1.5 seconds. Level throughout: no tilt, no pan, no handheld, no shake, no zoom breathing. The spectators in the foreground slide past faster than the vehicle and the far shore; the horizon does not move.
+CAMERA: one slow motorized lateral truck moving screen-right, travelling about 5% of the frame width, easing to a complete stop for the final 1.5 seconds. Level throughout: no tilt, no pan, no push, no zoom, no handheld, no shake. The spectators in the foreground slide past faster than the vehicle and the far shore; the horizon does not move.
 
 ACTION TIMING:
 0.0–6.5s: the amber engine flame flickers and breathes at the base of the vehicle; the great cream steam bank churns and billows low across the flats in its painted direction; the vehicle holds on the pad, trembling almost imperceptibly with thrust; the spectators are nearly still — a raised arm holds, hair and shirts move in the breeze; reflections tremble in the shallow water. Sound: a deep continuous ignition rumble rolling across the flats, wind, water lapping.
@@ -363,6 +367,27 @@ freeze-frame fix.
   freeze-frame. Fixed in every prompt: the hold beat now says the camera
   comes to rest and only the camera, and the scar line bans freeze-frame
   endings.
+
+### Gusher, Raising, Boom, Launch, House · take 1 · 2026-09-06 · 72 credits each
+
+Jobs: Gusher `57b8d263`, Raising `60cb5a9a`, Boom `cca99279`, Launch
+`68b2e5ab`, House `7be4632d`. Settings as Range take 2 plus the freeze-frame
+fix. Stepping index (mean frame-to-frame change in motion over mean motion;
+0.1 to 0.3 reads as film, 0.44 was take 1's on-twos):
+
+| Clip | Stepping | Grain swim | Hold (s7, s8) | Verdict |
+|---|---|---|---|---|
+| Range t2 | 0.09 | 3.0 | froze | accepted, tracking shot |
+| Gusher | 0.17 | 5.3 | 5.8, 3.2 alive | **retake**: push became push plus tilt, horizon slid from 75% to the bottom edge, derrick grew ~40% |
+| Raising | 0.05 | 9.9 (camera-inflated) | 1.3, 1.1 froze | hold; big move, froze early, wall angle and figures fine |
+| Boom | 0.26 | 4.2 | 5.8, 3.7 alive | accepted: push past the shoulder, horizon held, clouds right |
+| Launch | 0.06 | 4.7 | 6.1, 3.1 alive | **retake**: same failure as Gusher, horizon slid from 60% to ~90%, spectators pushed out of frame |
+| House | 0.29 | 6.4 | 4.8, 2.6 alive | accepted with a note: first second shows on-twos alternation, settles after; slowest scene so least visible |
+
+Lesson: "dolly push toward X" makes the model zoom onto X and recentre it,
+which drags the horizon. A lateral truck keeps the horizon (Range, Boom's
+past-the-shoulder push kept it because the man anchored the frame). Gusher
+and Launch move to a lateral truck with a pinned-horizon CRITICAL block.
 
 ## After generation
 
