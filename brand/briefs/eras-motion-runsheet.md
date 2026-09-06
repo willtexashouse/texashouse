@@ -839,6 +839,16 @@ Lesson for the runsheet: to remove an inherited defect, describe the
 defect itself in the prompt (what it looks like, where it is), not just
 the desired absence.
 
+### Dance Hall board, second generation · animate (Will: "let's animate it")
+
+Parent A = `21494282` (object gone, country band on stage). Half-turn B
+takes from it: `2aa756d3` B7 swaps couples one, four and five with every
+identity and the band held; `0dee224f` B8 turned less; `b0e05113` B9
+shuffled clothes and faces, rejected. Full-turn C takes `136b5cd6` C4 and
+`9cb32dbc` C5 both return to A's orientation. Clips submitted: A to B7 and
+B7 to C4, 4 seconds each, `end_image` pinned, original still as style
+reference, band described as playing throughout.
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
