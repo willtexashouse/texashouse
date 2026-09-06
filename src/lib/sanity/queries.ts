@@ -45,6 +45,7 @@ export const PAST_EVENTS_QUERY = `*[_type == "event" && (
   (!defined(statusOverride) && dateTime(coalesce(endDate, date)) < dateTime(now()))
 )] | order(date desc){
   _id, title, slug, date, endDate, city, coverImage, recapVideo, featured,
+  "strip": gallery[0...3],
   ${EVENT_STATUS}
 }`;
 

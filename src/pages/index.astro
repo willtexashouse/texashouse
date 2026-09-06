@@ -54,6 +54,33 @@ const fmtMonth = (d: string) =>
         .format(new Date(d)).toUpperCase()
     : '';
 const num = (i: number) => String(i).padStart(2, '0');
+
+// "What we do" — the floating image that follows the hover. These are real
+// event photos from the Sanity galleries (Race Weekend 2025, SXSW London 2025),
+// pinned here by asset until the section gets its own CMS field.
+const cdn = 'https://cdn.sanity.io/images/naolvj96/production/';
+const whatImg = (id: string) => `${cdn}${id}?w=900&h=1125&fit=crop&auto=format&q=72`;
+const whatWeDo = [
+  {
+    key: 'Act', title: 'Activations',
+    copy: 'Flagship programming staged where the world is already looking. We do not rent a booth. We build the room and set the agenda inside it.',
+    img: whatImg('817b54e00f64cdb3e96bbbc4205a733b1c4dd94d-1600x1067.jpg'), alt: 'A band on stage at Race Weekend 2025',
+  },
+  {
+    key: 'People', title: 'Superconnectors',
+    copy: 'The operators whose introductions actually move. Founders, funders, officials and creators who show up for each other long after the week is over.',
+    img: whatImg('d2c4d119a062f291a6f188b9157fbc5eb6a76073-1350x900.jpg'), alt: 'Two guests in conversation at SXSW London 2025',
+  },
+  {
+    key: 'Rooms', title: 'Curated Connections',
+    copy: 'Rooms built on purpose, not badge scans. Every seat is considered, and every introduction is made by someone who knows both sides of it.',
+    img: whatImg('31505f1901e16eb0bf62e0c57b46a61440aacb42-1350x900.jpg'), alt: 'Guests at a Texas House dinner in London',
+  },
+];
+
+// Past activations: alternating rows, each with a cover and up to three gallery
+// frames that fan out on hover. Events without a cover still get a row.
+const cityLabel = (c?: string) => (c === 'london' ? 'London' : c === 'austin' ? 'Austin' : '');
 ---
 
 <BaseLayout
@@ -119,54 +146,39 @@ const num = (i: number) => String(i).padStart(2, '0');
 
     <hr class="txh-rule-dashed about__rule" />
 
+    {/* About — the positioning statement IS the section. One display-scale
+        paragraph; the words brighten as you scroll through it. */}
     <section class="about" data-section="About">
-      <div>
-        <p class="txh-eyebrow about__eyebrow">About Texas House</p>
-        {/* Brand doc says "always with period"; the live site renders it with a
-            space before the period — unresolved (brand-specimen.md §8.4). */}
-        <h2 class="txh-display-sm about__head">Recognizing Texcellence.</h2>
-      </div>
-      <div class="about__body">
-        <p>
-          Texas House is a public affairs and innovation organization based in Austin.
-          We put Texas in front of the people already paying attention — with activations
-          at the moments the world shows up for: SXSW Austin, SXSW London, Formula 1.
-        </p>
-        <p>
-          Between those moments we work the network: curated connections, superconnector
-          programming, and rooms built across music, film, research, technology, policy,
-          and economic opportunity. Connect, celebrate, entertain.
-        </p>
-        <div class="about__cta">
-          <Button fill="ghost" href="/about">About Texas House</Button>
-        </div>
+      <p class="txh-eyebrow about__eyebrow">About Texas House</p>
+      <p class="about__read" data-read>
+        Texas House puts Texas in front of the people already paying attention.
+        Activations at the moments the world shows up for, and between them, the
+        network: the operators whose introductions actually move.
+      </p>
+      <div class="about__cta">
+        <Button fill="ghost" href="/about">About Texas House</Button>
       </div>
     </section>
 
+    {/* What we do — three rows, one image that follows the hover. */}
     <section class="what" data-section="What we do">
-      <div class="what__col">
-        <span class="txh-mono what__num">01</span>
-        <h3 class="what__title">Activations</h3>
-        <p class="what__copy">
-          Flagship programming staged where the world is already looking. We do not
-          rent a booth — we build the room and set the agenda inside it.
-        </p>
+      <div class="what__rows" data-what-rows>
+        {whatWeDo.map((w, i) => (
+          <div class="what__row" data-what-row={i}>
+            <span class="txh-mono what__key">{w.key}</span>
+            <div>
+              <h3 class="txh-display-sm what__title">{w.title}</h3>
+              <p class="what__copy">{w.copy}</p>
+            </div>
+          </div>
+        ))}
       </div>
-      <div class="what__col">
-        <span class="txh-mono what__num">02</span>
-        <h3 class="what__title">Superconnectors</h3>
-        <p class="what__copy">
-          The operators whose introductions actually move. Founders, funders, officials
-          and creators who show up for each other long after the week is over.
-        </p>
-      </div>
-      <div class="what__col">
-        <span class="txh-mono what__num">03</span>
-        <h3 class="what__title">Curated Connections</h3>
-        <p class="what__copy">
-          Rooms built on purpose, not badge scans. Every seat is considered, and every
-          introduction is made by someone who knows both sides of it.
-        </p>
+      <div class="what__stage" aria-hidden="true">
+        <div class="what__float" data-what-float>
+          {whatWeDo.map((w, i) => (
+            <img src={w.img} alt="" loading="lazy" width="900" height="1125" class:list={[{ 'is-on': i === 0 }]} data-what-img={i} />
+          ))}
+        </div>
       </div>
     </section>
 
@@ -195,15 +207,42 @@ const num = (i: number) => String(i).padStart(2, '0');
       {past.length > 0 && (
         <>
           <div class="txh-year">Past activations</div>
-          <div class="txh-grid">
-            {past.map((e) => (
-              <a class="txh-item" href={`/events/${e.slug.current}`}>
-                <span class="txh-item__meta"><strong>{fmtDay(e.date)}</strong></span>
-                {e.city && <span class="txh-chip txh-item__tag">{e.city}</span>}
-                <span class="txh-item__title">{e.title}</span>
-                <span class="txh-item__read">Recap →</span>
-              </a>
-            ))}
+          <div class="act">
+            {past.map((e) => {
+              const strip = (e.strip ?? []).filter((g: any) => g?.asset);
+              return (
+                <a class="act__row" href={`/events/${e.slug.current}`}>
+                  <div class="act__media" data-act-media>
+                    {e.coverImage?.asset ? (
+                      <img
+                        src={urlFor(e.coverImage).width(1200).height(800).fit('crop').auto('format').url()}
+                        alt="" loading="lazy" width="1200" height="800" class="act__cover" data-act-cover
+                      />
+                    ) : (
+                      <span class="act__blank txh-display">{cityLabel(e.city) || 'TXH'}</span>
+                    )}
+                    {strip.length > 0 && (
+                      <>
+                        <span class="act__veil"></span>
+                        <span class="act__strip">
+                          {strip.map((g: any) => (
+                            <img src={urlFor(g).width(520).height(780).fit('crop').auto('format').url()} alt="" loading="lazy" width="520" height="780" />
+                          ))}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                  <div class="act__copy">
+                    <span class="act__meta">
+                      {cityLabel(e.city) && <span class="txh-chip">{cityLabel(e.city)}</span>}
+                      <span class="txh-mono">{fmtMonth(e.date)}</span>
+                    </span>
+                    <span class="txh-display act__title">{e.title}</span>
+                    <span class="act__read">Recap →</span>
+                  </div>
+                </a>
+              );
+            })}
           </div>
         </>
       )}
@@ -339,40 +378,129 @@ const num = (i: number) => String(i).padStart(2, '0');
     to   { transform: translateX(-50%); }
   }
 
-  /* ── About ───────────────────────────────────────────────────────────── */
+  /* ── About — one paragraph, read by scroll ───────────────────────────── */
   .about__rule { margin-top: var(--space-9); }
   .about {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: var(--space-8); margin-top: var(--space-8);
+    display: grid; justify-items: center; text-align: center;
+    padding: var(--space-10) 0;
+    min-height: 100vh; align-content: center;
   }
   .about__eyebrow { color: var(--txh-accent-text); }
-  .about__head {
-    margin-top: var(--space-4);
-    font-size: clamp(30px, 3.6vw, 52px);
+  .about__read {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-dreamboat-sm);
+    line-height: var(--lh-display);
+    font-size: clamp(30px, 4.4vw, 72px);
+    max-width: 22ch;
+    margin-top: var(--space-6);
     color: var(--txh-fg-1);
+    text-align: left;
+    text-wrap: pretty;
   }
-  .about__body p {
-    font-size: var(--fs-body); line-height: var(--lh-body); color: var(--txh-fg-2);
-    max-width: 56ch;
+  /* Each word starts dim; the script lifts them in reading order as the
+     paragraph crosses the viewport. Transition makes the scrub feel liquid. */
+  .about__read span {
+    display: inline-block;
+    opacity: .16;
+    transition: opacity .35s var(--ease-out);
   }
-  .about__body p + p { margin-top: var(--space-4); }
-  .about__cta { margin-top: var(--space-6); }
+  .about__read span.is-lit { opacity: 1; }
+  .about__cta { margin-top: var(--space-8); }
 
-  /* ── What we do ──────────────────────────────────────────────────────── */
+  /* ── What we do — rows on the left, one image follows the hover ──────── */
   .what {
-    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-6); margin-top: var(--space-9);
+    display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+    gap: var(--space-8); margin-top: var(--space-9);
+    align-items: start;
   }
-  .what__col { border-top: 1px solid var(--txh-rule); padding-top: var(--space-4); }
-  .what__num { display: block; color: var(--txh-fg-4); }
+  .what__rows { border-top: 1px solid var(--txh-rule); }
+  .what__row {
+    display: grid; grid-template-columns: 72px minmax(0, 1fr);
+    gap: var(--space-5);
+    padding: var(--space-6) 0;
+    border-bottom: 1px solid var(--txh-rule);
+    transition: opacity var(--dur-slow) var(--ease-out);
+    cursor: default;
+  }
+  .what__rows.is-hover .what__row:not(:hover) { opacity: .32; }
+  .what__key { color: var(--txh-gold); padding-top: .9em; }
   .what__title {
-    font-family: var(--font-body-web); font-weight: 700;
-    font-size: var(--fs-h4); line-height: 1.25;
-    margin-top: var(--space-3); color: var(--txh-fg-1);
+    font-size: clamp(32px, 3.8vw, 58px);
+    color: var(--txh-fg-1);
+    transition: transform .65s var(--ease-emph);
   }
+  .what__row:hover .what__title { transform: translateX(10px); }
   .what__copy {
-    font-size: var(--fs-small); line-height: var(--lh-body);
-    color: var(--txh-fg-3); margin-top: var(--space-3);
+    font-size: var(--fs-body); line-height: var(--lh-body);
+    color: var(--txh-fg-2); max-width: 44ch; margin-top: var(--space-3);
+  }
+  .what__stage { position: relative; align-self: stretch; min-height: 60vh; }
+  .what__float {
+    position: absolute; right: 0; top: 0;
+    width: min(30vw, 400px); aspect-ratio: 4 / 5;
+    border-radius: var(--radius-2); overflow: clip;
+    background: var(--txh-bg-raised);
+    translate: 0 -50%;
+    transition: transform 1.075s var(--ease-emph);
+    will-change: transform;
+  }
+  .what__float img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    opacity: 0; transition: opacity var(--dur-base) var(--ease-out);
+  }
+  .what__float img.is-on { opacity: 1; }
+
+  /* ── Past activations — alternating rows, hover fans the photos out ──── */
+  .act { display: grid; gap: var(--space-10); margin-top: var(--space-7); }
+  .act__row {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-8); align-items: center;
+    text-decoration: none; color: inherit;
+  }
+  .act__row:nth-child(even) .act__media { order: 2; }
+  .act__media {
+    position: relative; aspect-ratio: 3 / 2;
+    border-radius: var(--radius-2); overflow: clip;
+    background: var(--txh-bg-raised);
+    display: grid; place-items: center;
+  }
+  .act__cover {
+    position: absolute; inset: -12% 0; height: 124%; width: 100%;
+    object-fit: cover; scale: 1.08;
+    will-change: transform;
+  }
+  .act__blank { color: var(--txh-fg-4); font-size: clamp(40px, 6vw, 96px); }
+  .act__veil {
+    position: absolute; inset: 0;
+    background: rgba(24, 18, 16, .78);
+    opacity: 0; transition: opacity var(--dur-base) var(--ease-out);
+  }
+  .act__strip {
+    position: absolute; inset: 0;
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px; padding: 8px;
+    opacity: 0; transition: opacity var(--dur-base) var(--ease-out);
+  }
+  .act__strip img {
+    width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-1);
+    transform: translateY(24px);
+    transition: transform .85s var(--ease-emph);
+  }
+  .act__strip img:nth-child(2) { transition-delay: 50ms; }
+  .act__strip img:nth-child(3) { transition-delay: 100ms; }
+  .act__row:hover .act__veil,
+  .act__row:hover .act__strip,
+  .act__row:focus-visible .act__veil,
+  .act__row:focus-visible .act__strip { opacity: 1; }
+  .act__row:hover .act__strip img,
+  .act__row:focus-visible .act__strip img { transform: none; }
+  .act__copy { display: grid; gap: var(--space-4); justify-items: start; }
+  .act__meta { display: flex; gap: var(--space-3); align-items: center; color: var(--txh-fg-3); }
+  .act__title { font-size: clamp(40px, 5vw, 84px); color: var(--txh-fg-1); }
+  .act__read {
+    font-family: var(--font-eyebrow); font-size: 12px; letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase; color: var(--txh-accent-text);
   }
 
   /* ── Section blocks ──────────────────────────────────────────────────── */
@@ -382,13 +510,112 @@ const num = (i: number) => String(i).padStart(2, '0');
     .hero { grid-template-columns: 1fr; min-height: 0; gap: var(--space-7); }
     .hero__slot { max-width: 420px; }
     .hero__globe { width: 100%; }
-    .about { grid-template-columns: 1fr; gap: var(--space-6); }
+    .about { min-height: 0; padding: var(--space-9) 0; }
     .what { grid-template-columns: 1fr; }
+    .what__stage { display: none; }
+    .what__row { grid-template-columns: 56px minmax(0, 1fr); }
+    .act { gap: var(--space-8); }
+    .act__row { grid-template-columns: 1fr; gap: var(--space-5); }
+    .act__row:nth-child(even) .act__media { order: 0; }
   }
 
   /* Static row, no travel — the logos that fit are the logos you get. */
   @media (prefers-reduced-motion: reduce) {
     .marquee__track { animation: none; }
     .marquee__viewport { overflow: hidden; }
+    .about__read span { opacity: 1; transition: none; }
+    .what__float, .what__title, .act__strip img { transition: none; }
+    .act__cover { transform: none !important; }
   }
 </style>
+
+<script>
+  /*
+    Home motion, no library. Three behaviours:
+      1. About paragraph: words light up in reading order as it scrolls through.
+      2. What we do: the floating image slides to the hovered row.
+      3. Past activations: covers drift inside their frames (parallax).
+    All scroll work is batched into one rAF and skipped under reduced motion.
+  */
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 1. About
+  const read = document.querySelector<HTMLElement>('[data-read]');
+  let words: HTMLElement[] = [];
+  if (read) {
+    const text = (read.textContent ?? '').trim().split(/\s+/);
+    read.textContent = '';
+    text.forEach((w, i) => {
+      const s = document.createElement('span');
+      s.textContent = w;
+      read.append(s);
+      if (i < text.length - 1) read.append(' ');
+    });
+    words = Array.from(read.querySelectorAll('span'));
+    if (reduce) words.forEach((w) => w.classList.add('is-lit'));
+  }
+  function updateRead() {
+    if (!read || reduce) return;
+    const r = read.getBoundingClientRect();
+    const vh = window.innerHeight;
+    // 0 when the top of the paragraph reaches 85% down the viewport,
+    // 1 when its bottom reaches 45%. Runs a little past the end so the
+    // last word lights before the paragraph leaves the reading zone.
+    const start = vh * 0.85, end = vh * 0.45;
+    const p = Math.min(1, Math.max(0, (start - r.top) / (r.height + start - end)));
+    const lit = Math.round(p * (words.length + 2));
+    words.forEach((w, i) => w.classList.toggle('is-lit', i < lit));
+  }
+
+  // 2. What we do
+  const rows = document.querySelector<HTMLElement>('[data-what-rows]');
+  const float = document.querySelector<HTMLElement>('[data-what-float]');
+  if (rows && float) {
+    const imgs = Array.from(float.querySelectorAll<HTMLImageElement>('[data-what-img]'));
+    const stage = float.parentElement as HTMLElement;
+    const rowEls = Array.from(rows.querySelectorAll<HTMLElement>('[data-what-row]'));
+    let active = rowEls[0];
+    const goTo = (row: HTMLElement) => {
+      const r = row.getBoundingClientRect(), s = stage.getBoundingClientRect();
+      float.style.transform = `translateY(${r.top - s.top + r.height / 2}px)`;
+    };
+    rowEls.forEach((row) => {
+      row.addEventListener('mouseenter', () => {
+        active = row;
+        rows.classList.add('is-hover');
+        imgs.forEach((im) => im.classList.toggle('is-on', im.dataset.whatImg === row.dataset.whatRow));
+        goTo(row);
+      });
+    });
+    rows.addEventListener('mouseleave', () => rows.classList.remove('is-hover'));
+    // No transition on the first placement, so the image doesn't fly in on load.
+    float.style.transition = 'none';
+    goTo(active);
+    requestAnimationFrame(() => { float.style.transition = ''; });
+    window.addEventListener('resize', () => goTo(active));
+  }
+
+  // 3. Past activations parallax
+  const covers = Array.from(document.querySelectorAll<HTMLElement>('[data-act-cover]'));
+  function updateCovers() {
+    if (reduce) return;
+    const vh = window.innerHeight;
+    covers.forEach((c) => {
+      const r = (c.parentElement as HTMLElement).getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      // -1 when the frame enters at the bottom, +1 when it leaves at the top.
+      const p = ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2);
+      c.style.transform = `translateY(${(-p * 6).toFixed(2)}%)`;
+    });
+  }
+
+  let ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { updateRead(); updateCovers(); ticking = false; });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+</script>
