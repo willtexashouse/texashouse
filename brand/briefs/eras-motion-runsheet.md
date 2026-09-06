@@ -163,6 +163,8 @@ Technical: filmed motion, not drawn motion — the scene moves like live-action 
 
 NO ON-SCREEN TEXT — CRITICAL: no on-screen text of any kind anywhere in frame at any point. No captions, no subtitles, no titles, no watermarks, no logos, no UI overlays. The frame is clean of all overlay graphics from first frame to last.
 
+THE OIL COMES UP THROUGH THE DERRICK — CRITICAL: the crude comes up the well bore inside the wooden derrick and blows out of its top, through the crown block, the way a real strike happens: the column rises out of the top of the tower, never out of the ground beside it, never from the base, never as an explosion in the dirt. The derrick stands intact with the column standing on it.
+
 THE GUSHER — CRITICAL: the oil goes straight up. A thick black column of crude blasts vertically out of the top of the derrick under enormous pressure, climbing straight into the sky two or three times the derrick's height, and at its top it bursts apart and sprays in every direction — black oil falling everywhere around the derrick in a wide circle, not to one side. This is how a real gusher behaves: a vertical fountain, then rain all around. It is unmistakable, violent and continuous, the biggest moving thing in frame, black against the rose dawn sky. The painted lean of the plume is only the first instant; within the first second the column stands straight up.
 
 THE CREW REACT NOW — CRITICAL: the crew are already ecstatic at frame one and stay that way: arms up, cheering, running toward the derrick, hats thrown, one dropping to his knees, all drenched in the falling oil. No slow reaction, no standing still and turning — they are mid-celebration from the first frame.
@@ -172,7 +174,7 @@ FIRST FRAME: open on the attached still exactly, pixel for pixel, at frame one �
 CAMERA: one slow, even zoom out (dolly back), widening the view by about 20% across the clip so more sky and more of the flats come into frame around the eruption, easing to a complete stop for the final 1.5 seconds. The derrick stays where it stands and shrinks slightly as the view widens; the horizon stays at the same height on screen, about three quarters of the way down; the foreground mud and timber stay in the bottom of the frame. Level throughout: no tilt, no pan, no handheld, no shake.
 
 ACTION TIMING:
-0.0–1.0s: the column straightens and surges straight up, doubling in height, and the crown of it bursts into spray. Sound: the roar rising, the first spatter.
+0.0–1.0s: the column rising out of the crown block straightens and surges straight up, doubling in height, and the crown of it bursts into spray. Sound: the roar rising, the first spatter.
 1.0–6.5s: full gusher — a vertical black fountain far above the derrick, oil raining down all around it in sheets, on the derrick, the mud, the tents and the men; the crew cheer, run, wave, one on his knees, hats in the air, all silhouetted; the mud shines. The camera widens slowly. Sound: deep continuous roar, oil hammering timber and mud, the crew's distant whoops and cheers, wind.
 6.5–8.0s: the camera comes to rest, and only the camera — the scene never pauses: the fountain keeps roaring, the oil keeps raining, the crew keep cheering. No freeze-frame. Sound continues unchanged.
 
@@ -269,6 +271,8 @@ NO ON-SCREEN TEXT — CRITICAL: no on-screen text of any kind anywhere in frame 
 
 THE LIFT-OFF — CRITICAL: the vehicle launches. Over the first two seconds the amber flame at its base swells into a blinding column of fire and enormous cream steam and dust plumes blast out from both sides of the pad, rolling low across the flats — plumes so big they dwarf the tower. Then the stainless vehicle lifts off the pad on the column of fire and climbs, slowly at first then gathering speed, clearing the tower and rising high into the sky, trailing fire and plume. The spectators stand, point, raise their arms, hold phones up, cheer.
 
+THE SPECTATORS ARE WHOLE PEOPLE — CRITICAL: every spectator is one complete human body. Those seated rise cleanly to their feet and leave their chairs behind; folding chairs, coolers and blankets stay on the ground exactly where they are. Nothing sticks to anyone, no chair travels with a body, no two people merge, every arm, hand and head stays attached and correct. The man at the lower right stands up and his chair stays on the sand.
+
 THE CAMERA FOLLOWS FROM A FIXED TRIPOD — CRITICAL: the camera does not travel. It stands still on its tripod and tilts up to follow the rocket, keeping the rocket near the centre of the frame as it climbs, the way a spectator's camera follows a launch. As the tilt rises, the spectators and the flats drop out of the bottom of the frame and the plume trails down toward the pad below; by the end the frame is mostly sky with the rocket high in it on its column of fire. The tilt is smooth and continuous, matched to the rocket's climb, never rushing ahead, never lagging behind. No pan, no push, no zoom, no handheld, no shake.
 
 FIRST FRAME: open on the attached still exactly, pixel for pixel, at frame one — same framing, same vehicle on the pad, same steam bank, same spectators — already alive, the engine already lit.
@@ -326,6 +330,20 @@ LOCKS: the attached frame's palette, medium, halftone and paper grain hold in ev
 Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on earlier takes, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames, no freeze-frame ending, no scene that stops when the camera stops, no puppet-like or cutout figures, no rigid limbs, no figures sliding without stepping.
 ```
 
+## Repaired stills (Will, 2026-09-06)
+
+Five frames go back through Higgsfield as image edits before they are
+animated again, each with the original attached as the reference and the
+instruction "recreate exactly, change only these things": Raising (ropes
+from the top plate to the framers, woman and child turned toward the
+house), Dance Hall (every couple one man and one woman, the strange object
+between the right-hand pair removed), Charreada (charros in traje de
+charro, crowd in ordinary clothes, no space-age outfits), Swang (chrome
+thirty-spoke swangas on every wheel, the kids on the truck as believable
+humans), Mind (the two men pinned behind the bench replaced by one engineer
+standing on the floor). Model nano_banana_pro, 21:9, 2k. Will reviews the
+stills before any of these five is animated again.
+
 ## About page clips (added 2026-09-06)
 
 Six frames from the About handoff. Same skeleton, one camera move each, the
@@ -349,17 +367,16 @@ THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. T
 
 FIRST FRAME: open on the attached still exactly, pixel for pixel, at frame one — already alive, the man already at the eyepiece.
 
-CAMERA: one slow motorized lateral truck moving screen-right, travelling about 4% of the frame width, easing to a complete stop for the final 1.5 seconds. Level throughout: no tilt, no pan, no push, no zoom, no handheld, no shake. The bench and the blinds slide past a little faster than the window and the far buildings.
+CAMERA: one slow motorized lateral truck moving screen-right, continuous for the whole 8 seconds, travelling about 6% of the frame width, never stopping. Level throughout: no tilt, no pan, no push, no zoom, no handheld, no shake. The bench and the blinds slide past a little faster than the window and the far buildings.
 
 ACTION TIMING:
-0.0–6.5s: the man works — he adjusts the microscope focus with one hand, leans in to the eyepiece, then sits back and writes a note, turns to glance at the green terminal and back; the striped light from the blinds lies across his shirt and the bench; the terminal's green display flickers faintly and scrolls a line; the second figure at the right shifts and reaches for something on the bench; outside, the cumulus clouds drift slowly screen-right and a bird crosses the far field. Sound: the quiet of a lab — a ventilation hum, the microscope's stage click, pen on paper, the terminal's faint whine, a distant door.
-6.5–8.0s: the camera comes to rest, and only the camera — the scene never pauses: the man keeps working, the clouds keep drifting. No freeze-frame. Sound continues unchanged.
+0.0–8.0s: the man works continuously — he adjusts the microscope focus with one hand, leans in to the eyepiece, sits back, writes a note, reaches for the mug and drinks, turns to the green terminal and types a line, leans back in; the striped light from the blinds lies across his shirt and the bench; the terminal's green display scrolls; the second figure at the right stands, picks up a folder and walks screen-right out of frame; outside, the cumulus clouds drift slowly screen-right and a bird crosses the far field; the camera trucks the whole time. No hold, no rest, no freeze-frame anywhere. Sound: the quiet of a lab — a ventilation hum, the microscope's stage click, pen on paper, keys, the terminal's faint whine, footsteps, a distant door.
 
 PHYSICS: settled bodies with natural weight shifts, hands with real mass on the instrument, cloth with lag. Nothing floats, nothing slides, nothing teleports.
 
 AUDIO: fully diegetic, quiet, continuous — hum, clicks, pen, the terminal, a distant door. No music, no score, no swell, no drone, no rising tone, no added foley beyond what is physically in frame, no voices.
 
-LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. One camera move, ending in a rest. Clouds drift screen-right. Motion filmed, never stepped. No flicker beyond the terminal, no boiling lines, no morphing.
+LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. One continuous camera move, no rest. Clouds drift screen-right. Motion filmed, never stepped. No flicker beyond the terminal, no boiling lines, no morphing.
 
 Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on earlier takes, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames, no freeze-frame ending, no scene that stops when the camera stops, no puppet-like or cutout figures, no rigid limbs, no figures sliding without stepping.
 ```
@@ -377,23 +394,24 @@ Technical: filmed motion, not drawn motion — the scene moves like live-action 
 
 NO ON-SCREEN TEXT — CRITICAL: no on-screen text of any kind anywhere in frame at any point. No captions, no subtitles, no titles, no watermarks, no logos, no UI overlays. The frame is clean of all overlay graphics from first frame to last.
 
-EVERYONE IS LIVE — CRITICAL: the whole church is singing. The robed choir on the platform sways together in time, side to side, clapping on the beat, mouths open in full song, faces lifted; the director at the right of the platform conducts with both arms; the pianist plays. The congregation in the foreground is on its feet — hands raised and swaying, heads nodding, hats moving, some clapping. Every body in frame moves in the shared rhythm at its own timing; nobody is frozen.
+ONE RHYTHM — CRITICAL: one shared beat, about 100 beats per minute, runs through the whole room for the whole clip. Every clap in the building lands on that beat together; every sway of the choir crosses centre on that beat together; the director's arms mark it. The choir moves as one body, the congregation with it. Human variation is in the size of the motion, never in its timing — nobody is early, nobody is late, nobody is out of step. Warm, real, human bodies in a shared groove: never puppet-like, never cutout, never random, never stiff.
+
+EVERYONE IS LIVE — CRITICAL: the whole church is singing. The robed choir on the platform sways together side to side and claps on the beat, mouths open in full song, faces lifted; the director at the right of the platform conducts with both arms; the pianist plays. The congregation in the foreground is on its feet — hands raised and swaying, heads nodding, hats moving, most clapping on the beat. Nobody is frozen, from first frame to last.
 
 THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. The platform, the cross, the great slanting beam of light from the upper left, the stained-glass panel at the right, the piano and the congregation all keep their places. The camera never tilts.
 
 FIRST FRAME: open on the attached still exactly, pixel for pixel, at frame one — already alive, the song already in full voice.
 
-CAMERA: one slow motorized dolly push toward the platform, ending about 8% closer, easing to a complete stop for the final 1.5 seconds. Level throughout: no tilt, no pan, no handheld, no shake, no zoom breathing. The foreground congregation slides past a little faster than the choir.
+CAMERA: one slow motorized dolly push toward the platform, continuous for the whole 8 seconds, ending about 8% closer, never stopping. Level throughout: no tilt, no pan, no handheld, no shake, no zoom breathing. The foreground congregation slides past a little faster than the choir.
 
 ACTION TIMING:
-0.0–6.5s: the choir sways and claps in time, the director's arms lifting on the phrases, the pianist's hands moving; fine dust turns slowly in the beam of light; the congregation sways and raises hands, a woman in a white hat lifting both arms, a man in a pale suit clapping. Sound: a massed gospel choir in full voice, the words indistinct, the piano under it, the congregation clapping on the beat, the room's reverb.
-6.5–8.0s: the camera comes to rest, and only the camera — the scene never pauses: the song and the sway continue. No freeze-frame. Sound continues unchanged.
+0.0–8.0s: the choir sways and claps on the shared beat, the director's arms marking it, the pianist's hands moving; fine dust turns slowly in the beam of light; the congregation sways and claps on the same beat, a woman in a white hat lifting both arms, a man in a pale suit clapping; the camera pushes in slowly the whole time. No hold, no rest, no freeze-frame anywhere. Sound: a massed gospel choir in full voice, the words indistinct, the piano under it, the whole room clapping on one beat, the room's reverb.
 
 PHYSICS: bodies swaying with real weight and lag, arms with mass, robes swinging, dust drifting in the beam. Nothing floats, nothing slides, nothing teleports.
 
 AUDIO: fully diegetic, continuous — the choir and piano physically in frame are the only music, the words indistinct with no readable lyrics, clapping, room reverb. No added score, no swell, no drone, no rising tone, no added foley beyond what is physically in frame.
 
-LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. One camera move, ending in a rest. The beam of light holds its angle. Motion filmed, never stepped. No flicker, no boiling lines, no morphing.
+LOCKS: the attached frame's palette, medium, halftone and paper grain hold in every frame of motion. One continuous camera move, no rest. One beat for the whole room. The beam of light holds its angle. Motion filmed, never stepped. No flicker, no boiling lines, no morphing.
 
 Negative prompts: no photorealism, no shallow depth of field, no close-up, no CGI gloss, no HDR, no cinematic lens flare, no neon, no cyberpunk, no readable text, no logos, no modern UI overlays, no hyper-detailed chrome, no AI art sheen, no duplicated figures, no distorted hands. Seen on earlier takes, now banned: no cel animation, no animation on twos, no stepped or stuttering motion, no held frames, no freeze-frame ending, no scene that stops when the camera stops, no puppet-like or cutout figures, no rigid limbs, no figures sliding without stepping.
 ```
