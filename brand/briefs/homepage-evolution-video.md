@@ -1,8 +1,15 @@
 # Texas House — Homepage Evolution Video
 
 **Working title:** *Same Land* · **Format:** scroll-driven hero sequence, texashouse.org homepage
-**Engine:** Nano Banana Pro for keyframes, Seedance 2.5 via the Higgsfield MCP connector for motion
-**Status:** brand review complete (2026-09-05). Era-1 hero frame in progress.
+**Engine:** Midjourney keyframes (done, eras production) → Seedance 2.5 via the Higgsfield MCP connector for motion
+**Status:** v3, 2026-09-06. The eras production supersedes Group A of the
+shot list: Will's other Claude chat expanded this brief's six chapters into a
+fifteen-frame production, generated all frames in Midjourney, and wrote the
+About-page handoff (`docs/about-page-handoff.md`). The frames were shown in
+the Claude Code session 2026-09-06; the files are not yet on disk. The eras
+set is law: all six chapter keyframes exist, nothing new is generated, and
+generation of the motion clips moves to a separate chat (see
+`brand/briefs/eras-motion-runsheet.md`).
 
 Rewritten from `~/dev/texas-house-crm/briefs/homepage-evolution-video.md`
 after review against `brand/VISUAL_LANGUAGE.md`. The story decisions of the
@@ -16,20 +23,20 @@ visual language, which is the style authority for everything here.
   the original brief's Style, Operating style, Texture and Skin slots. The
   original's "constant film stock" becomes constant paper stock: paper grain
   and halftone are identical in every era. Light and palette are the era
-  variables, moving Land → Institution → Orbit.
+  variables, moving Land → Institution → toward Orbit at the launch, then
+  home to warm Land at the house.
 - **What Texas House is.** Not a real-estate brand. Texas House is the bridge
   between Texas and the world (`docs/positioning.md`). The town-building beat
   stays because Will likes it and because it is the beat where the land gets
   a house on it, not because a house is the product.
-- **Ending.** The piece ends in orbit, not on a porch. The vertical motion
-  that starts with the launch keeps going until the horizon line becomes the
-  curve of the Earth with Texas below. Leaving the world, looking back at
-  Texas. The final frame rhymes with the hero globe emblem: a sphere with
-  Texas facing forward.
-- **The bloodline.** At Scene tier the subject is small in frame and no face
-  is legible, and `character-builder` is photoreal only. The lineage is
-  carried as silhouette: one hat shape and one posture recurring in every
-  era's single figure. No face lock.
+- **Ending (superseded 2026-09-06, Will).** The Orbit coda from the
+  2026-09-05 brand review is dead. The eras production Will brought over is
+  law: only its scenes exist, and the sequence ends on `eras-15-house` — the
+  porch, the light kept on — matching the About page's destination. No orbit
+  frame is generated, ever, for this piece.
+- **The bloodline (retired).** The frames are fixed art; no recurring
+  character is engineered. Whatever kinship the eras figures carry, they
+  carry as painted.
 - **Delivery.** Six pinned scroll sections, one short loop each, transitions
   triggered on section change. This supersedes the frame-sequence plan in
   `VISUAL_LANGUAGE.md` §5.3 step 4.
@@ -38,14 +45,14 @@ visual language, which is the style authority for everything here.
 
 One piece of Texas ground, held through 150 years. What Texans build on it
 changes: open range, oil, a town, towers, a launch pad. The land is the
-constant. The last chapter lifts off the land and looks back at it.
+constant, and the piece ends where the About page ends: on the porch of the
+house, the light kept on.
 
 Two spines run under the story.
 
 - **Horizontal to vertical, always left to right.** Riders cross the frame
-  in chapter 1. A rocket leaves the top of the frame in chapter 5. Every
-  chapter tilts the energy a few degrees upward. The page scrolls the state
-  into the sky. All lateral motion in every chapter runs left to right, like
+  in chapter 1; the launch carries the energy vertical in chapter 5; the
+  house settles it in chapter 6. All lateral motion in every chapter runs left to right, like
   turning the pages of a book (Will, 2026-09-05). Horses run right, oil and
   dust stream right, cranes swing right, the camera drifts right. Nothing
   moves against the read.
@@ -53,15 +60,61 @@ Two spines run under the story.
   launch cloud. Chapter 3 and 4 are the held breath between the second and
   third eruption.
 
-The horizon line sits at the same height in every chapter until the last,
-where it becomes the curve of the Earth. The light is late afternoon in every
-chapter until the last, where the sun becomes Earth glow.
+The horizon line sits at the same height in every chapter — it is the
+transition system. The light is late afternoon throughout.
 
 ## Shot list
 
 The Midjourney prompts for every keyframe and seam plate live in
-`midjourney-shot-list.md` beside this file. Will generates them in
-Midjourney; Claude Code animates from the approved stills.
+`midjourney-shot-list.md` beside this file. **The whole shot list is
+superseded by the eras production** — the chapters map to eras frames below.
+Groups B and A6 are cut under the law: nothing is generated that is not in
+the eras set.
+
+## The eras frames — what actually exists (reviewed 2026-09-06)
+
+| Chapter | Eras asset | As generated — deltas from the boards |
+|---|---|---|
+| 1 Range | `eras-01-open-range` | Four riders (boards said five), galloping right toward a great cream cumulus bank, red mesa with lone live oak at left, dark sage grass foreground, dusk sky cobalt-to-rose, amber rim light from the right. Matches the board. |
+| 2 Gusher | `eras-02-gusher` | Dawn-toned rose-to-cream sky (warmer than the dusty-peach board). Derrick centered, oil column blowing right ✓, crew silhouettes small at the base, one with arms raised ✓, tents and wagons at right. Foreground mud and timber debris. |
+| 3 Raising | `eras-03-raising` | Wall section tilting up, three framers pushing at right, pickup truck at far right, woman and child on the slab at left, water tower and white town buildings behind. Honey/orange timber glow as the warm accent ✓. |
+| 4 Boom | `eras-07-boom` | **Scene tier, not crowd tier**: one trader in Stetson at a high office window, seen from behind at right, Dallas skyline with an unfinished steel tower and two cranes beyond, blueprints and hardhat on the desk. The trading-floor version was not produced; the lineage-silhouette version won. |
+| 5 Launch | `eras-11-launch` | Stainless vehicle on the pad with a simple tower, ignition begun, steam cloud blasting **left** (breaks the left-to-right rule — see motion note), spectator families watching from the flats in the foreground (not two engineers; scale inversion intact and better). Deep cobalt sky. |
+| 6 House | `eras-15-house` | The destination, shared with the About page: family on the porch at sunset, guitar, dog, bluebonnets in the grass, a thin contrail high in the sky, city skyline small at the horizon. The porch light line lands here. |
+
+**The eras set is law (Will, 2026-09-06).** Only its scenes exist. The Orbit
+coda and the Group B seam plates are cut — no frame is generated that Will
+did not bring over. Transitions use the law's own grammar: crossfade on
+matched horizons (per `docs/about-page-handoff.md` §4), which means every
+clip starts and ends on its frame's composition; nothing else is needed.
+Frames not in the homepage cut — Chip, Choir, Charreada, Dance Hall, Swang,
+Wafer, Mind — belong to the About page and program pages.
+
+**Motion note on Launch:** the painted steam bank already streams left. Don't
+fight it in the clip — the chapter's designed motion is vertical (the climb
+and the tilt), and added motion should be the column rising and the amber
+flame, not new lateral steam. The left-to-right rule holds everywhere else.
+
+## The master style paragraph (draft from eras-01, 2026-09-06)
+
+> Superseded 2026-09-06: the scene-agnostic medium lock and cadence line in
+> `eras-motion-runsheet.md` are what every prompt carries. The paragraph
+> below kept Range-specific palette that cannot travel to the other frames.
+
+Written from the approved Range frame, per the rule. Reused verbatim in every
+Seedance prompt after Will confirms it; the fixed Blocks 1, 2 and 5 still
+open and close every prompt as always.
+
+> The attached frame's own medium in motion: a scanned late-80s magazine
+> illustration, gouache and airbrush, flat graphic shapes with clean
+> silhouettes, heavy analog paper grain and coarse visible halftone over
+> every area, sun-faded color, minor ink imperfections. Dusk on the open
+> range: deep cobalt sky grading through dusty rose to amber at the right
+> horizon, one towering cream cumulus bank catching pink light, terracotta
+> mesa with a single live oak, dark sage grassland, figures small in the
+> frame with amber rim light from the right and muted purple shadow running
+> left. The print itself is alive — the grain field stays fixed like a
+> printed page while the scene moves beneath it.
 
 ## Chapter boards
 
@@ -80,7 +133,6 @@ details, color note.
   streaming behind.
 - Color: amber light, terracotta and dusty rose earth, sage scrub, cobalt sky
   band, muted purple shadow. Warm dominant.
-- Out-beat: the riders pass close, their dust whites the frame to cream paper.
 
 ### 2. The Gusher (Spindletop, 1901) · Land, less saturated
 - Where: Beaumont salt-dome prairie. A wooden cable-tool derrick, steam
@@ -91,7 +143,6 @@ details, color note.
   on his knees, one with arms up into the falling oil.
 - Color: dusty peach sky, terracotta earth, charcoal oil column as the graphic
   shape, amber sun through the mist. Warm against the charcoal.
-- Out-beat: falling oil fills the frame to charcoal.
 
 ### 3. The Raising (1950s) · Land moving toward Institution
 - Where: the same flats, now a graded lot at the edge of a young town. A
@@ -103,7 +154,6 @@ details, color note.
 - What: the wall tilts up in one push. Rafters swing into place.
 - Color: cream sky, honey timber as the warm accent, sage and olive ground,
   first cobalt in the shadows. Balanced.
-- Out-beat: the camera rises with a rafter into open sky.
 
 ### 4. The Boom (Dallas, 1980s) · Institution
 - Where: a Dallas trading floor seen through glass, towers going up behind it
@@ -115,7 +165,6 @@ details, color note.
   gaining a floor. Everything rises.
 - Color: cobalt sky through glass, amber pendant lamps, charcoal suits and
   steel, cream paper. Warm accent in lamplight and wood.
-- Out-beat: up past the roofline into open cobalt sky.
 
 ### 5. The Launch (Gulf coast, today) · Institution moving toward Orbit
 - Where: Gulf coast tidal flats, scrub and shallow water, a stainless steel
@@ -123,45 +172,29 @@ details, color note.
   hardware. Simplified late-80s geometry.
 - Who: two engineers at a distance, tiny against the vehicle. Scale inverted
   from chapter 1.
-- What: ignition. Steam and dust blast across the flats (eruption three). The
-  vehicle climbs, the camera tilts to vertical, the rocket leaves the top of
-  frame.
+- What: ignition. Steam and flame build (eruption three); the vehicle begins
+  its climb inside the frame. The camera holds — the vertical is the
+  vehicle's, not the camera's.
 - Color: dusk. Muted purple sky, cobalt water, cream steam column as the
   graphic shape, single amber flame as the warm accent.
-- Out-beat: the vehicle exits the top of frame, dusk sky holds.
 
-### 6. Orbit (coda) · Orbit
-- Where: the same sky, now dark. The horizon line of every previous chapter
-  is now the curve of the Earth. Texas and the Gulf coast visible below,
-  centered, with a thin cobalt atmospheric glow along the limb.
-- Who: one figure in a Stetson at a station window, seen from behind, small
-  against the glass. The lineage silhouette, last appearance.
-- What: one slow settle. The Earth turns a few degrees. A faint launch
-  contrail fades far below. Hold.
-- Color: indigo and near-black space, cobalt limb, charcoal and silver
-  interior, cream highlights. Single warm accent: the amber hat. Nothing else
-  warm.
-- Why: the last frame is the hero globe seen from the inside. Texas facing
-  forward.
+### 6. The House (destination) · Land, warm again
+- Frame: `eras-15-house`, exactly as painted. Family on the porch at sunset,
+  a guitar, a dog at the steps, bluebonnets in the grass, a thin contrail
+  high in the sky, the city small at the horizon.
+- What moves: almost nothing. The porch light warms on. The contrail fades.
+  Grass and bluebonnets in a light breeze. The slowest clip of the six.
+- Why: the About page holds this frame four viewports; the homepage lands on
+  it and loops. Rockets leave; the porch light stays on.
 
-## Seams
+## Transitions
 
-Each chapter is its own generation. Nothing crosses a chapter boundary
-inside a clip. Each clip's last beat and the next clip's first beat are two
-halves of one transition, landing on a near-uniform frame where the cut is
-invisible.
-
-| Seam | Out-beat | In-beat |
-|---|---|---|
-| Range → Gusher | dust whites the frame to cream paper | cream settles out revealing 1901 mud and derrick |
-| Gusher → Raising | falling oil takes the frame to charcoal | charcoal resolves as dark timber, pull back off a beam |
-| Raising → Boom | camera rises with a rafter into open sky | same sky, tilt down onto glass and cranes |
-| Boom → Launch | up past the roofline into cobalt sky | same sky over the Gulf coast pad, dusk |
-| Launch → Orbit | vehicle exits top of frame, dusk sky holds | dusk deepens to indigo, the horizon curves, tilt down to Texas |
-
-Two techniques hold the seams: first-frame chaining (each clip opens on a
-frame pulled from the previous clip's out-beat) and constant paper stock
-(identical grain and halftone in every chapter).
+Per the About handoff (law): crossfade on matched horizons. Every frame's
+horizon sits at the same height, so a straight crossfade reads as the world
+changing under a fixed line. Consequence for generation: every clip opens on
+its frame's exact composition and settles back to (or near) it at the end.
+No seam plates, no whiteouts, no engineered out-beats — the cut is carried
+by the horizon and the constant paper stock.
 
 ## Texture and reference discipline
 
@@ -184,8 +217,7 @@ fastest under heavy action, fast cuts and handheld camera. The rules from
 
 - Loops of 5 to 8 seconds. One or two beats, not three cuts.
 - Slow push in or slow lateral drift. No camera move that breaks the
-  horizon, except the designed vertical tilts at the ends of chapters 3, 4
-  and 5.
+  horizon, ever — the crossfade grammar depends on it.
 - Minimal subject motion: dust, steam, oil, flags, grass, a slow turn of a
   head, one wall section rising.
 - Image to video from an approved keyframe every time. Never text to video.
@@ -197,14 +229,43 @@ fastest under heavy action, fast cuts and handheld camera. The rules from
 | Step | Tool | Output |
 |---|---|---|
 | 0. Brand review | this document | done 2026-09-05 |
-| 1. Hero frame, chapter 1 | `generate_image`, nano_banana_pro, five blocks, 21:9, batch of 4 | THE hero frame, also test render 5 from `VISUAL_LANGUAGE.md` §8 |
-| 2. Style paragraph | written from the approved frame | reused verbatim downstream |
-| 3. Keyframes 2 to 6 | `generate_image_batch`, same block 3, same aspect | six frames laid side by side, checked as one publication |
-| 4. Seam plates | `generate_image_batch` | out-beat stills: cream whiteout, charcoal, open sky ×2, dusk sky |
-| 5. Video prompts ×6 | `cinema-director-v3` spine with blocks 1, 2, 5 in the style slots | one prompt per chapter, first frame chained |
-| 6. Video | `generate_video`, seedance_2_5, omni_reference, start_image + end_image, 1080p, 21:9, cost preflight each | six loops |
+| 1. Keyframes 1–5 | Midjourney, eras production | **done 2026-09-06** — files pending on disk; intake each as `eras-NN-…` into `public/brand/eras/` |
+| 2. Style paragraph | written from eras-01 | **drafted above** — Will confirms |
+| 3. Video prompts ×6 | `cinema-director-v3` spine with blocks 1, 2, 5 + the master style paragraph in the style slots | one prompt per chapter — all six written in `eras-motion-runsheet.md` |
+| 4. Video | `generate_video`, seedance_2_5, start_image = the frame, reference = the frame, 1080p, 21:9, cost preflight each | six clips, run from the separate generation chat; each also exported as `seq-eras-NNNN.webp` frames for the About scrub |
 | 7. Intake | `npm run hf -- intake …` | filed in `public/brand/`, logged in `brand/renders.md` |
 | 8. Build | pinned scroll sections in the homepage hero slot | verified in the browser, committed, pushed |
+
+## Pilot Seedance prompt — Chapter 1, Range
+
+Attach: `start_image` = eras-01 still · reference = the eras-01 still.
+No end image — the clip settles back toward its own composition. The full
+six-prompt runsheet lives in `eras-motion-runsheet.md`.
+
+```
+1 continuous shot. Total 7 seconds, no cuts, no transitions. Real-time throughout, no slow motion, no speed change.
+
+[Block 1 verbatim] [Block 2 verbatim]
+
+[The master style paragraph, verbatim.]
+
+NO ON-SCREEN TEXT — CRITICAL: no on-screen text of any kind anywhere in frame at any point. No captions, no subtitles, no titles, no watermarks, no logos, no UI overlays. The frame is clean of all overlay graphics from first frame to last.
+
+THE COMPOSITION HOLDS — CRITICAL: this clip is the attached frame in motion. The horizon stays at its height for the entire duration, the sky's upper half stays open with nothing entering it, the mesa, the live oak, the cloud bank and every rider keep their positions. The camera drifts right so slowly the move reads only across the full clip; it never tilts, never reframes.
+
+FIRST FRAME: exactly the composition of the attached still, already alive — the riders mid-gallop, dust already streaming.
+
+ACTION TIMING:
+0.0–7.0s: the four riders hold full gallop moving right toward the low sun, legs and dust cycling, hat brims and duster hems pressed back in the wind of their own speed; torn-up dust streams behind each horse as flat shapes; the grass foreground lays over in one steady wind moving right; the cumulus bank crawls almost imperceptibly; by the final second the riders are back near their painted positions so the clip returns to the composition it opened on. Sound: massed hoofbeats on dry hardpan, wind over open grass, leather creak.
+
+PHYSICS: real weight scaled to the illustration — dust obeys one wind direction with lag, duster hems and manes trail the motion, contact reads in the gallop cycle. Nothing floats, nothing slides, nothing teleports.
+
+AUDIO: fully diegetic, quiet, continuous — hoofbeats, wind, leather. No music, no score, no swell, no drone, no rising tone, no added foley beyond what is physically in frame, no voices.
+
+LOCKS: palette, medium, halftone and paper grain identical to the attached frame in every frame of motion — the illustration never sharpens toward photorealism, never smooths toward 3D render, never re-draws itself. The grain field stays fixed like a printed page while the scene moves beneath it. Horizon height constant. All motion left to right. No flicker, no boiling lines, no grain swimming, no morphing.
+
+[Block 5 verbatim]
+```
 
 Negatives start at block 5 and grow only from defects actually seen.
 
@@ -225,5 +286,13 @@ Negatives start at block 5 and grow only from defects actually seen.
 
 ## Open
 
+- **Files on disk.** The eras stills exist in Midjourney/with Will but not in
+  the repo. Drop them in `brand/inbox/` (any names) and Claude Code runs
+  intake; or straight into `public/brand/eras/` per the About handoff naming.
+- **`brand/ERAS_HANDOFF.md`** is referenced by the About handoff but not yet
+  in the repo — it carries the repaired-still versions and which frames have
+  clips.
+- Homepage cut length: six chapters as boarded, or the About handoff's
+  "four to five frame" short version (drop Raising and/or Boom first; never
+  drop House).
 - Segment lengths once the homepage says how much scroll the hero gets.
-- Chapter 4 weighting: trading floor or cranes dominant.
