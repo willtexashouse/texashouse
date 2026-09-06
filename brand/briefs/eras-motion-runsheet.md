@@ -854,6 +854,10 @@ Result: part one `e090dc15` (stepping 0.08) and part two `3e2677c8`
 0.3-second crossfade at the half: `dancehall-rotation-v2.mp4`, 7.85s.
 This is the Dance Hall master candidate.
 
+Will's call: the rotation is good for its first 3 seconds. Trimmed locally
+with ffmpeg to `dancehall-3s.mp4` (0 to 3.0s, 0.2s audio fade at the
+tail). Edits like this stay in ffmpeg, not Higgsfield.
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
