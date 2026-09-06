@@ -695,6 +695,16 @@ Choir v2 `c04d4191` (0.14, no freeze, continuous push), Chip v2 `74593a78`
 was cured by removing the rest beat and giving every figure continuous
 action.
 
+### Swang still, second pass · 2026-09-06
+
+First pass read as cartoonish to Will (blades good). Second pass reused the
+original as the only reference and put the finish first in the prompt:
+the original's semi-photographic softness, heavy grain and halftone, with
+cartoon, cel-shading, vector and clean digital painting banned. Three
+variants, jobs `47b82afe` (A), `f70d6ca2` (B), `6dff2385` (C). All three
+keep the original's grain and the swangas; A and C put two big kids in the
+foreground of the truck bed, C keeps the whole group. Will picks.
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
