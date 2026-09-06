@@ -705,6 +705,14 @@ variants, jobs `47b82afe` (A), `f70d6ca2` (B), `6dff2385` (C). All three
 keep the original's grain and the swangas; A and C put two big kids in the
 foreground of the truck bed, C keeps the whole group. Will picks.
 
+### Swang still, third pass · 2026-09-06
+
+Will chose variant A but the kids stood on a barbecue grill. Third pass
+used A (`47b82afe`) as the only reference and swapped the grill for a
+pickup bed: `613f0c56` (silver pickup, kids in the bed, the second half of
+the group behind) and `7690b71b` (a cream 1960s pickup filling the right
+foreground, kids in its bed). Will picks.
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
