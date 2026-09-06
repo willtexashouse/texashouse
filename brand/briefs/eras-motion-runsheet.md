@@ -676,6 +676,25 @@ scroll-scrubbed, no hold needed) and run one continuous move; for on-twos
 results, test a motion-interpolation pass in post before spending on
 retakes.
 
+### v5 redos and repaired stills · 2026-09-06 · Ultra
+
+Stills (nano_banana_pro, 21:9, 3168×1344, each with the original as
+reference): Raising `38d00294` (ropes from the top plate to three men
+hauling, wall mid-raise, woman and child turned to the house — answered),
+Dance Hall `ab6706d0` (couples mostly man and woman, the object between
+the right pair gone; one pair near the stage still reads as two women),
+Charreada `cc715257` (charros in traje de charro, crowd ordinary —
+answered), Swang `c6a6c160` (swangas on every wheel, kids natural —
+answered), Mind `ca84a591` (one engineer with a clipboard on the floor,
+man in the hat leaning — answered). All sent to Will for review; none
+animated yet.
+
+Videos: Gusher v5 `38a34467` (stepping 0.03), Launch v5 `87b4de66` (0.09),
+Choir v2 `c04d4191` (0.14, no freeze, continuous push), Chip v2 `74593a78`
+(0.14, no freeze, continuous truck). The on-twos cadence on Choir and Chip
+was cured by removing the rest beat and giving every figure continuous
+action.
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
