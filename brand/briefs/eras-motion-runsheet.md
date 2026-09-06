@@ -728,6 +728,24 @@ pass used the first no-kids take (`1bd41816`) as the only reference and
 asked for rounded live-oak canopies against continuous sky. Jobs
 `4b3feaf4` and `e686c277`. Will picks.
 
+### 2026-09-06 evening · shorter clips, repaired-still animations, more stills
+
+Will's calls: Swang still second take (`e686c277`) chosen, then revised
+again for blades on both sides and open rear wheel wells (`d20f7bfc`,
+`842c03aa`, Will to pick). Chip is done. Mind, Charreada and Dance Hall
+stills approved. Raising still redone with the wall leaning forward
+(`e2de33ad`, `e290bf5c`); both came back with the men pushing by hand
+again, ropes dropped, Will to judge. Clips now run 6 seconds (54 credits).
+
+Videos this round, all 6s, no rest beat: Charreada v2 `080a8cab` (0.15,
+good), Mind v2 `3eea0ac1` (0.17, good), Dance Hall v2 `285a52d4` (stepping
+1.62, under investigation), Swang v2 `f9d0e442` (0.22, from the one-sided
+still, to be redone from the chosen still), Gusher v6 `9b89687f`
+(**failed**: thin drip of oil, camera zoomed in, stick-figure crew; the
+"out of the top of the frame" beat broke it). Gusher v7 `4841eb7c`
+submitted on the v5 structure plus the human-crew block and a 30% zoom
+out, with "no zoom in" and "no thin dribble" in the scar line.
+
 ## After generation
 
 1. Bring approved clips (or their URLs) back to the Claude Code session in
