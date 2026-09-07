@@ -447,3 +447,17 @@ first site asset ships:
    from approved renders. The site's locked tokens stay the page palette;
    sampled values become an imagery sub-palette (`--txh-img-*`) rather than
    replacing the brand tokens.
+
+## Crediting reviewers
+
+Every shared Texas House document carries a **Revisions** tab on the right
+edge. Opening it lists each review round: whose feedback it was, the date, how
+many notes, and a bullet per section with links to the changed passages. Each
+changed passage also carries a badge above it reading the reviewer's name and
+date, in bluebonnet text-safe ink, on its own line like every other badge.
+
+The rule: whenever a named person's feedback is applied, the round is logged in
+the tab and the passages are badged. Reviewers should be able to see their notes
+landed without hunting. The tab count is the number of rounds worked through; a
+round that has been received but not yet processed does not appear, and the tab
+says so.
