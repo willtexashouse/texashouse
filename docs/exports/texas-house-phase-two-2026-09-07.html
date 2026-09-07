@@ -271,8 +271,9 @@
   </nav>
   <div class="guide" id="how-to-review">
     <div class="label" style="margin-bottom:8px">How to review this</div>
-    <p style="max-width:none;margin:0 0 8px">Four of us are working this together: Will, Marisa, Christin, and Alex.
-    Go section by section. There are two ways to leave feedback, depending on how you opened this.</p>
+    <p style="max-width:none;margin:0 0 8px">This is a working document, read by the team and by the people we are talking to.
+    Whoever you are, your notes are welcome: go section by section, and say the thing you would say out loud.
+    There are two ways to leave feedback, depending on how you opened this.</p>
     <p style="max-width:none;margin:0 0 8px"><b>If Will added you by email,</b> select any text in the section you are responding to
     and choose Comment. The comment stays pinned to that passage and everyone can see it and reply.</p>
     <p style="max-width:none;margin:0 0 8px"><b>If you opened the public link,</b> comments are switched off by the platform. Use the
@@ -1015,10 +1016,11 @@
         <button type="button" data-name="Marisa" aria-pressed="false">Marisa</button>
         <button type="button" data-name="Christin" aria-pressed="false">Christin</button>
         <button type="button" data-name="Alex" aria-pressed="false">Alex</button>
+        <button type="button" data-name="Jesse" aria-pressed="false">Jesse</button>
         <button type="button" data-name="" aria-pressed="false">Someone else</button>
       </div>
       <input id="fbx-name" type="text" placeholder="Your name" style="margin-top:8px" hidden>
-      <p class="fbx__hint" id="fbx-whohint" style="margin-top:6px">Pick once. It sticks in this browser and tags every note you leave, in every section.</p>
+      <p class="fbx__hint" id="fbx-whohint" style="margin-top:6px">Pick once, or choose Someone else and type your name. It sticks in this browser and tags every note you leave, in every section.</p>
     </div>
     <div><label class="small" for="fbx-sec">Section</label><select id="fbx-sec"></select></div>
     <div><label class="small">Kind</label><div class="fbx__kinds" id="fbx-kinds">
@@ -1047,12 +1049,12 @@
   function load(){try{return JSON.parse(localStorage.getItem(KEY)||'{"name":"","notes":[]}')}catch(e){return {name:'',notes:[]}}}
   function save(d){try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}}
   var data=load(); name.value=data.name||'';
-  var PRESET=['Will','Marisa','Christin','Alex'], asEl=$('#fbx-as'), names=$('#fbx-names');
+  var PRESET=['Will','Marisa','Christin','Alex','Jesse'], asEl=$('#fbx-as'), names=$('#fbx-names');
   function who(){return (data.name||'').trim()}
   function paintWho(){var w=who(),custom=w&&PRESET.indexOf(w)<0;
     [].forEach.call(names.children,function(b){b.setAttribute('aria-pressed',(b.dataset.name===w||(custom&&b.dataset.name===''))?'true':'false')});
     name.hidden=!(custom||names.querySelector('[data-name=""]').getAttribute('aria-pressed')==='true');
-    asEl.textContent=w?'· '+w:''; $('#fbx-whohint').textContent=w?'Every note you leave is tagged '+w+'. Change it any time.':'Pick once. It sticks in this browser and tags every note you leave, in every section.'}
+    asEl.textContent=w?'· '+w:''; $('#fbx-whohint').textContent=w?'Every note you leave is tagged '+w+'. Change it any time.':'Pick once, or choose Someone else and type your name. It sticks in this browser and tags every note you leave, in every section.'}
   names.addEventListener('click',function(e){var b=e.target.closest('button[data-name]');if(!b)return;
     if(b.dataset.name){data.name=b.dataset.name;name.value='';save(data);paintWho()}else{data.name='';name.value='';save(data);[].forEach.call(names.children,function(c){c.setAttribute('aria-pressed',c===b?'true':'false')});name.hidden=false;name.focus();asEl.textContent=''}});
   name.addEventListener('input',function(){data.name=name.value.trim();save(data);asEl.textContent=data.name?'· '+data.name:''});
@@ -1076,7 +1078,7 @@
   $('#fbx-add').onclick=function(){var t=txt.value.trim();if(!who()){$('#fbx-who').scrollIntoView();names.firstElementChild.focus();$('#fbx-whohint').textContent='Pick who you are first.';return}if(!t){txt.focus();return}if(editingId){var ex=data.notes.filter(function(x){return x.id===editingId})[0];if(ex){ex.sec=sel.value;ex.kind=kind;ex.text=t;ex.sent=false}editingId=null;$('#fbx-add').textContent='Add note'}else{data.notes.push({id:Date.now()+Math.random().toString(16).slice(2),by:who(),sec:sel.value,kind:kind,text:t,at:new Date().toISOString()})}save(data);txt.value='';render()};
   $('#fbx-sent').onclick=function(){data.notes.forEach(function(n){n.sent=true});save(data);out.removeAttribute('data-show');render()};
   $('#fbx-copy').onclick=function(){var batch=pending();if(!batch.length){txt.focus();return}
-    var w=who()||'a reviewer',md='# Texas House, Phase Two — feedback from '+w+' ('+new Date().toLocaleDateString()+')\n\n';
+    var w=who()||'a reviewer';var auth=[];batch.forEach(function(n){var a=n.by||w;if(auth.indexOf(a)<0)auth.push(a)});var whoStr=auth.length?auth.slice(0,-1).join(', ')+(auth.length>1?' and ':'')+auth[auth.length-1]:w;var md='# Texas House, Phase Two — feedback from '+whoStr+' ('+new Date().toLocaleDateString()+')\n\n';
     var by={};batch.forEach(function(n){(by[n.sec]=by[n.sec]||[]).push(n)});
     secs.forEach(function(o){if(!by[o.id])return;md+='## '+o.label+'\n\n';by[o.id].forEach(function(n){md+='**'+n.kind+'** · '+(n.by||w)+'\n'+n.text+'\n\n'})});
     outtext.value=md;out.setAttribute('data-show','');
