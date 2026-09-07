@@ -452,12 +452,15 @@ first site asset ships:
 
 Every shared Texas House document carries a **Revisions** tab on the right
 edge. Opening it lists each review round: whose feedback it was, the date, how
-many notes, and a bullet per section with links to the changed passages. Each
-changed passage also carries a badge above it reading the reviewer's name and
-date, in bluebonnet text-safe ink, on its own line like every other badge.
+many notes, and a bullet per section.
 
-The rule: whenever a named person's feedback is applied, the round is logged in
-the tab and the passages are badged. Reviewers should be able to see their notes
-landed without hunting. The tab count is the number of rounds worked through; a
-round that has been received but not yet processed does not appear, and the tab
-says so.
+Each section that changed ends with a **feedback note**: a dashed rule, a
+bluebonnet mono heading naming the reviewer and the date, then one entry per
+note. Each entry quotes the reviewer's own words in italic, and under it, in
+dimmed text, what was done about it, including the cases where the answer was
+no. No inline badges in the body copy.
+
+The rule: whenever a named person's feedback is applied, the round goes in the
+tab and their notes go at the foot of every section they changed. Reviewers
+should see their notes landed without hunting, in their own words. A round
+received but not yet worked through does not appear, and the panel says so.
