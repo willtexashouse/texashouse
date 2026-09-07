@@ -450,9 +450,14 @@ first site asset ships:
 
 ## Crediting reviewers
 
-Every shared Texas House document carries a **Revisions** tab on the right
-edge. Opening it lists each review round: whose feedback it was, the date, how
-many notes, and a bullet per section.
+Every shared Texas House document carries a **Revisions** button, bottom right
+and immediately left of Feedback. Opening it lists each review round: whose
+feedback it was, the date, how many notes, and a bullet per section.
+
+The feedback drawer keeps a reviewer's own notes under a "Your notes" heading
+with a count, above the copy-out box, each with Edit and Remove. Notes persist
+in that browser between visits, so a reviewer can reopen the drawer days later,
+find what they wrote, and change it before sending.
 
 Each section that changed ends with a **feedback note**: a dashed rule, a
 bluebonnet mono heading naming the reviewer and the date, then one entry per

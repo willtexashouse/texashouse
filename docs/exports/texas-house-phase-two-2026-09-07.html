@@ -184,7 +184,8 @@
   .sechead .note:hover { color: var(--ivory); }
 
   /* ── Feedback drawer (public-link version: kept in this browser, copied out) ── */
-  .fbx-btn { position: fixed; right: 24px; bottom: 24px; z-index: 40; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ivory); background: var(--clay); border: 0; padding: 12px 16px; cursor: pointer; }
+  .doc-bar { position: fixed; right: 24px; bottom: 24px; z-index: 45; display: flex; gap: 8px; align-items: stretch; }
+  .fbx-btn { z-index: 40; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ivory); background: var(--clay); border: 0; padding: 12px 16px; cursor: pointer; }
   .fbx-btn:hover { background: var(--clay-bright, #8f4a3d); }
   .fbx { position: fixed; top: 0; right: 0; height: 100%; width: min(440px, 100%); z-index: 50; background: var(--raised, #221a17); border-left: 1px solid var(--edge); color: var(--ivory); display: none; flex-direction: column; box-sizing: border-box; }
   .fbx[data-open] { display: flex; }
@@ -203,15 +204,20 @@
   .fbx__row { display: flex; gap: 8px; }
   .fbx__go { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ivory); background: var(--clay); border: 0; padding: 12px 16px; cursor: pointer; }
   .fbx__ghost { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ivory); background: none; border: 1px solid var(--edge); padding: 12px 16px; cursor: pointer; }
-  .fbx__list { border-top: 1px dashed var(--clay); padding-top: 14px; display: flex; flex-direction: column; gap: 10px; }
+  .fbx__listhead { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; border-top: 1px dashed var(--clay); padding-top: 14px; margin-top: 4px; }
+  .fbx__listhead .label { margin: 0; }
+  .fbx__list { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+  .fbx__note[data-editing] { border-color: var(--clay); }
   .fbx__note { border: 1px solid var(--edge); padding: 10px 12px; font-size: 13px; line-height: 1.5; }
   .fbx__note .meta { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg3); display: flex; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
-  .fbx__note .meta button { background: none; border: 0; color: var(--fg3); cursor: pointer; font-family: inherit; font-size: inherit; letter-spacing: inherit; text-transform: inherit; }
+  .fbx__note .meta button { background: none; border: 1px solid var(--edge); color: var(--ivory); cursor: pointer; font-family: inherit; font-size: inherit; letter-spacing: inherit; text-transform: inherit; padding: 3px 7px; }
+  .fbx__note .meta button:hover { border-color: var(--clay); }
+  .fbx__note .meta__act { display: flex; gap: 6px; flex-shrink: 0; }
   .fbx__note pre { margin: 0; white-space: pre-wrap; font-family: var(--body); font-size: 13px; }
   .fbx__out { display: none; }
   .fbx__out[data-show] { display: block; }
   .fbx__hint { font-size: 12px; color: var(--fg3); margin: 0; }
-  @media print { .fbx, .fbx-btn { display: none !important; } }
+  @media print { .fbx, .doc-bar { display: none !important; } }
 
   /* ── Revisions: who changed what, and when ─────────────────────────── */
   .revnote { border-top: 1px dashed var(--clay); margin-top: 32px; padding-top: 16px; }
@@ -221,8 +227,8 @@
   .revnote__quote { margin: 0 0 5px; font-size: 14px; line-height: 1.55; color: var(--ivory); font-style: italic; max-width: 74ch; }
   .revnote__did { margin: 0; font-size: 13px; line-height: 1.55; color: var(--fg3); max-width: 74ch; }
   .revnote__did b { color: var(--ivory-dim, var(--fg2)); font-style: normal; }
-  .rev-tab { position: fixed; right: 0; top: 40%; z-index: 45; writing-mode: vertical-rl; transform: rotate(180deg); font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ivory); background: var(--raised, #221a17); border: 1px solid var(--clay); border-right: 0; padding: 14px 10px; cursor: pointer; }
-  .rev-tab:hover { background: var(--clay); }
+  .rev-tab { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ivory); background: var(--raised, #221a17); border: 1px solid var(--edge); padding: 12px 16px; cursor: pointer; }
+  .rev-tab:hover { border-color: var(--clay); }
   .rev-panel { position: fixed; top: 0; right: 0; height: 100%; width: min(400px, 100%); z-index: 46; background: var(--raised, #221a17); border-left: 1px solid var(--edge); color: var(--ivory); display: none; flex-direction: column; box-sizing: border-box; }
   .rev-panel[data-open] { display: flex; }
   .rev-panel__head { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid var(--rule); }
@@ -234,7 +240,7 @@
   .rev-round li { margin-bottom: 4px; }
   .rev-round a { color: inherit; border-bottom: 1px dashed var(--clay); text-decoration: none; }
   .rev-panel .fbx__close { background: none; border: 0; color: var(--fg3); font-size: 22px; cursor: pointer; line-height: 1; }
-  @media print { .rev-tab, .rev-panel { display: none !important; } }
+  @media print { .rev-panel { display: none !important; } }
 </style>
 
 <div class="wrap" id="top">
@@ -978,7 +984,6 @@
 
 
 
-<button class="rev-tab" type="button" data-rev-open>Revisions · 1</button>
 <aside class="rev-panel" id="revisions" aria-label="Revisions">
   <div class="rev-panel__head"><div class="label">Revisions</div><button class="fbx__close" type="button" data-rev-close aria-label="Close">×</button></div>
   <div class="rev-panel__body">
@@ -1005,7 +1010,10 @@
 <script data-txh>
 (function(){var p=document.getElementById('revisions');document.addEventListener('click',function(e){if(e.target.closest('[data-rev-open]'))p.setAttribute('data-open','');if(e.target.closest('[data-rev-close]'))p.removeAttribute('data-open');if(e.target.closest('.rev-panel a[href^="#"]'))p.removeAttribute('data-open')});document.addEventListener('keydown',function(e){if(e.key==='Escape')p.removeAttribute('data-open')})})();
 </script>
-<button class="fbx-btn" type="button" data-fb-open>Feedback<span id="fbx-count"></span></button>
+<div class="doc-bar">
+  <button class="rev-tab" type="button" data-rev-open>Revisions · 1</button>
+  <button class="fbx-btn" type="button" data-fb-open>Feedback<span id="fbx-count"></span></button>
+</div>
 <aside class="fbx" id="feedback" aria-label="Feedback">
   <div class="fbx__head"><div class="label">Feedback <span id="fbx-as" class="muted" style="text-transform:none;letter-spacing:0;font-family:var(--body);font-size:13px"></span></div><button class="fbx__close" type="button" data-fb-close aria-label="Close">×</button></div>
   <div class="fbx__body">
@@ -1035,8 +1043,9 @@
       <textarea id="fbx-text" placeholder="Drop everything for this section here. One thought per line; start a line with - for a bullet."></textarea></div>
     <div class="fbx__row"><button class="fbx__go" type="button" id="fbx-add">Add note</button><button class="fbx__ghost" type="button" id="fbx-copy">Copy batch</button><button class="fbx__ghost" type="button" id="fbx-sent" hidden>Mark sent</button></div>
     <p class="fbx__hint">Add notes as you read. When you are done, press <b>Copy batch</b> and paste it into an email to <b>will@texashouse.org</b>. Then press <b>Mark sent</b> so the next batch only carries new notes. Notes stay in this browser between visits.</p>
-    <div class="fbx__out" id="fbx-out"><label class="small" for="fbx-outtext">Your batch, ready to paste. If the copy button did nothing, select all in this box and copy.</label><textarea id="fbx-outtext" readonly></textarea></div>
+    <div class="fbx__listhead"><div class="label">Your notes <span id="fbx-listcount" class="muted" style="text-transform:none;letter-spacing:0;font-family:var(--body);font-size:13px"></span></div><span class="fbx__hint">Edit any of them</span></div>
     <div class="fbx__list" id="fbx-list"></div>
+    <div class="fbx__out" id="fbx-out"><label class="small" for="fbx-outtext">Your batch, ready to paste. If the copy button did nothing, select all in this box and copy.</label><textarea id="fbx-outtext" readonly></textarea></div>
   </div>
 </aside>
 <script data-txh>
@@ -1062,11 +1071,12 @@
   function label(id){var o=secs.filter(function(x){return x.id===id})[0];return o?o.label:id}
   function pending(){return data.notes.filter(function(n){return !n.sent})}
   function render(){list.innerHTML='';var c=$('#fbx-count'),pn=pending().length;c.textContent=pn?' · '+pn:'';$('#fbx-sent').hidden=!pn;
-    if(!data.notes.length){list.innerHTML='<p class="fbx__hint">No notes yet.</p>';return}
+    var lc=$('#fbx-listcount');if(lc)lc.textContent=data.notes.length?'· '+data.notes.length:'';
+    if(!data.notes.length){list.innerHTML='<p class="fbx__hint">Nothing yet. Notes you add appear here, and stay in this browser between visits.</p>';return}
     data.notes.slice().reverse().forEach(function(n){var d=document.createElement('div');d.className='fbx__note';if(n.sent)d.style.opacity='.5';
       var m=document.createElement('div');m.className='meta';var a=document.createElement('a');a.href='#'+n.sec;a.style.color='inherit';a.textContent=(n.by||who())+' · '+label(n.sec)+' · '+n.kind+(n.sent?' · sent':'');a.onclick=function(){close()};m.appendChild(a);
-      var e=document.createElement('button');e.type='button';e.textContent='edit';e.style.marginRight='8px';e.onclick=function(){editingId=n.id;sel.value=n.sec;txt.value=n.text;kind=n.kind;[].forEach.call($('#fbx-kinds').children,function(c){c.setAttribute('aria-pressed',c.dataset.kind===kind?'true':'false')});$('#fbx-add').textContent='Save note';txt.focus()};m.appendChild(e);
-      var b=document.createElement('button');b.type='button';b.textContent='remove';b.onclick=function(){data.notes=data.notes.filter(function(x){return x.id!==n.id});save(data);render()};m.appendChild(b);
+      var e=document.createElement('button');e.type='button';e.textContent='edit';e.onclick=function(){editingId=n.id;sel.value=n.sec;txt.value=n.text;kind=n.kind;[].forEach.call($('#fbx-kinds').children,function(c){c.setAttribute('aria-pressed',c.dataset.kind===kind?'true':'false')});$('#fbx-add').textContent='Save note';[].forEach.call(list.children,function(c){c.removeAttribute('data-editing')});d.setAttribute('data-editing','');try{txt.scrollIntoView({block:'center'})}catch(err){}txt.focus()};var acts=document.createElement('span');acts.className='meta__act';acts.appendChild(e);
+      var b=document.createElement('button');b.type='button';b.textContent='remove';b.onclick=function(){if(editingId===n.id){editingId=null;txt.value='';$('#fbx-add').textContent='Add note'}data.notes=data.notes.filter(function(x){return x.id!==n.id});save(data);render()};acts.appendChild(b);m.appendChild(acts);
       var pre=document.createElement('pre');pre.textContent=n.text;d.appendChild(m);d.appendChild(pre);list.appendChild(d)})}
   function open(secId){if(secId){sel.value=secId}box.setAttribute('data-open','');txt.focus()}
   function close(){box.removeAttribute('data-open')}
