@@ -451,3 +451,29 @@ pass if the room picks differently.
   "Recognizing Texcellence." kept as the About headline pending the decision.
 - Still carrying retired lines on purpose: `src/pages/brand.astro` (the brand
   specimen lists the old lines as history) and `src/pages/proto.astro`.
+
+## 13. Alex's review, decided with Will (2026-09-07)
+
+The team document is now titled "Texas House, Phase Two." Decisions from the
+review, applied to the document and the site:
+
+- Intro: becoming a company, and the brand is ascending. Phase Two is building
+  the company that can carry the brand.
+- Board: "Board members serve three main functions." Christin's year-one task
+  reads "run the search that fills seat five." Liz stays "in conversation."
+  Vice presidents are staff roles, not officers; Alex is not an officer.
+- Seat 6 (Justin) rewritten: produces perspective, not doors. A Texan living
+  the state's transition; his life experience is the point.
+- Seat 7 becomes a board search with a running candidate table: the
+  government door (John Cornyn, suggested by Alex), the hospitality operator,
+  the second capital seat.
+- Money answer (§12, §13): partner-funded today, "think of us like a sports
+  team," ticketed events next, membership after. The old "no ticket revenue,
+  no dues" line is gone.
+- Mentorship in the membership concept: unpaid, member-to-member.
+- Park House's $14 million: lifetime outside equity per CB Insights, no timing
+  claim; it leases its space.
+- Site: Newsroom headline is now "The Story of Contemporary Texas" with the
+  lede "Recaps, dispatches, and the people in the room." American spelling
+  "program" everywhere.
+- Feedback drawer: General kind (default) and an Edit button on notes.
