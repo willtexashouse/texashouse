@@ -469,3 +469,22 @@ The rule: whenever a named person's feedback is applied, the round goes in the
 tab and their notes go at the foot of every section they changed. Reviewers
 should see their notes landed without hunting, in their own words. A round
 received but not yet worked through does not appear, and the panel says so.
+
+### The document skill
+
+The whole system is packaged as a Claude skill at
+`brand/skills/texas-house-brief/` (installed for Claude Code at
+`~/.claude/skills/texas-house-brief/`, and uploadable to claude.ai as
+`brand/skills/texas-house-brief.zip`). `SKILL.md` carries the rules;
+`assets/template.html` is the shell with the licensed faces embedded, every
+component, the feedback drawer, the revisions panel and the mobile behaviour.
+Copy the template. Never rebuild the shell from a description: substitute fonts
+and drifted colour are what a rebuild produces.
+
+### Mobile
+
+Documents are tested at 375px. Every table sits inside `.scroll`, and a swipe
+hint appears under any table wider than the screen, disappearing once the reader
+reaches the end. Card grids use `repeat(auto-fit, minmax(280px, 1fr))`. Below
+620px tables drop to 13px with tighter cells and the button bar shrinks. The
+page itself must never scroll horizontally; only `.scroll` may.
