@@ -78,6 +78,8 @@ Use what exists. Do not invent a new card.
 | `.muted`, `.label`, `.txh-mono` | Dimmed aside, small caps label, mono detail. |
 | `.xref` | A link to another section: `<a class="xref" href="#s13">§13</a>`. |
 | `.revnote` | A reviewer's round. See below. |
+| `figure.pos__fig` | A photograph inside a card, directly under its `<h3>`. Embed as a base64 JPEG (about 1200px wide, quality 70), never an external URL: artifacts block outside images. Mono `figcaption` names the place and credits the photographer. |
+| `.legend` + `.map` + `.tile` | A doing-now / could-do map. Solid `.tile` = doing now (sage top rule); add `.tile--could` for dashed "could do"; add `.tile--money` for revenue (blue top rule). Badge each tile with `.chip.rebuild` (doing now), `.chip.could` or `.chip.money`. Sub-lists inside a tile go in `.tile__sub` under `.label` headings, never as inline tags. |
 
 **The badge rule.** A badge sits on its own line **above** the paragraph it
 labels, never inline in the sentence, with space under it. Inside a table cell

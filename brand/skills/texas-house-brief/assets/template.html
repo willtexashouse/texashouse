@@ -258,6 +258,35 @@
   @media (max-width: 420px) {
     .doc-bar button { padding: 10px 10px; letter-spacing: .08em; }
   }
+
+  /* ── Doing now / could do: the state-of-the-company map ─────────────── */
+  .legend { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; margin: 16px 0 8px; font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg3); }
+  .legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .sw { display: inline-block; width: 22px; height: 14px; border: 1px solid var(--edge); }
+  .sw--now { background: var(--raised); border-top: 2px solid var(--sage); }
+  .sw--could { border-style: dashed; }
+  .sw--money { background: var(--raised); border-top: 2px solid var(--blue); }
+  .mapgroup { margin-top: 32px; }
+  .mapgroup > .label { margin-bottom: 4px; }
+  .map { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 12px; }
+  .tile { border: 1px solid var(--edge); border-top: 2px solid var(--sage); background: var(--raised); padding: 12px 14px; }
+  .tile--money { border-top-color: var(--blue); }
+  .tile--could { background: transparent; border-style: dashed; border-top-style: dashed; }
+  .tile--could .tile__t { color: var(--ivory-dim); }
+  .tile .chiprow--cell { margin: 0 0 8px; }
+  .tile__t { font-weight: 700; font-size: 15px; line-height: 1.3; color: var(--ivory); }
+  .tile__s { font-size: 13px; line-height: 1.5; color: var(--fg3); margin: 4px 0 0; }
+  .tile__sub { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--rule); }
+  .tile__sub .label { font-size: 10px; margin: 0 0 3px; }
+  .tile__sub p { margin: 0 0 8px; font-size: 13px; line-height: 1.5; color: var(--ivory-dim); }
+  .tile__sub p:last-child { margin-bottom: 0; }
+  .chip.could { color: var(--fg3); }
+  .chip.money { color: var(--blue); }
+
+  /* ── Photographs inside cards ────────────────────────────────────────── */
+  .pos__fig { margin: 12px 0 16px; }
+  .pos__fig img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border: 1px solid var(--edge); background: var(--deep); }
+  .pos__fig figcaption { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg3); line-height: 1.5; margin-top: 6px; }
 </style>
 <div class="wrap" id="top">
 
