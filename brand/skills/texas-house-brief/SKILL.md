@@ -21,9 +21,14 @@ wrong: substitute fonts, drifted colour, a broken drawer. Copy the file, replace
 the content between `<header class="masthead">` and the closing `</div>` of
 `.wrap`, and leave the rest alone.
 
-```bash
-cp ~/.claude/skills/texas-house-brief/assets/template.html /path/to/new-doc.html
-```
+The template sits next to this file, at `assets/template.html` inside this skill's
+folder. Where that folder is depends on where you are running:
+
+| Where you are | Template path |
+| --- | --- |
+| Claude Code on Will's Mac | `~/.claude/skills/texas-house-brief/assets/template.html` |
+| The Hermes creative agent | `~/.hermes/profiles/creative/skills/creative/texas-house-brief/assets/template.html` |
+| A claude.ai chat | `assets/template.html` in this skill's own folder |
 
 The template is an HTML **fragment**, not a full page: it starts at `<title>` and
 has no doctype, `<html>`, `<head>` or `<body>`. That is what the Artifact
@@ -67,6 +72,8 @@ mission. No hype, no consultant register, no exclamation marks, no emoji.
   hides its open questions is worthless in the room it was built for.
 - Bold the words a skimmer needs. Never bold a whole sentence.
 - Quote a reviewer in their own words rather than paraphrasing them.
+- No em dashes in the copy. Use the house dash, a spaced hyphen ( - ), or
+  rewrite the sentence.
 
 ## Structure
 
@@ -170,18 +177,25 @@ Tested at 375px. Keep it that way.
 - Check `document.documentElement.scrollWidth > innerWidth` at 375. It must be
   false. Horizontal scrolling belongs inside `.scroll` and nowhere else.
 
-## Publishing
+## Handing it over
 
-Publish with the Artifact tool, passing the fragment's file path. Republishing
-the same path keeps the same URL.
+What happens at the end depends on where you are running. The document is the
+same everywhere; only the delivery changes.
 
-**The share pin.** An artifact shared by link stays pinned to the version that
-was current when it was shared. Publishing does not move the pin, and no tool
-can. After every publish, tell Will in plain words that he has to update the
-shared version in the Share menu or the team keeps seeing the old document.
+**Claude Code.** Publish the fragment with the Artifact tool; republishing the
+same path keeps the same URL. An artifact shared by link stays pinned to the
+version that was current when it was shared, and publishing does not move the
+pin. When Will wants a shareable version, publish a fresh artifact so the link
+starts current, and send the wrapped file as well. Save the wrapped copy to
+`~/texashouse/docs/exports/` with the date in the filename, and commit it.
 
-Also save a wrapped standalone copy into the project's `docs/exports/` with the
-date in the filename, and commit it.
+**A claude.ai chat.** Return the wrapped HTML as a file, and as an HTML artifact
+if the chat can make one. Tell Will it is ready to open, send, or upload.
+
+**The Hermes creative agent.** Draft only. Save the wrapped HTML in your
+workspace, named for the document and dated, and hand the file to Will. Never
+publish it, post it, share a link to it, or send it to anyone else. Anything
+outward waits for a human.
 
 ## Before you publish, check
 
