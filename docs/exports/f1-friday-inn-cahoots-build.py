@@ -31,17 +31,18 @@ css='''<style data-txh>
   .hero-line .amt { color: var(--green-text); font-size: 1em; font-weight: inherit; }
   .minibar { position: sticky; top: 0; z-index: 30; display: flex; gap: 6px; overflow-x: auto; background: var(--gunmetal); border-bottom: 1px solid var(--rule); padding: 10px 0; margin: 40px 0 0; scrollbar-width: none; }
   .minibar::-webkit-scrollbar { display: none; }
-  .minibar a { flex: 0 0 auto; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg3); text-decoration: none; border: 1px solid var(--rule); padding: 6px 10px; }
+  .minibar a { min-height: 36px; display: inline-flex; align-items: center; flex: 0 0 auto; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg3); text-decoration: none; border: 1px solid var(--rule); padding: 6px 10px; }
   .minibar a:hover { color: var(--ivory); border-color: var(--edge); }
   .minibar a.is-current { color: var(--ivory); border-color: var(--clay); }
   section[id], .parthead[id] { scroll-margin-top: 64px; }
   .amt { font-weight: 800; font-size: 1.2em; color: var(--ivory); font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 12px; }
-  .stat { background: var(--raised); border: 1px solid var(--rule); border-top: 2px solid var(--edge); padding: 16px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 12px; }
+  .stat { container-type: inline-size; background: var(--raised); border: 1px solid var(--rule); border-top: 2px solid var(--edge); padding: 16px; }
   .stat__k { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg3); }
-  .stat__v { font-family: var(--display); font-size: clamp(30px, 4vw, 44px); line-height: 1.02; color: var(--ivory); margin-top: 10px; }
+  .stat__v { font-family: var(--display); font-size: clamp(26px, 3vw, 40px); font-size: clamp(26px, 15cqi, 44px); line-height: 1.02; color: var(--ivory); margin-top: 10px; }
   .stat__v .amt { font-size: 1em; font-weight: inherit; }
   .stat__s { font-size: 13px; color: var(--fg3); margin-top: 6px; }
+  .stat__s .amt { font-size: 1.1em; }
   .stat--green { background: var(--green-surface); border-top-color: var(--green-accent); }
   .stat--green .stat__v, .stat--green .stat__v .amt, .stat--green .stat__k { color: var(--green-text); }
   .verdict { font-size: 19px; color: var(--ivory); }
@@ -54,8 +55,9 @@ css='''<style data-txh>
   .path--red { background: var(--red-surface); border-top: 3px solid var(--red-accent); }
   .path--green { background: var(--green-surface); border-top: 3px solid var(--green-accent); }
   .path__tag { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
-  .path--red .path__tag { color: var(--red-text); }
-  .path--green .path__tag { color: var(--green-text); }
+  .path__tag { color: var(--ivory-dim); }
+  .path--red .path__tag .mk { color: var(--red-accent); font-weight: 800; }
+  .path--green .path__tag .mk { color: var(--green-accent); font-weight: 800; }
   .path h3, .lever h3 { font-size: 19px; font-weight: 700; line-height: 1.3; color: var(--ivory); margin: 8px 0 10px; }
   .path p { max-width: none; }
   table.kv { min-width: 0; }
@@ -92,28 +94,39 @@ css='''<style data-txh>
   .appendix h3.sub { font-size: 16px; font-weight: 700; color: var(--ivory); margin: 28px 0 8px; }
   table.check td:first-child { font-family: var(--mono); color: var(--green-text); width: 44px; }
   table.check td:last-child { white-space: nowrap; font-family: var(--mono); font-size: 12px; color: var(--fg3); }
-  table.check tr td { border-left: 0; }
-  table.check tr { box-shadow: inset 3px 0 0 var(--green-accent); }
   .closing { margin-top: 72px; padding: 32px; background: var(--green-surface); border-top: 3px solid var(--green-accent); }
   .closing__big { font-family: var(--display); font-size: clamp(26px, 4vw, 46px); line-height: 1.05; color: var(--ivory); margin: 0 0 16px; }
   .closing__big .amt { color: var(--green-text); font-size: 1em; font-weight: inherit; }
   .closing p { max-width: 64ch; }
   .closing__muted { color: var(--fg3); font-size: 14px; margin: 18px 0 0; }
   .sources li { margin-bottom: 6px; color: var(--ivory-dim); }
-  @media (max-width: 620px) { .path, .closing { padding: 16px; } .lever { padding: 14px; } }
+  .wrap { padding-bottom: 96px; }
+  @media (max-width: 620px) {
+    .path, .closing { padding: 16px; } .lever { padding: 14px; }
+    table.dtable, table.check { min-width: 0; }
+    table.dtable tr:first-child { display: none; }
+    table.dtable tr { display: block; border: 1px solid var(--rule); margin: 0 0 12px; }
+    table.dtable td { display: block; border: 0; padding: 8px 12px; }
+    table.dtable td[data-label]::before { content: attr(data-label); display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg3); margin-bottom: 2px; }
+    table.dtable td:first-child { font-size: 16px; padding-top: 12px; }
+  }
+  @media (pointer: coarse) { .minibar a, .doc-bar button { min-height: 44px; } .sechead .note { padding: 12px 0; } }
   @media print { .minibar { display: none; } }
 </style>
 '''
 
-def T_(head, rows, cls='', label='table'):
+def T_(head, rows, cls='', label='table', labels=False):
     out=f'<div class="scroll" tabindex="0" role="region" aria-label="{label}"><table'+(f' class="{cls}"' if cls else '')+'>'
-    if head: out+='<tr>'+''.join(f'<th>{h}</th>' for h in head)+'</tr>'
+    if head: out+='<tr>'+''.join(f'<th scope="col">{h}</th>' for h in head)+'</tr>'
     for r in rows:
         rcls, cells = (r[0], r[1]) if isinstance(r, tuple) else ('', r)
         out+='<tr'+(f' class="{rcls}"' if rcls else '')+'>'
-        for c in cells:
-            if isinstance(c, tuple): out+=f'<td class="{c[0]}">{c[1]}</td>'
-            else: out+=f'<td>{c}</td>'
+        for i,c in enumerate(cells):
+            dl=''
+            if labels and head and i>0:
+                dl=' data-label="'+re.sub(r'^[✕✓+] ','',re.sub(r'<[^>]+>','',head[i]))+'"'
+            if isinstance(c, tuple): out+=f'<td class="{c[0]}"{dl}>{c[1]}</td>'
+            else: out+=f'<td{dl}>{c}</td>'
         out+='</tr>'
     return out+'</table></div>'
 
@@ -130,7 +143,7 @@ body=f'''
 <header class="masthead">
   {logo}
   <div class="eyebrow">Texas House · F1 week · pricing and go-to-market · September 2026 · <span style="color:var(--warn)">confidential</span></div>
-  <h1>F1 Friday at<br>Inn Cahoots</h1>
+  <h1>F1 Friday<br>at Inn Cahoots</h1>
   <p class="dates txh-mono">Friday, October 23, 2026 · Elderbrook · Disko Cowboy · Inn Cahoots, East 6th · <span id="countdown">35 days out</span></p>
   <p class="hero-line">Two pathways. One nets $122K. One loses money.</p>
 </header>
@@ -179,10 +192,10 @@ body=f'''
 {sec('pathways','§02','The two pathways')}
   <div class="paths">
     <div class="path path--red">
-      <div class="path__tag">✕ Red pathway · the instinct</div>
+      <div class="path__tag"><span class="mk" aria-hidden="true">✕</span> Maximum risk · the instinct</div>
       <h3>Premium pricing, pay for everything</h3>
       <p>The instinct is that an F1 crowd is affluent, so charge accordingly and buy the strongest bill available. Here is what that produces.</p>
-      {T_(None,[['GA price','$175 flat'],['VIP price','$600'],['Driver','Paid, $40K'],['Total cost','<b>$173K</b>'],['GA sold','~300'],['Ticket revenue','<b>$48K</b>'],['Sponsorship','$95K'],('net',['− Net','−$30K']),['Garden','One third full']],'kv','Red pathway')}
+      {T_(None,[['GA price','$175 flat'],['VIP price','$600'],['Driver','Paid, $40K'],['Total cost','<b>$173K</b>'],['GA sold','~300'],['Ticket revenue','<b>$48K</b>'],['Sponsorship','$95K'],('net',['Net','−$30K']),['Garden','One third full']],'kv','Maximum risk pathway')}
       <div class="label" style="margin:20px 0 8px">Why it fails</div>
       <ul class="why why--red">
         <li>{X}No Austin F1 party has sold a $175 GA ticket. The ceiling is $145, on Saturday, with a bigger act and official COTA backing.</li>
@@ -193,10 +206,10 @@ body=f'''
       </ul>
     </div>
     <div class="path path--green">
-      <div class="path__tag">✓ Green pathway · tiered pricing, zero-cost driver</div>
+      <div class="path__tag"><span class="mk" aria-hidden="true">✓</span> Ideal · tiered pricing, zero-cost driver</div>
       <h3>Price GA to fill the room</h3>
       <p>Put the premium in VIP where buyers are not price-sensitive. Take the driver only if it costs nothing.</p>
-      {T_(None,[['GA price','$65 → $89 → $109 → $125'],['VIP price','$600, capped at 50'],['Driver','Free or sponsor-funded, $0'],['Total cost','<b>$133K</b>'],['GA sold','900 to 1,000'],['Ticket revenue','<b>$106K to $125K</b>'],['Sponsorship','$130K'],('net',['+ Net','+$122K']),['Garden','Full']],'kv','Green pathway')}
+      {T_(None,[['GA price','$65 → $89 → $109 → $125'],['VIP price','$600, capped at 50'],['Driver','Free or sponsor-funded, $0'],['Total cost','<b>$133K</b>'],['GA sold','900 to 1,000'],['Ticket revenue','<b>$106K to $125K</b>'],['Sponsorship','$130K'],('net',['Net','+$122K']),['Garden','Full']],'kv','Ideal pathway')}
       <div class="label" style="margin:20px 0 8px">Why it works</div>
       <ul class="why why--green">
         <li>{V}$89 sits above the comparable Austin comp ($35, Vintage Culture) and below the ceiling ($145, Sofi Tukker). Defensible in both directions.</li>
@@ -210,19 +223,19 @@ body=f'''
 </section>
 
 {sec('decisions','§03','Decision table')}
-  <p class="muted">Every row is the same decision made two ways. The swing is what the green choice is worth against the red one.</p>
-  {T_(['Decision','✕ Red choice','✓ Green choice','+ Swing'],[
+  <p class="muted">Every row is the same decision made two ways. The swing is what the ideal choice is worth against the maximum-risk one.</p>
+  {T_(['Decision','✕ Maximum risk','✓ Ideal','+ Swing'],[
     ['<b>GA pricing</b>',R('$175 flat'),G('$65 / $89 / $109 / $125'),('c-swing','+$58K')],
     ['<b>Driver</b>',R('Pay $40K'),G('Free, sponsored, or cut'),('c-swing','+$40K')],
     ['<b>Headliner</b>',R('$100K act we cannot name'),G('Elderbrook at $50K, named'),('c-swing','+$50K')],
     ['<b>VIP</b>',R('Underprice near GA'),G('$600, 50 seats'),('c-swing','+$21K')],
     ['<b>Delegation</b>',R('Uncapped, drifts to 150'),G('Hard cap at 100'),('c-swing','+$12K')],
     ['<b>Announce timing</b>',R('Wait for driver confirmation'),G('Announce on Elderbrook signature'),('c-swing','+ ~200 tickets')],
-  ],'','Decision table')}
+  ],'dtable','Decision table',labels=True)}
 </section>
 
 {sec('levers','§04','The five levers')}
-  <p class="muted">Each lever is one decision, shown both ways.</p>
+  <p class="muted">Each lever is one decision, shown both ways: ✕ maximum risk, ✓ ideal.</p>
   <div class="levers">
     <div class="lever"><div class="lever__n">1</div><h3>Ticket price</h3>
       <p class="lv lv--red">{X}$175 flat → ~300 sold, $48K, empty garden</p>
