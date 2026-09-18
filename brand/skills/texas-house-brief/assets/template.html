@@ -399,8 +399,28 @@
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(all);
 })();
 </script>
+<aside class="rev-panel" id="revisions" aria-label="Revisions">
+  <div class="rev-panel__head"><div class="label">Revisions</div><button class="fbx__close" type="button" data-rev-close aria-label="Close">×</button></div>
+  <div class="rev-panel__body">
+    <p class="muted" style="margin:0 0 14px;font-size:13px">Every review round is logged here, and each section that changed carries the reviewer's notes at the end of it, in their own words, with what was done about each one. If you sent feedback and don't see your round, it hasn't been worked through yet.</p>
+    <!-- ROUNDS go here, newest first. For each round: copy the block below, delete the
+         "No review rounds yet" line, and raise the count on the Revisions button.
+    <div class="rev-round">
+      <div class="rev-round__who">Name's feedback added</div>
+      <div class="rev-round__when">DD Month YYYY · N notes · decided with Will</div>
+      <ul>
+        <li><a href="#s01">§01</a>: what changed, in one line.</li>
+      </ul>
+    </div>
+    -->
+    <p class="muted" style="margin:0;font-size:13px">No review rounds yet.</p>
+  </div>
+</aside>
+<script data-txh>
+(function(){var p=document.getElementById('revisions');document.addEventListener('click',function(e){if(e.target.closest('[data-rev-open]'))p.setAttribute('data-open','');if(e.target.closest('[data-rev-close]'))p.removeAttribute('data-open');if(e.target.closest('.rev-panel a[href^="#"]'))p.removeAttribute('data-open')});document.addEventListener('keydown',function(e){if(e.key==='Escape')p.removeAttribute('data-open')})})();
+</script>
 <div class="doc-bar">
-  <button class="rev-tab" type="button" data-rev-open>Revisions · 1</button>
+  <button class="rev-tab" type="button" data-rev-open>Revisions · 0</button>
   <button class="fbx-btn" type="button" data-fb-open>Feedback<span id="fbx-count"></span></button>
 </div>
 <aside class="fbx" id="feedback" aria-label="Feedback">
@@ -477,7 +497,7 @@
   $('#fbx-add').onclick=function(){var t=txt.value.trim();if(!who()){$('#fbx-who').scrollIntoView();names.firstElementChild.focus();$('#fbx-whohint').textContent='Pick who you are first.';return}if(!t){txt.focus();return}if(editingId){var ex=data.notes.filter(function(x){return x.id===editingId})[0];if(ex){ex.sec=sel.value;ex.kind=kind;ex.text=t;ex.sent=false}editingId=null;$('#fbx-add').textContent='Add note'}else{data.notes.push({id:Date.now()+Math.random().toString(16).slice(2),by:who(),sec:sel.value,kind:kind,text:t,at:new Date().toISOString()})}save(data);txt.value='';render()};
   $('#fbx-sent').onclick=function(){data.notes.forEach(function(n){n.sent=true});save(data);out.removeAttribute('data-show');render()};
   $('#fbx-copy').onclick=function(){var batch=pending();if(!batch.length){txt.focus();return}
-    var w=who()||'a reviewer';var auth=[];batch.forEach(function(n){var a=n.by||w;if(auth.indexOf(a)<0)auth.push(a)});var whoStr=auth.length?auth.slice(0,-1).join(', ')+(auth.length>1?' and ':'')+auth[auth.length-1]:w;var md='# Texas House, Phase Two — feedback from '+whoStr+' ('+new Date().toLocaleDateString()+')\n\n';
+    var w=who()||'a reviewer';var auth=[];batch.forEach(function(n){var a=n.by||w;if(auth.indexOf(a)<0)auth.push(a)});var whoStr=auth.length?auth.slice(0,-1).join(', ')+(auth.length>1?' and ':'')+auth[auth.length-1]:w;var md='# '+document.title+' — feedback from '+whoStr+' ('+new Date().toLocaleDateString()+')\n\n';
     var by={};batch.forEach(function(n){(by[n.sec]=by[n.sec]||[]).push(n)});
     secs.forEach(function(o){if(!by[o.id])return;md+='## '+o.label+'\n\n';by[o.id].forEach(function(n){md+='**'+n.kind+'** · '+(n.by||w)+'\n'+n.text+'\n\n'})});
     outtext.value=md;out.setAttribute('data-show','');

@@ -38,6 +38,24 @@ out = ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">'
 The viewport meta is not optional. Without it a phone renders the page at 980px
 and every table looks cut off.
 
+## Starting a new document
+
+Do these in order, every time, so every document matches.
+
+1. Copy `assets/template.html` to the new file. Never start from an old document:
+   old documents carry their own sections, reviewers and revision rounds.
+2. Replace `<title>TITLE — replace me</title>` with the document's name. The
+   Copy batch header in the feedback drawer reads it, so it must be right.
+3. In the masthead: the eyebrow (`Texas House · working brief · MONTH YEAR ·
+   confidential`), the two-line `<h1>`, the `.standfirst`, the `.dates` line.
+4. Write the sections, numbered `§01` upward. Keep the `.index` jump nav in step
+   with the section ids.
+5. Set the reviewer list in the drawer for this document's audience: the
+   `data-name` buttons and the `PRESET` array, matching each other.
+6. Leave Revisions at `Revisions · 0` with "No review rounds yet" until the
+   first round of feedback is applied.
+7. Run the checklist at the end of this file, then publish.
+
 ## Voice
 
 Write the way Will talks: warm, direct, Texan-plainspoken, decisive. "We" for the
@@ -117,7 +135,10 @@ Update the reviewer list when the audience changes. It is a row of buttons with
 `data-name` plus a `PRESET` array in the drawer script. Both must match.
 
 **The revisions panel** (the Revisions button, immediately left of Feedback)
-indexes each round: who, the date, how many notes, a bullet per section.
+indexes each round: who, the date, how many notes, a bullet per section. The
+template ships it empty. For each round, copy the commented block inside
+`.rev-panel__body`, newest first, delete the "No review rounds yet" line, and
+raise the count on the button.
 
 **When you apply someone's feedback**, add their round to the panel and end each
 changed section with a `.revnote`:
