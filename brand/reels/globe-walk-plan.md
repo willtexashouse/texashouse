@@ -33,11 +33,13 @@ continents, clay Texas, gun metal ground. Grain and halftone on.
 
 Pick one sheet. That pick is the reference for Phase 2.
 
-**Status 2026-09-20:** four stills rendered (no-eyes turnaround and whistle,
-eyes turnaround and whistle), logged in `brand/renders.md`. The no-eyes pair
-came out to spec. The eyes pair drifted: the model added a mouth and put the
-eyes on the Atlantic side. If eyes win, Phase 1b re-runs that pair with the
-no-eyes sheet as the reference and the eye placement stated as the only change.
+**Decided 2026-09-20:** the eyes whistle still is the character
+(`public/brand/emblem-brand-globe-walker-4x5-v1.png`). Eyes and a puckered
+whistle on the east side of the face beside the Atlantic; Texas uncovered.
+Model sheets rendered from it live in `brand/reels/globe-walker/`:
+five-view turnaround, rotation strip, walk cycle, action poses, and the
+centered 9:16 reel frame (Phase 2's K2). See `brand/renders.md` for what each
+sheet got right and wrong.
 
 ## Phase 2 — Keyframes (stills, 3 credits)
 Three 9:16 frames, same character, same camera, gun metal ground with the
@@ -77,12 +79,9 @@ under a footstep click on each bounce. Captions off; the piece is silent-safe.
 3. Walk prompt (Phase 3) — above, plus start/end frame roles.
 
 ## Open decisions
-- Eyes. Claude's case for none: the hat and the Gulf coast already give the
-  sphere a head and a mouth line, and Texas is the one feature that is ours;
-  pie-cut eyes make it a generic 1928 mascot that happens to be blue. Will's
-  instinct is that a cartoon walker needs eyes. Phase 1 renders both, and if
-  eyes win they sit as two small ivory pie-cut eyes on the Pacific, west of
-  North America, so Texas stays uncovered.
+- Settled 2026-09-20: eyes are in. Two ivory pie-cut eyes and a puckered
+  whistle sit east of Texas beside the Atlantic (where the winning render put
+  them), not on the Pacific as first planned. Texas stays uncovered.
 - Hat: flip only, or also add the brim bounce in the walk? Both in Phase 3.
 - Settled 2026-09-20: cowboy boots in clay instead of the classic shoes; arms
   and legs in the globe's blue; white four-fingered gloves stay.

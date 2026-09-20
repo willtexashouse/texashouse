@@ -51,3 +51,24 @@ One entry per approved file in `public/brand/`: filename, tier, register, the Bl
 - Prompt: Brand Lock opening (brand/prompts/brand-lock.txt, "no cartoon" swapped for "no modern cartoon gloss"), then: the reference globe with its hat as a 1928-style rubber-hose walker; hat mirrored so the brim dips forward to the right; globe is head and body, no neck; thin hose legs in the ocean blue ending in clay cowboy boots with a stacked heel and ivory outline; hose arms in the same blue with white four-fingered gloves. Turnaround: front, three-quarter right, profile right, standing. Whistle: profile right, mid-stride, back arm swinging, front glove raised by the Gulf, three flat ivory notes ahead. Eyes variant: two small ivory pie-cut eyes on the Pacific west of North America, no mouth.
 - Read: palette, outline, boots, limbs, gloves all held on every sheet. Sheet 3 added a mouth and put the front-view eyes over the western US; sheet 4 put the eyes and a pucker east of Texas, over the Atlantic side, not the Pacific. Sheets 1 and 2 are exactly to spec.
 - Files: not yet in public/brand; scratchpad reel/p1/. The pick gets filed with intake once Will chooses.
+
+## public/brand/emblem-brand-globe-walker-4x5-v1.png
+- Date: 2026-09-20 · Made in Higgsfield, taken in by hand · Aspect: 4:5
+- Tier: emblem · Register: brand
+- Source: /tmp/claude-0/-home-user-texashouse/139d78b4-300c-50b6-a3e7-723a483f2eaa/scratchpad/reel/p1/4-eyes-whistle.png
+- Prompt: APPROVED 2026-09-20 (Will): the globe walker character for the reel. Hero globe as a 1928-style rubber-hose walker: hat brim leading right, two ivory pie-cut eyes and a puckered whistle on the east side of the face beside the Atlantic, blue hose limbs, white four-fingered gloves, clay cowboy boots, three flat ivory notes ahead. Higgsfield via Composio (Strategy + Will), nano_banana_pro 2k, job 990599cf-efab-476c-8786-5e6c2c698939, reference = approved hero globe.
+
+## public/brand/emblem-brand-globe-walker-4x5-v1.png
+- Date: 2026-09-20 · Made in Higgsfield via Composio ("Strategy + Will"), nano_banana_pro 2k · Aspect: 4:5
+- Tier: emblem · Register: brand · Job 990599cf-efab-476c-8786-5e6c2c698939 · Reference: approved hero globe
+- APPROVED 2026-09-20 (Will): "He is perfect." The globe walker character for the reel and any future character use. Eyes are in: two ivory pie-cut eyes and a puckered whistle on the east side of the face beside the Atlantic, Texas uncovered. Hat brim leads right, blue hose limbs, white four-fingered gloves, clay boots, three flat ivory notes.
+- This render is the reference attached to every later character sheet, keyframe and clip.
+
+## brand/reels/globe-walker/ — model sheets (five stills, one batch)
+- Date: 2026-09-20 · Higgsfield via Composio ("Strategy + Will"), nano_banana_pro 2k · Reference: the approved walker (job 990599cf) on all five
+- Shared opening: "Draw exactly the reference character and nothing else: the same character with the same proportions every time" + the walker's feature list + Brand Lock palette and no-text/no-labels/no-arrows.
+- sheet-turnaround-5view-16x9-v1.png · job 4fe6ea06-4f5b-4e10-99c6-7258858250f9 · front, ¾ front right, profile right, ¾ back right, back, one baseline. Clean; face and map turn with the body.
+- sheet-rotation-21x9-v1.png · job b2443bb2-e4d8-4697-a021-6beaaa229084 · asked for eight 45° steps, got six; map rotation reads (Americas → Europe/Africa → Asia → Australia → back to front) but the last figure carries the face on the wrong side.
+- sheet-walk-cycle-21x9-v1.png · job 9d38a5c1-17ba-4b81-b658-bcd3db6259c9 · contact, down, passing, up, contact, down in profile on one baseline. The "up" pose came out a full size larger, not a slight stretch; usable as a pose guide, not as a frame.
+- sheet-actions-16x9-v1.png · job d94d9503-8445-423c-a3de-c3ae1d774507 · hat tip with notes, wave, hands on hips, jump with the hat floating. Clean.
+- keyframe-k2-center-9x16-v1.png · job cb28dd74-0f09-4864-bd03-73a1270f28e3 · the walker in the approved pose, centered, ivory horizon line at the boots. This is Phase 2's K2 as rendered, and the template for K1 and K3.
