@@ -19,8 +19,10 @@ Turn the emblem into a character before anything moves. One batch:
    brim leads to the right, the direction of travel; a walker's hat tips
    forward into the walk.
 2. **Body added.** Rubber-hose legs and arms out of the sphere at the equator.
-   Legs: thin black hose, oversized ivory shoes. Arms: thin black hose, white
-   four-fingered gloves. No neck, no face on the globe: Texas stays the face.
+   Legs: thin hose in the globe's bluebonnet blue, ending in cowboy boots in
+   the hat's clay with an ivory outline and a simple stacked heel. Arms: thin
+   hose in the same blue, white four-fingered gloves. No neck. Face: Will's
+   call, see Open decisions; the default sheet ships one version each way.
 3. **Turnaround.** The same character front, three-quarter right, profile
    right. Profile is the walk view.
 4. **Whistle pose.** Profile right, one arm swinging, one glove raised, small
@@ -63,12 +65,19 @@ Whistle: a 12-second whistled tune, generated separately or licensed, ducked
 under a footstep click on each bounce. Captions off; the piece is silent-safe.
 
 ## Prompts to write before we spend
-1. Character sheet prompt (Phase 1) — needs the hat flip stated first.
+1. Character sheet prompt (Phase 1) — needs the hat flip stated first, then
+   "boots match the hat, limbs match the ocean, gloves white".
 2. Keyframe prompt (Phase 2) — one prompt, three position lines.
 3. Walk prompt (Phase 3) — above, plus start/end frame roles.
 
 ## Open decisions
-- Does Texas stay clay, or does the "face" get pie-cut eyes on the sphere?
-  Recommendation: no eyes. Texas is the face; it is what makes it ours.
+- Eyes. Claude's case for none: the hat and the Gulf coast already give the
+  sphere a head and a mouth line, and Texas is the one feature that is ours;
+  pie-cut eyes make it a generic 1928 mascot that happens to be blue. Will's
+  instinct is that a cartoon walker needs eyes. Phase 1 renders both, and if
+  eyes win they sit as two small ivory pie-cut eyes on the Pacific, west of
+  North America, so Texas stays uncovered.
 - Hat: flip only, or also add the brim bounce in the walk? Both in Phase 3.
+- Settled 2026-09-20: cowboy boots in clay instead of the classic shoes; arms
+  and legs in the globe's blue; white four-fingered gloves stay.
 - Whistle source: generate, or a licensed public-domain tune.
