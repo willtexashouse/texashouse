@@ -72,6 +72,14 @@ Matching K1 and K3 poses is what lets the walk loop cleanly.
 Whistle: a 12-second whistled tune, generated separately or licensed, ducked
 under a footstep click on each bounce. Captions off; the piece is silent-safe.
 
+## Rendering rules learned on the character
+- Never crop him to a head. Head-only grids redrew the continents and moved
+  Texas (2026-09-20). Render the full figure at the working sheet's scale.
+- Attach two references: the approved walker and the last sheet that held
+  the map. Say the globe is a fixed object, Texas in the same place and size.
+- Expression library: sixteen positive expressions across four full-body
+  sheets in `brand/reels/globe-walker/sheet-expressions-fullbody-*.png`.
+
 ## Prompts to write before we spend
 1. Character sheet prompt (Phase 1) — needs the hat flip stated first, then
    "boots match the hat, limbs match the ocean, gloves white".

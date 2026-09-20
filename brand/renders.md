@@ -79,3 +79,11 @@ One entry per approved file in `public/brand/`: filename, tier, register, the Bl
 - faces-b · job b15a3243-2683-4154-a63d-81a5b7da699c · tongue-out grin, sparkle-eyed excitement, easy howdy smile, sly half-lidded grin, singing with notes, soft chuckle. Clean; the sparkle eyes and blush dots on the second face are the one addition outside the token vocabulary.
 - fullbody · job d0ffb8a4-5460-4a8d-90fc-d574a363be56 · belly laugh, thumbs-up wink, hands clasped, arms open in welcome. Clean.
 - All faces sit east of Texas on the Atlantic side, as on the approved render. Mouths are one ink line, eyes ivory pie-cuts, tongue in clay.
+
+## brand/reels/globe-walker/sheet-expressions-fullbody-{2,3,4}-16x9-v1.png — expressions, second pass
+- Date: 2026-09-20 · Higgsfield via Composio ("Strategy + Will"), nano_banana_pro 2k, 16:9
+- Why: Will rejected the two head-only grids (faces-a, faces-b, now removed): with the globe cropped to a head the model redrew the continents and moved Texas on every panel. The full-body sheet held the map, so the twelve expressions were rerun as full-body figures with two references, the approved walker (job 990599cf) and the working full-body sheet (job d0ffb8a4), and the prompt stating the globe is a fixed object with Texas in the same place and size on every figure.
+- fullbody-2 · job e040e272-8a24-4d15-9ddc-b779d58b3260 · warm smile, big laugh with glove on belly, wink pointing, delighted O with gloves up. On model.
+- fullbody-3 · job 84151c42-d89a-4fb4-8392-e54f75485be1 · eyes-closed content, proud smirk hands on hips, tongue-out wave, cheer. On model. (First attempt, job 864181a5, redrew the globe with an oversized Texas and a shrunken hat; discarded.)
+- fullbody-4 · job 39bbd54d-b101-47ea-a0de-b81ff7751656 · hat tip, sly grin arms folded, singing with notes, soft chuckle glove to mouth. On model.
+- Lesson for the plan: never render the character as a cropped head. Keep the full figure at the working sheet's scale, attach the working sheet as a second reference, and say the map is fixed.
