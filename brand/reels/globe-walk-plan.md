@@ -77,8 +77,9 @@ under a footstep click on each bounce. Captions off; the piece is silent-safe.
   Texas (2026-09-20). Render the full figure at the working sheet's scale.
 - Attach two references: the approved walker and the last sheet that held
   the map. Say the globe is a fixed object, Texas in the same place and size.
-- Expression library: sixteen positive expressions across four full-body
+- Expression library: twelve positive expressions across three full-body
   sheets in `brand/reels/globe-walker/sheet-expressions-fullbody-*.png`.
+- Check limb length on every sheet; one was rejected for long legs.
 
 ## Prompts to write before we spend
 1. Character sheet prompt (Phase 1) — needs the hat flip stated first, then
