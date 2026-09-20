@@ -72,3 +72,10 @@ One entry per approved file in `public/brand/`: filename, tier, register, the Bl
 - sheet-walk-cycle-21x9-v1.png · job 9d38a5c1-17ba-4b81-b658-bcd3db6259c9 · contact, down, passing, up, contact, down in profile on one baseline. The "up" pose came out a full size larger, not a slight stretch; usable as a pose guide, not as a frame.
 - sheet-actions-16x9-v1.png · job d94d9503-8445-423c-a3de-c3ae1d774507 · hat tip with notes, wave, hands on hips, jump with the hat floating. Clean.
 - keyframe-k2-center-9x16-v1.png · job cb28dd74-0f09-4864-bd03-73a1270f28e3 · the walker in the approved pose, centered, ivory horizon line at the boots. This is Phase 2's K2 as rendered, and the template for K1 and K3.
+
+## brand/reels/globe-walker/sheet-expressions-*.png — positive expressions (three stills, one batch)
+- Date: 2026-09-20 · Higgsfield via Composio ("Strategy + Will"), nano_banana_pro 2k, 16:9 · Reference: the approved walker (job 990599cf) · Brief from Will: more expressions, positive only
+- faces-a · job 65cbac0b-0d63-436c-8fc8-6ad7d61dfc08 · warm smile, big laugh, wink, delighted O, eyes-closed content, proud smirk. Clean; all six on-model, Texas uncovered.
+- faces-b · job b15a3243-2683-4154-a63d-81a5b7da699c · tongue-out grin, sparkle-eyed excitement, easy howdy smile, sly half-lidded grin, singing with notes, soft chuckle. Clean; the sparkle eyes and blush dots on the second face are the one addition outside the token vocabulary.
+- fullbody · job d0ffb8a4-5460-4a8d-90fc-d574a363be56 · belly laugh, thumbs-up wink, hands clasped, arms open in welcome. Clean.
+- All faces sit east of Texas on the Atlantic side, as on the approved render. Mouths are one ink line, eyes ivory pie-cuts, tongue in clay.
