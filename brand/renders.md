@@ -43,3 +43,11 @@ One entry per approved file in `public/brand/`: filename, tier, register, the Bl
 - Also tried: MiniMax H3 Max, same inputs. It turned the globes but panned the pair sideways through the shot; rejected.
 - Processing: frames sampled evenly from the clip, ground keyed to alpha by colour distance, then each globe located per frame, scaled to one fixed diameter, and pinned to a fixed centre, because the FLUX clip let the pair drift outward. Frame 000 is also the static poster (footer-globes.webp/png).
 - Placement: GlobeSpin.astro in the footer. Scroll position drives the frame index; reduced motion shows the poster. The hero globe gets the same treatment next.
+
+## Globe walk reel — Phase 1 character sheet (four stills, awaiting Will's pick)
+- Date: 2026-09-20 · Made in Higgsfield via Composio (account "Strategy + Will"), nano_banana_pro 2k · Turnarounds 16:9 (2752×1536), whistle poses 4:5 (1856×2304)
+- Tier: emblem · Register: brand · Reference: the approved hero globe (job 23ae7281-a66e-4734-b8cb-4bc90db2b47a) attached to all four
+- Jobs: 1 no eyes, turnaround 2f1ab5be-fc49-4f12-a9fb-b30223decc60 · 2 no eyes, whistle ae30b31f-57b2-42c1-a30b-c8be6b7a19e7 · 3 eyes, turnaround 86550945-8c62-47ba-bfd5-cfca3d5f3b82 · 4 eyes, whistle 990599cf-efab-476c-8786-5e6c2c698939
+- Prompt: Brand Lock opening (brand/prompts/brand-lock.txt, "no cartoon" swapped for "no modern cartoon gloss"), then: the reference globe with its hat as a 1928-style rubber-hose walker; hat mirrored so the brim dips forward to the right; globe is head and body, no neck; thin hose legs in the ocean blue ending in clay cowboy boots with a stacked heel and ivory outline; hose arms in the same blue with white four-fingered gloves. Turnaround: front, three-quarter right, profile right, standing. Whistle: profile right, mid-stride, back arm swinging, front glove raised by the Gulf, three flat ivory notes ahead. Eyes variant: two small ivory pie-cut eyes on the Pacific west of North America, no mouth.
+- Read: palette, outline, boots, limbs, gloves all held on every sheet. Sheet 3 added a mouth and put the front-view eyes over the western US; sheet 4 put the eyes and a pucker east of Texas, over the Atlantic side, not the Pacific. Sheets 1 and 2 are exactly to spec.
+- Files: not yet in public/brand; scratchpad reel/p1/. The pick gets filed with intake once Will chooses.

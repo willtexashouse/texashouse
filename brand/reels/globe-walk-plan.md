@@ -33,6 +33,12 @@ continents, clay Texas, gun metal ground. Grain and halftone on.
 
 Pick one sheet. That pick is the reference for Phase 2.
 
+**Status 2026-09-20:** four stills rendered (no-eyes turnaround and whistle,
+eyes turnaround and whistle), logged in `brand/renders.md`. The no-eyes pair
+came out to spec. The eyes pair drifted: the model added a mouth and put the
+eyes on the Atlantic side. If eyes win, Phase 1b re-runs that pair with the
+no-eyes sheet as the reference and the eye placement stated as the only change.
+
 ## Phase 2 — Keyframes (stills, 3 credits)
 Three 9:16 frames, same character, same camera, gun metal ground with the
 footer horizon line drawn once in ivory at the bottom third:
