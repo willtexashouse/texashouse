@@ -69,6 +69,12 @@ plus a 10 s K1→K3 variant. All in `brand/reels/globe-walker/cut/`.
   shading, no lighting change."
 - Render 9:16 at 1080p, no audio.
 
+## Phase 4b — The loop (Will's redirect, 2026-09-21)
+No cut, no cards, no ground, no logo. He walks in place at center, whistling,
+notes animated, as a GIF-style loop. Two variants in
+`brand/reels/globe-walker/loop/` (A steady, B peppier), each as MP4 and GIF.
+The model insists on drawing a floor line; `loop/deline.js` removes it.
+
 ## Phase 4 — Cut
 **v1 done 2026-09-21:** `brand/reels/globe-walker/globe-walk-v1.mp4`, built by
 `cut/cut.sh`. Silent. Open items: whistle track, real show name/date/link on the
