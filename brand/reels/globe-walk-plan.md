@@ -41,7 +41,12 @@ five-view turnaround, rotation strip, walk cycle, action poses, and the
 centered 9:16 reel frame (Phase 2's K2). See `brand/renders.md` for what each
 sheet got right and wrong.
 
-## Phase 2 — Keyframes (stills, 3 credits)
+## Phase 2 — Keyframes (built locally, 0 credits)
+**Done 2026-09-21.** Higgsfield would not move him to the edges, so the three
+frames are composed from the approved center frame: `keyframes/build-keyframes.js`
+cuts him to alpha and places him at 42% frame height, left, center, right.
+
+## Phase 2 (original spec)
 Three 9:16 frames, same character, same camera, gun metal ground with the
 footer horizon line drawn once in ivory at the bottom third:
 - **K1** Character just inside the left edge, mid-stride, facing right.
@@ -50,7 +55,11 @@ footer horizon line drawn once in ivory at the bottom third:
 
 Matching K1 and K3 poses is what lets the walk loop cleanly.
 
-## Phase 3 — Motion (video, 2 to 3 credits)
+## Phase 3 — Motion
+**Done 2026-09-21.** FLUX 3 Video, 1080p, audio off: clipA K1→K2, clipB K2→K3,
+plus a 10 s K1→K3 variant. All in `brand/reels/globe-walker/cut/`.
+
+## Phase 3 (original spec)
 - **Model:** FLUX 3 Video, which held composition on the footer spin, with
   start and end frames locked. Fallback: Kling 3.0 for stronger walk cycles.
 - **Clip A** K1 to K2, 5s. **Clip B** K2 to K3, 5s. Same prompt on both.
@@ -60,7 +69,12 @@ Matching K1 and K3 poses is what lets the walk loop cleanly.
   shading, no lighting change."
 - Render 9:16 at 1080p, no audio.
 
-## Phase 4 — Cut (ffmpeg, no credits)
+## Phase 4 — Cut
+**v1 done 2026-09-21:** `brand/reels/globe-walker/globe-walk-v1.mp4`, built by
+`cut/cut.sh`. Silent. Open items: whistle track, real show name/date/link on the
+end card, horizon line height vs the Reels UI band.
+
+## Phase 4 (original spec)
 | Time | Content |
 |---|---|
 | 0.0–1.0 | Gun metal, horizon line, cursive wordmark fades in top-left |
