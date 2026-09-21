@@ -120,3 +120,14 @@ under a footstep click on each bounce. Captions off; the piece is silent-safe.
 - Settled 2026-09-20: cowboy boots in clay instead of the classic shoes; arms
   and legs in the globe's blue; white four-fingered gloves stay.
 - Whistle source: generate, or a licensed public-domain tune.
+
+## Reel 2 — Hopping in (storyboarded 2026-09-21)
+Stills in `brand/reels/globe-walker/f1/`. The car is designed once under the
+Brand Lock (`car-design-sheet-16x9-v1.png`, ivory body, clay nose and wings,
+no livery, no logos) and attached as a second reference on every car frame.
+Boards: 1 beside the car, glove on the halo · 2 mid-hop above the cockpit, hat
+floating · 3 seated, whistling · 4 driving off right with speed lines.
+Motion plan when Will says go: MiniMax H3 from board 1 (walk up and hop),
+then from board 3 (settle, whistle, pull away), each free-ended, cut by frame
+matching. Same rules as the walk: start frames from approved stills only,
+nothing in frame that should not move, no floor.
