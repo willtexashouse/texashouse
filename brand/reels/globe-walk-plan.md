@@ -74,6 +74,9 @@ No cut, no cards, no ground, no logo. He walks in place at center, whistling,
 notes animated, as a GIF-style loop. Two variants in
 `brand/reels/globe-walker/loop/` (A steady, B peppier), each as MP4 and GIF.
 The model insists on drawing a floor line; `loop/deline.js` removes it.
+v4 (current): Kling 3.0 Turbo, 10 s free-ended clip, best two-stride segment cut
+with `loop/findloop.js`; steady tempo, boots whole. Do not force start = end
+frame on a walk; do not say "treadmill".
 
 ## Phase 4 — Cut
 **v1 done 2026-09-21:** `brand/reels/globe-walker/globe-walk-v1.mp4`, built by

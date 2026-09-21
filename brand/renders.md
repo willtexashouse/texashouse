@@ -111,3 +111,10 @@ One entry per approved file in `public/brand/`: filename, tier, register, the Bl
 ## Account move, 2026-09-21
 - "Strategy + Will" (Composio account higgsfield_mcp_weaver-vila) is out of credits. Work continues on "pollen.media" (higgsfield_mcp_necker-exult). Renders and job ids do not cross workspaces; the source files live in the repo and are imported by raw GitHub URL.
 - Imported on pollen.media: loop start frame keyframes/loop-center-1080x1920.png → media 951c0fe9-7800-447e-b409-1aff138c67d1; approved walker public/brand/emblem-brand-globe-walker-4x5-v1.png → media 94cc5191-67f2-4e9d-98b5-512c445c493b.
+
+## brand/reels/globe-walker/loop/globe-walk-loop-v4.{mp4,gif} — steady tempo, boots whole (Kling)
+- Date: 2026-09-21 · Will's notes on v3: boots still breaking, pace not consistent. Cause: forcing start frame = end frame in 5 s makes the model speed up and slow down to land, and mid-stride FLUX merges the two boots.
+- Fix: 10 s clips with a free ending on pollen.media (start frame media 951c0fe9), prompt centred on a metronome-steady stride and two separate boots that never merge. FLUX 3 Video (job c04eada1-016f-493f-8872-2262a5cb3d2c) pushed the camera in and grew the character; rejected. Kling 3.0 Turbo 1080p (job de19b77b-9296-42a4-b0c6-d432cc4e0138) held size, position and tempo, boots whole, blinks and pucker present.
+- Kling took "like a treadmill" literally and drew one under him. Removed with loop/detread.js (the flood-fill line remover with the treadmill's dim neutral colour marked as never-character), verified under the boots.
+- Loop cut with loop/findloop.js: stride period is 40 frames; the two-stride segment with the most seamless join is frames 111–191 (81 frames, 3.4 s), which includes a blink. MP4 24 fps; GIF 12 fps, 540 px.
+- Lesson: never say "treadmill" to a video model; say "walks on the spot".
