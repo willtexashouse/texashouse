@@ -147,3 +147,10 @@ One entry per approved file in `public/brand/`: filename, tier, register, the Bl
 - board-3-seated · job d16f1129-0f81-45ee-8ba0-5942e84377b9 · in the cockpit, gloves on the wheel, whistling. (First try, job 096a07a9, went grey ground and a roadster; discarded.)
 - board-4-driveoff · job 61e26726-afbf-4eb9-a585-2086cf7e5fbd · speeding right, front wheels lifting, one glove holding the hat, speed lines and a puff. (First try, job 3ff9fa9d, turned the globe away from Texas and drew a roadster; discarded.)
 - Lesson: without the car sheet as a second reference the model draws a 1950s roadster and drifts the ground to grey. Attach the sheet on every car frame and say "the LEFT car exactly".
+
+## brand/campaigns/cota-anime/driver/driver-portrait-3x2-v{1..4}.png — the Driver, first portrait (COTA anime campaign)
+- Date: 2026-09-23 · Campaign style, not the house style (see brand/campaigns/cota-anime/README.md and HANDOFF.md). Higgsfield via Composio on pollen.media (Strategy + Will refused: out of credits), nano_banana_pro 2k, 3:2, prompt 7A from the handoff verbatim, four runs of the same prompt.
+- Style reference: ref-01 (the film's sunset driver still), uploaded by presigned PUT from the git-ignored inbox, media 1d2bce8d-146b-47f6-8d72-534340ec395c; role image_references. The still itself is not in the repo and never ships.
+- Jobs: v1 a87bf680-6dbf-4737-b046-77f079939204 · v2 8a6df5c8-47f2-468a-8546-1b79e7cd918a · v3 bd8bf6e6-6fa5-4a78-a6da-33f9db9f2e4c · v4 0e8671b1-2e0c-4329-a9fe-bfdb49601cb4
+- Read: all four hold the spec (blonde waves, aviators up in the hair, Lone Star pendant, fingerless gloves, oxblood jacket over white, dashboard POV, Hill Country, warm hard-edged shadows) and none carries the film driver's signature combination. Line and hatching are right; the camera layer (bloom, aberration, vignette) is present but light. v2 has the sharpest hatching and the most drawn hands; v3 the liveliest face with teeth drawn individually; v1 and v4 lean toward a stock pretty face, the risk the handoff flagged for the word "beautiful".
+- Sponsor logos: none generated, per the brief.
