@@ -154,3 +154,6 @@ One entry per approved file in `public/brand/`: filename, tier, register, the Bl
 - Jobs: v1 a87bf680-6dbf-4737-b046-77f079939204 · v2 8a6df5c8-47f2-468a-8546-1b79e7cd918a · v3 bd8bf6e6-6fa5-4a78-a6da-33f9db9f2e4c · v4 0e8671b1-2e0c-4329-a9fe-bfdb49601cb4
 - Read: all four hold the spec (blonde waves, aviators up in the hair, Lone Star pendant, fingerless gloves, oxblood jacket over white, dashboard POV, Hill Country, warm hard-edged shadows) and none carries the film driver's signature combination. Line and hatching are right; the camera layer (bloom, aberration, vignette) is present but light. v2 has the sharpest hatching and the most drawn hands; v3 the liveliest face with teeth drawn individually; v1 and v4 lean toward a stock pretty face, the risk the handoff flagged for the word "beautiful".
 - Sponsor logos: none generated, per the brief.
+
+## brand/campaigns/cota-anime/outputs/round-01/ — Driver hero image, Round 1 (four stills)
+- Date: 2026-09-23 · Brief: briefs/round-01-driver-hero.md · Report: outputs/round-01/REPORT.md · Strategy + Will out of credits, ran on pollen.media; model resolved to nano_banana_2; prompts verbatim, one batch, no reruns.
