@@ -157,3 +157,9 @@ One entry per approved file in `public/brand/`: filename, tier, register, the Bl
 
 ## brand/campaigns/cota-anime/outputs/round-01/ — Driver hero image, Round 1 (four stills)
 - Date: 2026-09-23 · Brief: briefs/round-01-driver-hero.md · Report: outputs/round-01/REPORT.md · Strategy + Will out of credits, ran on pollen.media; model resolved to nano_banana_2; prompts verbatim, one batch, no reruns.
+
+## brand/reels/globe-walker/photoreal/break-trackside-2x3-v{1,2}.png — the mascot as a real man on his break
+- Date: 2026-09-25 · Higgsfield via Composio (pollen.media), nano_banana_pro 2k, 2:3 (resolved to nano_banana_2) · jobs aed29614-b68b-4dc1-862d-4828ed62dd99, 356eb296-9001-428d-bfb7-165ea1cf667a
+- Brief from Will: photoreal, exhausted, leaning on an F1 barrier, hat off, globe head where the hat would be; modeled on a tabloid photo of a tired man leaning on a wall. The photo was used for pose and mood in words only, never as an image reference (real person's likeness).
+- References: our own expression sheet (media 07359ee8) and the approved walker (media 94cc5191) for the globe head and palette. Prompt: candid long-lens photo, physical painted globe head with Texas facing camera, clay hat held at the side, oxblood race suit tied at the waist over a white tee, brown boots, hand in pocket, catch fencing and blurred grandstand, overcast, no logos, no cigarette.
+- v1: tighter, grandstand crowd behind, hat in hand crossing the body, dramatic lean. v2: flatter light, bigger globe, hat held low, stiller and sadder. Both clean: no text, no logos, Texas correct.
