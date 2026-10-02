@@ -171,3 +171,9 @@ One entry per approved file in `public/brand/`: filename, tier, register, the Bl
 ## brand/reels/globe-walker/head-tongue-out-{1x1,alpha}-v{1,2}.png — globe, expression and hat only, no limbs
 - Date: 2026-10-02 · Higgsfield via Composio (pollen.media), nano_banana_pro 2k, 1:1 (resolved to nano_banana_2) · jobs ce7f68d5-a041-4015-b8b6-f7f44f6abc1b, 1bee2b73-91ea-47af-b4fc-009968bf7242 · Reference: expression sheet fullbody-2 (media 07359ee8), "copy the THIRD figure, draw only the globe and the hat".
 - Both on model: tongue-out grin, raised brows, pie-cut eyes, Texas in place, hat brim leading right, no limbs. v1 hat sits a touch higher and shows more sky-side ocean; v2 hat sits lower and tighter on the sphere. Alpha versions cut by edge flood fill and trimmed to the subject.
+
+## brand/reels/globe-walker/head-tongue-out-{1x1,alpha}-v{3,4}.png — head only, second pass, true to the sheet
+- Date: 2026-10-02 · Will on v1/v2: he must look at the camera and the sphere and hat must match the sheet; just remove the limbs. v1/v2 removed from the repo.
+- Method: cropped the tongue-out figure from sheet-expressions-fullbody-3 (head-source-fig3-crop.png), uploaded it by presigned PUT (media 7dee9dd1; a raw-GitHub import served a stale cached crop and two takes, jobs c9123ddc and 48d6aeba, came back as the wink figure, discarded), then an edit prompt on nano_banana_pro 2k 1:1: keep everything identical, only remove arms, gloves, legs, boots and close the outline. Jobs 4bd945ae-c202-4ba6-9fe1-f9ada15c01ff (v3), 74261ea3-892c-4830-91da-d1db491cec56 (v4).
+- Both hold the sheet's face (eyes to camera, raised brows, tongue), hat shape and tilt, sphere and Texas. v4 keeps the sheet's exact hat-to-globe proportion a little more closely; v3 sits the hat a touch larger. Alpha versions cut by edge flood fill and trimmed.
+- A local pixel-cut attempt (delimb.js) mis-fitted the sphere because the arms share the ocean blue; not used.
