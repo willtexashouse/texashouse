@@ -204,3 +204,8 @@ One entry per approved file in `public/brand/`: filename, tier, register, the Bl
 - Head pitch, pass one, edits on v6 and v5 asking for a 25° forward rotation: v9 32d0342c-b16b-46a3-93a2-532fc0bc4b2e · v10 aba378c4-e956-4d37-97f8-04692bdb15b3 · 749b8f25-1086-4636-aeed-89a8c76438e3 discarded, Texas missing. Edit mode held the pose; the head barely moved.
 - Head pitch, pass two, drawn fresh from v6 plus the walker (media 94cc5191) with the camera placed above him and the brim overhanging the face: v11 4d8e24c6-a86e-4193-b7a0-637c5101f837 · v12 c3dd83a5-779b-43e7-a5ee-b76e5233574d · v13 df4af023-610e-447f-8df1-b1def863aa3a. These tip the hat forward and drop the brim over the eyes, the most hanging-head of the set, but the sphere itself stays near front-on: the model will not rotate this character's head much in this style.
 - All cut to alpha (10% fuzz) and re-laid on gun metal; slate grounds came back again on several takes.
+
+## brand/reels/globe-walker/sorry/sorry-hands-{1x1,alpha}-v{14,15}.png — looking at the camera
+- Date: 2026-10-16 · Will: "Can we make him looking at the camera though." Eyes-only edits on v11 and v6: pupils centred and aimed at the viewer, upper lids still lowered a little in ocean blue, everything else held.
+- v14 f9ceda4d-b77a-4a0d-a528-34428e5dcd8a (from v11, head tipped, the pick) · v15 3143edc4-ddb6-44aa-aaad-eccc45113cc2 (from v6, head more upright). Both keep his dark eyes, the small frown and the hands.
+- cc9ddfa7-283c-4d87-852d-5570a1cd0f3f and fbd57524-2652-49c0-8573-7a162726d2cc came back with light blue irises, off-model; filed as alt-sorry-hands-blue-iris-v16/v17 for the record only. Alpha cuts as before.
